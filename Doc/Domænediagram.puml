@@ -1,0 +1,18 @@
+@startuml
+'https://plantuml.com/object-diagram
+!pragma layout smetana
+'made the 28/04/2025
+object Users
+object Orders
+object Orderlines
+object Posts
+object Straps
+object Rafter
+
+Users *-- Orders
+Orders <|-- Orderlines
+Orderlines <|-- Posts
+Orderlines <|-- Straps
+Orderlines  <|-- Rafter
+
+@enduml
