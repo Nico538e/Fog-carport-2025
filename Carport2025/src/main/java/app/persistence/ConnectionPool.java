@@ -18,6 +18,7 @@ import java.util.logging.Logger;
             private static final Logger LOGGER = Logger.getLogger(ConnectionPool.class.getName());
 
 
+
             /***
              * Private constructor to enforce Singleton pattern.
              */
