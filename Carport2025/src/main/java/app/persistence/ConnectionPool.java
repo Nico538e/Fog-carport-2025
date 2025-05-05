@@ -17,6 +17,7 @@ public class ConnectionPool {
     private static HikariDataSource ds = null;
     private static final Logger LOGGER = Logger.getLogger(ConnectionPool.class.getName());
 
+
     /***
      * Private constructor to enforce Singleton pattern.
      */
