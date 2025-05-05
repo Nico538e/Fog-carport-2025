@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<title>Frontpage</title>
+<title>Login page</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
 </head>
 <body>
 <nav class="navbar">
-<div class="logo">
-<img src="../public/images/fog_logo.png" th:src="@{/images/fog_logo.png}" width="32%"/>
-</div>
+    <div class="logo">
+        <img src="../public/images/fog_logo.png" th:src="@{/images/fog_logo.png}" width="32%"/>
+    </div>
     <ul class="nav-links">
         <!--# er placeholder til links routs ind til vi ved vor at det skal føre hen-->
         <li><a th:href="#">Hjem</a></li>
@@ -20,10 +20,15 @@
     </ul>
 </nav>
 
-<div class="content">
-    <h1>Velkommen til Fog's Carport side</h1>
-    <img class="front-page-carport" src="../public/images/front_page_carport.png" th:src="@{/images/front_page_carport.png}" width="50%">
-    <button type="submit" formaction="/getStarted" class="get-started">Kom i gang</button>
+<div class="login-container">
+    <h2>Login</h2>
+<form method="post" class="login-form">
+    <input type="text" name="username" placeholder="Indtast brugernavn" class="login-field" required>
+    <input type="password" name="password" placeholder="Indtast kodeord" class="login-field" required>
+
+    <button type="submit" formaction="/login" class="login-button">Login</button>
+    <div><p th:text="${message}"></p></div>
+</form>
 </div>
 </body>
 </html>

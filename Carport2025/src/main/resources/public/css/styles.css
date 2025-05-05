@@ -1,7 +1,137 @@
-/* Stylesheet for the application */
+/***** Frontpage *****/
+body, h1, ul, li{
+    margin: 0;
+    padding: 0;
+}
 
-h1 {
-    color: #369;
+body{
+    font-family: Arial, sans-serif;
+    background-color: #ffffffff;
+}
+
+.navbar{
+    background-color: #164986;
+    color: #ffff;
+    padding: -3px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo{
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.nav-links{
+    list-style: none;
+    display: flex;
+    gap: 70px;
+    transform: translatex(-345px);
+}
+
+.nav-links a{
+    color: #ffff;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.nav-links a:hover{
+    text-decoration: underline;
+    cursor:pointer;
+}
+
+/* main content */
+.content{
+    text-align: center;
+    margin-top: 40px;
+}
+
+.content h1{
+    color: #164986;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 3rem;
+    margin-bottom: 25px;
+    transform: translatey(-8px);
+
 }
+
+.front-page-carport{
+    max-width: 570px;
+    height: auto;
+    border-radius: 5px;
+    transform: translatex(95px);
+}
+
+.get-started{
+    margin-top: 30px;
+    padding: 15px 60px;
+    font-size: 16px;
+    background-color: #164986;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transform: translate(-142%,140%);
+}
+
+.get-started:hover{
+    background-color: #b6c8de;
+    color: #272b30;
+}
+
+/***** Login page *****/
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.login-container{
+    width: 400px;
+    height: 270px;
+    margin: 1rem auto;
+    background-color: #ededed;
+    padding: 170px 505px;
+    border-radius: 5px;
+}
+
+.login-container h2{
+    color: #164986;
+    align-items: center;
+    transform: translate(30%, -400%);
+}
+
+.login-field{
+    width: 60%;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    border-radius: 5px;
+    border-color: rgb(0,0,0,0);
+    text-align: left;
+    transform: translate(6%, -140%);
+    font-size: 17px;
+}
+
+input::placeholder{
+    background-color: white;
+    color: #bababa;
+}
+
+.login-button{
+    background-color: #164986;
+    color: white;
+    border: none;
+    padding: 1rem 4rem;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 15px;
+    transform: translatey(-75px);
+    margin-left: 70px;
+    cursor: pointer;
+}
+
+.login-button:hover{
+    background-color: #b6c8de;
+    color: #272b30;
+}
+
+/***** About our Carports *****/
