@@ -1,0 +1,42 @@
+package app.controllers;
+
+import app.entities.Orders;
+import app.exceptions.DatabaseException;
+import app.persistence.ConnectionPool;
+import io.javalin.Javalin;
+import io.javalin.http.Context;
+
+import java.util.List;
+
+public class CarportController {
+
+    public static void addRoutes(Javalin app, ConnectionPool connectionPool){
+
+
+    }
+
+    public static void checkAllOrders(Context ctx, ConnectionPool connectionPool){
+        try {
+            List<Orders> orders = UserMapper.getOrdersByUserId(connectionPool,2);
+
+            ctx.attribute("orders", orders);
+            ctx.render("page2.html"); //change filepath
+
+        } catch (DatabaseException e) {
+            ctx.status(500);
+            ctx.attribute("message", "Fejl ved hentning af order data");
+            ctx.render("error.html"); //change filepath
+        }
+
+    }
+
+
+    // minder om showCart fra cupcake
+    public static void showUserOrder(){
+
+    }
+
+    public static void showSvgDrawing(){
+
+    }
+}
