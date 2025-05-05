@@ -5,6 +5,7 @@ import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
+import app.persistence.UserMapper;
 
 import java.util.List;
 
