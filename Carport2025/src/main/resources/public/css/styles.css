@@ -14,7 +14,6 @@ body{
     color: #ffff;
     padding: -3px 20px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
 }
 
@@ -24,10 +23,15 @@ body{
 }
 
 .nav-links{
-    list-style: none;
     display: flex;
-    gap: 70px;
-    transform: translatex(-345px);
+    gap: 5rem;
+    list-style: none;
+    padding: 0;
+    position: absolute;
+    top: 7%;
+    left: 22%;
+    margin-top: 0.5rem;
+
 }
 
 .nav-links a{
@@ -41,10 +45,22 @@ body{
     cursor:pointer;
 }
 
+@media (max-width: 50px) {
+    .nav-links {
+        top: 30%;  /* Juster placeringen lidt højere på små skærme */
+        left: 50%;  /* Centrer linksene */
+        transform: translateX(-50%);  /* Kun horisontal centrering på små skærme */
+    }
+}
+
 /* main content */
 .content{
     text-align: center;
-    margin-top: 40px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .content h1{
@@ -52,26 +68,26 @@ body{
     font-family: Arial, Helvetica, sans-serif;
     font-size: 3rem;
     margin-bottom: 25px;
-    transform: translatey(-8px);
-
+    text-align: center;
 }
 
 .front-page-carport{
-    max-width: 570px;
-    height: auto;
+    width: 80%;
+    max-width: 420px;
     border-radius: 5px;
-    transform: translatex(95px);
+    height: auto;
+    margin-top: 1.5rem;
 }
-
 .get-started{
-    margin-top: 30px;
-    padding: 15px 60px;
-    font-size: 16px;
     background-color: #164986;
     color: white;
+    border: none;
+    padding: 1rem 2rem;
+    margin-top: 2rem;
+    font-size: 1rem;
     border-radius: 5px;
     cursor: pointer;
-    transform: translate(-142%,140%);
+    width: fit-content;
 }
 
 .get-started:hover{
