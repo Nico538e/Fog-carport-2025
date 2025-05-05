@@ -17,12 +17,21 @@ import java.util.logging.Logger;
             private static HikariDataSource ds = null;
             private static final Logger LOGGER = Logger.getLogger(ConnectionPool.class.getName());
 
+ 
+    /***
+     * Private constructor to enforce Singleton pattern.
+     */
+    private ConnectionPool() {
+        // Prevent instantiation
+    }
+
             /***
              * Private constructor to enforce Singleton pattern.
              */
             private ConnectionPool() {
                 // Prevent instantiation
             }
+ 
 
             /***
              * Getting a singleton instance of a Hikari Connection Pool with specific credentials
