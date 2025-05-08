@@ -20,12 +20,23 @@ public class Item {
     }
 
     public Item(int itemId, String itemName, int itemHeight, int itemWidth, int itemTypeId, String itemPackageType, int itemCostPrice) {
+        this.itemCostPrice = itemCostPrice;
+        this.itemPackageType = itemPackageType;
+        this.itemWidth = itemWidth;
+        this.itemHeight = itemHeight;
+        this.itemName = itemName;
+        this.itemId = itemId;
+    }
+
+    public Item(int itemId, String itemName, String itemType, String itemPackageType, int itemCostPrice) {
         this.itemId = itemId;
         this.itemName = itemName;
-        this.itemHeight = itemHeight;
-        this.itemWidth = itemWidth;
+        this.itemType = itemType;
         this.itemPackageType = itemPackageType;
-        this.itemCostPrice = itemCostPrice;}
+        this.itemCostPrice = itemCostPrice;
+
+       }
+
 
     public int getItemId() {
         return itemId;
