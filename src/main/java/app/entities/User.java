@@ -8,14 +8,16 @@ public class User {
     private String role;
     private String userEmail;
     private int userTlf;
+    private boolean isPaidStatus;
 
-    public User(int userId, String userName, String userPassword, String role, String userEmail, int userTlf) {
+    public User(int userId, String userName, String userPassword, String role, String userEmail, int userTlf, boolean isPaidStatus) {
         this.userId = userId;
         this.userName = userName;
         this.userPassword = userPassword;
         this.role = role;
         this.userEmail = userEmail;
         this.userTlf = userTlf;
+        this.isPaidStatus = isPaidStatus;
     }
 
     public User(int userTlf, String userEmail, String role, String userPassword, String userName) {
