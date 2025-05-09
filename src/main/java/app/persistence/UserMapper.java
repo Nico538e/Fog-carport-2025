@@ -30,7 +30,8 @@ public class UserMapper {
                 String userEmail = rs.getString("user_email");
                 int userTlf = rs.getInt("user_tlf");
                 boolean isPaidStatus = rs.getBoolean("isPaidStatus");
-                return new User( userId, userName, userPassword, roles, userEmail, userTlf, isPaidStatus) ;
+                String address = rs.getString("address");
+                return new User( userId, userName, userPassword, roles, userEmail, userTlf, isPaidStatus, address) ;
             } else {
                 throw new DatabaseException("Fejl i login. Prøv igen");
             }

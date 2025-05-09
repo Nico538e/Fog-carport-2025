@@ -9,8 +9,9 @@ public class User {
     private String userEmail;
     private int userTlf;
     private boolean isPaidStatus;
+    private String address;
 
-    public User(int userId, String userName, String userPassword, String role, String userEmail, int userTlf, boolean isPaidStatus) {
+    public User(int userId, String userName, String userPassword, String role, String userEmail, int userTlf, boolean isPaidStatus, String address) {
         this.userId = userId;
         this.userName = userName;
         this.userPassword = userPassword;
@@ -18,6 +19,7 @@ public class User {
         this.userEmail = userEmail;
         this.userTlf = userTlf;
         this.isPaidStatus = isPaidStatus;
+        this.address = address;
     }
 
     public User(int userTlf, String userEmail, String role, String userPassword, String userName) {
