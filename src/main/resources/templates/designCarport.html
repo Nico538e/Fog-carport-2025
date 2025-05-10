@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>DesignCarport</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+</head>
+<body>
+<nav class="navbar">
+    <div class="logo">
+        <img src="../public/images/fog_logo.png" th:src="@{/images/fog_logo.png}" width="32%"/>
+    </div>
+    <ul class="nav-links">
+        <!--links routs -->
+        <li><a th:href="@{/index}">Hjem</a></li>
+        <li><a th:href="@{/designCarport}">Design din egen carport</a></li>
+        <li><a th:href="@{/inspiration}">Få inspiration</a></li>
+        <li><a th:href="@{/aboutOurCarports}">Om vores Carporte</a></li>
+        <li><a th:href="@{/login}">Login</a></li>
+    </ul>
+</nav>
+
+<div class="grey-container carport-selection">
+    <h2>Vælg mål for din Carport</h2>
+
+    <div class="selectors">
+        <select name="length">
+            <option selected>Længde</option>
+            <option value="240">240</option>
+            <option value="270">270</option>
+            <option value="300">300</option>
+            <option value="330">330</option>
+            <option value="360">360</option>
+            <option value="390">390</option>
+            <option value="420">420</option>
+            <option value="450">450</option>
+            <option value="480">480</option>
+            <option value="510">510</option>
+            <option value="540">540</option>
+            <option value="570">570</option>
+            <option value="600">600</option>
+            <option value="450">630</option>
+            <option value="480">660</option>
+            <option value="510">690</option>
+            <option value="540">720</option>
+            <option value="570">750</option>
+            <option value="600">780</option>
+        </select>
+
+        <select name="width">
+            <option selected>Bredde</option>
+            <option value="240">240</option>
+            <option value="270">270</option>
+            <option value="300">300</option>
+            <option value="330">330</option>
+            <option value="360">360</option>
+            <option value="390">390</option>
+            <option value="420">420</option>
+            <option value="450">450</option>
+            <option value="480">480</option>
+            <option value="510">510</option>
+            <option value="540">540</option>
+            <option value="570">570</option>
+            <option value="600">600</option>
+        </select>
+    </div>
+
+    <button class="view-button">Vis</button>
+
+
+
+    <button class="next-button">Næste</button>
+</div>
+
+</body>
+</html>
