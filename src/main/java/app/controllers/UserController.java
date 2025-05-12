@@ -11,6 +11,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class UserController {
+    public static void addRouts(Javalin app, ConnectionPool connectionPool){
+        app.get("/adminWatchOrders", ctx -> UserController.watchOrders(ctx, connectionPool));
+    }
 
 
     public static void login(Context ctx, ConnectionPool connectionPool) {
@@ -62,5 +65,20 @@ public class UserController {
             ctx.attribute("message", "Fejl ved hentning af user data");
             ctx.render("index.html"); //change filepath
         }
+    }
+
+    public static void watchOrders(Context ctx, ConnectionPool connectionPool){
+        try {
+            List<User> userOrder = UserMapper.adminGetUserOrdersById(connectionPool, 3);
+
+            ctx.attribute("userOrder", userOrder);
+            ctx.render("adminPage1.html");
+
+        }catch(DatabaseException e){
+            ctx.status(500);
+            ctx.attribute("message", "Failed trying to get the users order data");
+            ctx.render("error.html");
+        }
+
     }
 }

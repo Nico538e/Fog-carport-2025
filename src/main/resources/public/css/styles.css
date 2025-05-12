@@ -174,3 +174,30 @@ input::placeholder{
 }
 
 /***** About our Carports *****/
+
+/***** admin page 1 *****/
+
+.user-order-table {
+    width: 670px;
+    border-collapse: collapse;
+    margin-top: 20px;
+    position:absolute;
+    top: 20%;
+    left: 25%;
+}
+
+.user-order-table th, .user-order-table td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+    color: white;
+}
+
+.user-order-table th {
+    background-color: #164986;
+}
+
+.user-order-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+

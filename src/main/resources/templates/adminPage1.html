@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<title>Frontpage</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo">
+        <img src="../public/images/fog_logo.png" th:src="@{/images/fog_logo.png}" width="32%"/>
+    </div>
+    <ul class="nav-links">
+        <!--# er placeholder til links routs ind til vi ved vor at det skal føre hen-->
+        <li><a th:href="#">Hjem</a></li>
+        <li><a th:href="#">Design din egen carport</a></li>
+        <li><a th:href="#">Få inspiration</a></li>
+        <li><a th:href="#">Om vores Carporte</a></li>
+        <li><a th:href="#">Logout</a></li>
+    </ul>
+</nav>
+
+<div>
+    <table class="user-order-table">
+        <thead>
+        <tr>
+            <th>OrderId</th>
+            <th>Name</th>
+            <th>E-mail</th>
+            <th>Tlf-nummer</th>
+            <th>Status</th>
+            <th>Pris</th>
+            <th>vis ordre</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${userOrder}">
+            <td th:text="|${user.orderId}|"></td>
+            <td th:text="|${user.userName}|"></td>
+            <td th:text="|${user.userEmail}|"></td>
+            <td th:text="|${user.userTlf}|"></td>
+            <td th:text="|${user.isPaidStatus} ? ' ordren er betalt' : 'Ordren er ikke betalt'|"></td>
+            <td th:text="${user.costPrice}"></td>
+            <td>
+                <a class="show-order-button" th:if="${session.currentUser != null}" th:href="@{/adminWatchOrders}">vis ordrer</a>
+                <button class="show-order-button"></button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+</body>
+</html>
