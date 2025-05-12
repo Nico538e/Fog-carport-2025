@@ -174,3 +174,98 @@ input::placeholder{
 }
 
 /***** About our Carports *****/
+
+/***** DesignCarport*****/
+
+.grey-container{
+    display: flex;
+    align-items: center;
+    width: 380px;
+    height: 240px;
+    margin: 1rem auto;
+    background-color: #ededed;
+    padding: 170px 505px;
+    border-radius: 5px;
+}
+
+.carport-selection{
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem;
+    width: 90%;
+
+    height: auto;
+}
+
+.carport-selection h2{
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.selectors {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.selectors select {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.view-button, .next-button {
+    background-color: #ccc;
+    border: none;
+    padding: 0.75rem 2rem;
+    font-size: 1rem;
+    margin: 1rem auto;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/***** DesignCarportInfo*****/
+
+.info-field{
+width: 250px;
+padding: 0.7rem;
+margin: 0.5rem 0;
+border-radius: 10px;
+border: none;
+background-color: #ffffff;
+text-align: center;
+font-size: 1rem;
+}
+
+.form-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.confirm-button {
+    background-color: #164986;
+    border: #164986;
+    text-decoration-color: white;
+    padding: 0.6rem 2rem;
+    font-size: 1rem;
+    margin-top: 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.checkbox-group label {
+    font-size: 1rem;
+    color: #444;
+    margin: 0.2rem 0;
+}
