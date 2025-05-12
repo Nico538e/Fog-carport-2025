@@ -13,11 +13,11 @@
     </div>
     <ul class="nav-links">
         <!--# er placeholder til links routs ind til vi ved vor at det skal føre hen-->
-        <li><a th:href="#">Hjem</a></li>
-        <li><a th:href="#">Design din egen carport</a></li>
-        <li><a th:href="#">Få inspiration</a></li>
-        <li><a th:href="#">Om vores Carporte</a></li>
-        <li><a th:href="#">Logout</a></li>
+        <li><a th:href="@{/index}">Hjem</a></li>
+        <li><a th:href="@{/designCarport}">Design din egen carport</a></li>
+        <li><a th:href="@{/inspiration}">Få inspiration</a></li>
+        <li><a th:href="@{/aboutOurCarports}">Om vores Carporte</a></li>
+        <li><a th:href="@{/login}">Logout</a></li>
     </ul>
 </nav>
 
@@ -29,6 +29,7 @@
             <th>Name</th>
             <th>E-mail</th>
             <th>Tlf-nummer</th>
+            <th>Adresse</th>
             <th>Status</th>
             <th>Pris</th>
             <th>vis ordre</th>
@@ -40,6 +41,7 @@
             <td th:text="|${user.userName}|"></td>
             <td th:text="|${user.userEmail}|"></td>
             <td th:text="|${user.userTlf}|"></td>
+            <td th:text="|${user.Address}|"></td>
             <td th:text="|${user.isPaidStatus} ? ' ordren er betalt' : 'Ordren er ikke betalt'|"></td>
             <td th:text="${user.costPrice}"></td>
             <td>

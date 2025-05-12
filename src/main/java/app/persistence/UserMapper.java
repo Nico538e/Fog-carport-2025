@@ -95,6 +95,7 @@ public class UserMapper {
                 "u.user_name, " +
                 "u.user_email, " +
                 "u.user_tlf, " +
+                "u.user_address, " +
                 "u.is_paid_status, " +
                 "ol.cost_price " +
                 "FROM orders o" +
@@ -115,10 +116,11 @@ public class UserMapper {
                 String userName = rs.getString("user_name");
                 String email = rs.getString("user_email");
                 int tlf = rs.getInt("user_tlf");
+                String address = rs.getString("user_address");
                 boolean isPaidStatus = rs.getBoolean("is_paid_status");
                 BigDecimal costPrice = rs.getBigDecimal("cost_price");
 
-                User users = new User(orderId, userName, email, tlf, isPaidStatus, costPrice);
+                User users = new User(orderId, userName, email, tlf, address, isPaidStatus, costPrice);
                 userOrderList.add(users);
             }
 
