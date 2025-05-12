@@ -38,11 +38,12 @@ public class User {
         this.userName = userName;
     }
 
-    public User(int orderId, String userName, String userEmail, int userTlf, boolean isPaidStatus, BigDecimal costPrice){
+    public User(int orderId, String userName, String userEmail, int userTlf, String address, boolean isPaidStatus, BigDecimal costPrice){
         this.orderId = orderId;
         this.userName = userName;
         this.userEmail = userEmail;
         this.userTlf = userTlf;
+        this.address = address;
         this.isPaidStatus = isPaidStatus;
         this.costPrice = costPrice;
     }
