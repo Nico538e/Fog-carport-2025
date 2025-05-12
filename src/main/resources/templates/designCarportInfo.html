@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>DesignCarportInfo</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+</head>
+<body>
+<nav class="navbar">
+    <div class="logo">
+        <img src="../public/images/fog_logo.png" th:src="@{/images/fog_logo.png}" width="32%"/>
+    </div>
+    <ul class="nav-links">
+        <!--links routs -->
+        <li><a th:href="@{/index}">Hjem</a></li>
+        <li><a th:href="@{/designCarport}">Design din egen carport</a></li>
+        <li><a th:href="@{/inspiration}">Få inspiration</a></li>
+        <li><a th:href="@{/aboutOurCarports}">Om vores Carporte</a></li>
+        <li><a th:href="@{/login}">Login</a></li>
+    </ul>
+</nav>
+
+<div class="grey-container">
+    <div class="form-wrapper">
+        <h2>Indtast Info for foresørgele</h2>
+
+        <input type="text" placeholder="Navn" class="info-field" />
+        <input type="email" placeholder="E-mail" class="info-field" />
+        <input type="text" placeholder="Adresse" class="info-field" />
+        <input type="tel" placeholder="Tlf-nummer" class="info-field" />
+
+        <h2>Kontakt mig på:</h2>
+
+        <div class="checkbox-group">
+            <label><input type="checkbox" /> Email</label>
+            <label><input type="checkbox" /> Tlf</label>
+        </div>
+
+        <button class="confirm-button">Bekræft</button>
+
+    </div>
+
+</div>
+
+</body>
+</html>
