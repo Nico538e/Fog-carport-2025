@@ -226,3 +226,46 @@ input::placeholder{
     border-radius: 4px;
     cursor: pointer;
 }
+
+/***** DesignCarportInfo*****/
+
+.info-field{
+width: 250px;
+padding: 0.7rem;
+margin: 0.5rem 0;
+border-radius: 10px;
+border: none;
+background-color: #ffffff;
+text-align: center;
+font-size: 1rem;
+}
+
+.form-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.confirm-button {
+    background-color: #164986;
+    border: #164986;
+    text-decoration-color: white;
+    padding: 0.6rem 2rem;
+    font-size: 1rem;
+    margin-top: 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.checkbox-group label {
+    font-size: 1rem;
+    color: #444;
+    margin: 0.2rem 0;
+}
