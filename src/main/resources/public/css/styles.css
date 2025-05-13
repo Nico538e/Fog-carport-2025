@@ -202,7 +202,13 @@ input::placeholder{
 }
 
 
-/***** DesignCarport*****/
+/***** DesignCarport+ SVG*****/
+
+
+.carport-svg-topview{
+
+}
+
 
 .grey-container{
     display: flex;
@@ -220,7 +226,6 @@ input::placeholder{
     text-align: center;
     padding: 2rem;
     width: 90%;
-
     height: auto;
 }
 
@@ -296,3 +301,4 @@ font-size: 1rem;
     color: #444;
     margin: 0.2rem 0;
 }
+
