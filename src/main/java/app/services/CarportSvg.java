@@ -13,6 +13,7 @@ public class CarportSvg {
         carportSvg.addRectangle(0,0,600,780,"stroke-width:1px; stroke: #000000; fill: white");
         addBeams();
         addRafters();
+        addPost();
     }
 
     private void addBeams(){
@@ -24,6 +25,13 @@ public class CarportSvg {
     private void addRafters(){
         for(double i = 0; i < 780; i += 55.714){
             carportSvg.addRectangle(i,0,600,4.5,"stroke: black; fill: white");
+        }
+    }
+
+    private void addPost(){
+        for(double i =110; i < 780; i+= 310){
+            carportSvg.addRectangle(i,35,9.7,10,"stroke: black; fill: white");
+            carportSvg.addRectangle(i,565,9.7,10,"stroke: black; fill: white");
         }
     }
 

@@ -31,7 +31,7 @@ public class Svg {
             "    </defs>";
 
     private static final String SVG_LINE_TEMPLATE = "<line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" style=\"%s\" />";
-    private static final String SVG_TEXT_TEMPLATE = "    <text style=\"%s\" transform=\"translate(25,300) rotate(-90)\">";
+    private static final String SVG_TEXT_TEMPLATE = "<text x=\"%d\" y=\"%d\" transform= \"rotate(%d)\" style=\"%s\">%s</text>";
     private static final String SVG_RECT_TEMPLATE = "<rect x=\"%f\" y=\"%f\" height=\"%f\" width=\"%f\" style=\"%s\"/>";
     //%d= tal, %s=text, %f=floating-point, %.2f=floating-points med 2 dicimaler
     private StringBuilder svg = new StringBuilder();
@@ -53,17 +53,14 @@ public class Svg {
     }
 
     public void addArrow(int x1, int y1, int x2, int y2, String style){
-
-        svg.append(String.format(SVG_LINE_TEMPLATE,x1, y1, x2, y2, style));
-// kald addLine med en style indenholder  pilehovredr style="stroke: black;
-//                 stroke-width: 1.2;
-//                 marker-start: url(#beginArrow);
-//                 marker-end: url(#endArrow);"
+        String arrowStyle = style +
+                "marker-start: url(#beginArrow);\n" +
+                "marker-end: url(#endArrow);\"";
+        svg.append(String.format(SVG_LINE_TEMPLATE,x1, y1, x2, y2, arrowStyle));
     }
 
     public void addText(int x, int y, int rotation, String text){
-
-
+    svg.append(String.format(SVG_TEXT_TEMPLATE, x, y, rotation, text));
     }
 
     public void addSvg(Svg innerSvg){

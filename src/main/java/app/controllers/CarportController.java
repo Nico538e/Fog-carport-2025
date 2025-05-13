@@ -41,9 +41,10 @@ public class CarportController {
     }
 
     public static void showSvgDrawing(Context ctx){
-        //TODO: create a svg drawing and inject into designCarport.html as a String
         Locale.setDefault(new Locale("US")); //Setting the number sustem på US(amarican)
-        CarportSvg svg = new CarportSvg(600,780);
+        int length = ctx.queryParamAsClass("length",Integer.class).getOrDefault(780);
+        int width =ctx.queryParamAsClass("width",Integer.class).getOrDefault(600);
+        CarportSvg svg = new CarportSvg(width,length);
         ctx.attribute("svg",svg.toString());
         ctx.render("designCarport.html");
     }
