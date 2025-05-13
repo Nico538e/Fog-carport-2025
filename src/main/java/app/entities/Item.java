@@ -3,27 +3,40 @@ package app.entities;
 public class Item {
     private int itemId;
     private String itemName;
-    private int itemLength;
     private int itemHeight;
     private int itemWidth;
     private String itemType;
-    private String itemMaterialType;
-    private int itemPackageAmount;
     private String itemPackageType;
     private int itemCostPrice;
 
-    public Item(int itemId, String itemName, int itemLength, int itemHeight, int itemWidth, String itemType, String itemMaterialType, int itemPackageAmount, String itemPackageType, int itemCostPrice) {
+    public Item(int itemCostPrice, String itemPackageType, String itemType, int itemWidth, int itemHeight, String itemName, int itemId) {
+        this.itemCostPrice = itemCostPrice;
+        this.itemPackageType = itemPackageType;
+        this.itemType = itemType;
+        this.itemWidth = itemWidth;
+        this.itemHeight = itemHeight;
+        this.itemName = itemName;
+        this.itemId = itemId;
+    }
+
+    public Item(int itemId, String itemName, int itemHeight, int itemWidth, int itemTypeId, String itemPackageType, int itemCostPrice) {
+        this.itemCostPrice = itemCostPrice;
+        this.itemPackageType = itemPackageType;
+        this.itemWidth = itemWidth;
+        this.itemHeight = itemHeight;
+        this.itemName = itemName;
+        this.itemId = itemId;
+    }
+
+    public Item(int itemId, String itemName, String itemType, String itemPackageType, int itemCostPrice) {
         this.itemId = itemId;
         this.itemName = itemName;
-        this.itemLength = itemLength;
-        this.itemHeight = itemHeight;
-        this.itemWidth = itemWidth;
         this.itemType = itemType;
-        this.itemMaterialType = itemMaterialType;
-        this.itemPackageAmount = itemPackageAmount;
         this.itemPackageType = itemPackageType;
         this.itemCostPrice = itemCostPrice;
-    }
+
+       }
+
 
     public int getItemId() {
         return itemId;
@@ -39,14 +52,6 @@ public class Item {
 
     public void setItemName(String itemName) {
         this.itemName = itemName;
-    }
-
-    public int getItemLength() {
-        return itemLength;
-    }
-
-    public void setItemLength(int itemLength) {
-        this.itemLength = itemLength;
     }
 
     public int getItemHeight() {
@@ -73,22 +78,6 @@ public class Item {
         this.itemType = itemType;
     }
 
-    public String getItemMaterialType() {
-        return itemMaterialType;
-    }
-
-    public void setItemMaterialType(String itemMaterialType) {
-        this.itemMaterialType = itemMaterialType;
-    }
-
-    public int getItemPackageAmount() {
-        return itemPackageAmount;
-    }
-
-    public void setItemPackageAmount(int itemPackageAmount) {
-        this.itemPackageAmount = itemPackageAmount;
-    }
-
     public String getItemPackageType() {
         return itemPackageType;
     }
@@ -110,12 +99,9 @@ public class Item {
         return "Item{" +
                 "itemId=" + itemId +
                 ", itemName='" + itemName + '\'' +
-                ", itemLength=" + itemLength +
                 ", itemHeight=" + itemHeight +
                 ", itemWidth=" + itemWidth +
                 ", itemType='" + itemType + '\'' +
-                ", itemMaterialType='" + itemMaterialType + '\'' +
-                ", itemPackageAmount=" + itemPackageAmount +
                 ", itemPackageType='" + itemPackageType + '\'' +
                 ", itemCostPrice=" + itemCostPrice +
                 '}';

@@ -1,9 +1,11 @@
 package app.persistence;
 
 import app.entities.Orders;
+import app.entities.ShowUserOrders;
 import app.entities.User;
 import app.exceptions.DatabaseException;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,7 +31,9 @@ public class UserMapper {
                 String userPassword = rs.getString("user_password");
                 String userEmail = rs.getString("user_email");
                 int userTlf = rs.getInt("user_tlf");
-                return new User( userId, userName, userPassword, roles, userEmail, userTlf) ;
+                boolean isPaidStatus = rs.getBoolean("isPaidStatus");
+                String address = rs.getString("address");
+                return new User( userId, userName, userPassword, roles, userEmail, userTlf, isPaidStatus, address) ;
             } else {
                 throw new DatabaseException("Fejl i login. Prøv igen");
             }
@@ -74,7 +78,6 @@ public class UserMapper {
 
             while(rs.next()){
                 int orderId = rs.getInt("order_id");
-
                 Orders order = new Orders(orderId,userId);
                 ordersList.add(order);
             }
@@ -84,4 +87,45 @@ public class UserMapper {
         }
         return ordersList;
     }
+
+    public static List<ShowUserOrders> adminGetUserWithOrders(ConnectionPool connectionPool) throws DatabaseException{
+        List<ShowUserOrders> userOrderList = new ArrayList<>();
+
+        String sql = "SELECT o.order_id, " +
+                "u.user_name, " +
+                "u.user_email, " +
+                "u.user_tlf, " +
+                "u.user_address, " +
+                "u.is_paid_status, " +
+                "ol.cost_price " +
+                "FROM orders o " +
+                "join users u on o.user_id = u.user_id " +
+                "join order_line ol on o.order_id = ol.order_id " +
+                "where u.role = 'postgres' " +
+                "and o.order_id is not null ";
+
+        try(Connection connection = connectionPool.getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql)
+        ){
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+                int orderId = rs.getInt("order_id");
+                String userName = rs.getString("user_name");
+                String Email = rs.getString("user_email");
+                int tlf = rs.getInt("user_tlf");
+                String address = rs.getString("user_address");
+                boolean isPaidStatus = rs.getBoolean("is_paid_status");
+                BigDecimal costPrice = rs.getBigDecimal("cost_price");
+
+                ShowUserOrders showUserOrders = new ShowUserOrders(orderId, userName, Email, tlf, address, isPaidStatus, costPrice);
+                userOrderList.add(showUserOrders);
+            }
+
+        }catch(SQLException e){
+            System.out.println("Failed could not get the order and user details of the user: " + e.getMessage());
+        }
+        return userOrderList;
+    }
+
 }

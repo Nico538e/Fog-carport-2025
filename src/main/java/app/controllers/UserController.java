@@ -1,5 +1,6 @@
 package app.controllers;
 
+import app.entities.ShowUserOrders;
 import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
@@ -11,6 +12,10 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class UserController {
+    public static void addRoutes(Javalin app, ConnectionPool connectionPool){
+        app.get("/adminWatchOrders", ctx -> UserController.watchOrders(ctx, connectionPool));
+        app.get("/adminPage1", ctx -> UserController.watchOrders(ctx, connectionPool));
+    }
 
 
     public static void login(Context ctx, ConnectionPool connectionPool) {
@@ -62,5 +67,21 @@ public class UserController {
             ctx.attribute("message", "Fejl ved hentning af user data");
             ctx.render("index.html"); //change filepath
         }
+    }
+
+    public static void watchOrders(Context ctx, ConnectionPool connectionPool){
+        try {
+            List<ShowUserOrders> userOrder = UserMapper.adminGetUserWithOrders(connectionPool);
+
+            ctx.attribute("userOrder", userOrder);
+            ctx.render("adminPage1.html");
+
+
+        }catch(DatabaseException e){
+            ctx.status(500);
+            ctx.attribute("message", "Failed trying to get the users order data");
+            ctx.render("error.html");
+        }
+
     }
 }
