@@ -37,7 +37,26 @@ public class CarportController {
 
     }
 
-    public static void showSvgDrawing(){
+    public static void showSvgDrawing(Context ctx){
+//TODO: create a svg drawing and inject into designCarport.html as a String
 
+        String svgText = "<svg width=\"127\" height=\"105\" viewBox=\"0 0 255 210\">\n" +
+                "    <rect x=\"0\" y=\"0\" height=\"210\" width=\"255\"\n" +
+                "          style=\"stroke:#000000; fill: #f7cb02\"/>\n" +
+                "    <rect x=\"0\" y=\"0\" height=\"90\" width=\"90\"\n" +
+                "          style=\"stroke:#000000; fill: #2d6caa\"/>\n" +
+                "    <rect x=\"120\" y=\"0\" height=\"90\" width=\"135\"\n" +
+                "          style=\"stroke:#000000; fill: #2d6caa\"/>\n" +
+                "    <rect x=\"0\" y=\"120\" height=\"90\" width=\"90\"\n" +
+                "          style=\"stroke:#000000; fill: #2d6caa\"/>\n" +
+                "    <rect x=\"120\" y=\"120\" height=\"90\" width=\"135\"\n" +
+                "          style=\"stroke:#000000; fill: #2d6caa\"/>\n" +
+                "\n" +
+                "</svg>";
+
+        ctx.attribute("svg",svgText);
+        ctx.render("designCarport.html");
     }
+
+
 }
