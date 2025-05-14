@@ -225,8 +225,8 @@ input::placeholder{
 
 
 .carport-svg-topview{
-    max-width: 800px;
-    max-height: 800px;
+    max-width: 100%;
+    height: auto;
 }
 
 

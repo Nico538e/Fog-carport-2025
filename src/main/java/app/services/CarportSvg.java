@@ -9,7 +9,7 @@ public class CarportSvg {
     public CarportSvg(int width, int length) {
         this.width = width;
         this.length = length;
-        carportSvg = new Svg(0,0,"0 0 855 690", "75%"); //insteriser en ny svg tegning
+        carportSvg = new Svg(0,0,"0 0 855 690", "100%"); //insteriser en ny svg tegning
         carportSvg.addRectangle(0,0,600,780,"stroke-width:1px; stroke: #000000; fill: white");
         addBeams();
         addRafters();
