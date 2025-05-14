@@ -15,6 +15,10 @@ public class UserController {
     public static void addRoutes(Javalin app, ConnectionPool connectionPool){
         app.get("/adminWatchOrders", ctx -> UserController.watchOrders(ctx, connectionPool));
         app.get("/adminPage1", ctx -> UserController.watchOrders(ctx, connectionPool));
+        app.post("/login", ctx -> login(ctx,connectionPool));
+        app.get("login", ctx -> ctx.render("login.html"));
+        app.get("logout", ctx -> logout(ctx));
+        app.get("/carportInfo", ctx -> ctx.render("designCarportInfo.html"));
     }
 
 
