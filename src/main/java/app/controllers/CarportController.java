@@ -34,7 +34,6 @@ public class CarportController {
 
     }
 
-
     // minder om showCart fra cupcake
     public static void showUserOrder(){
 
@@ -42,9 +41,12 @@ public class CarportController {
 
     public static void showSvgDrawing(Context ctx){
         Locale.setDefault(new Locale("US")); //Setting the number sustem på US(amarican)
+        // Gets the length and width parameters form Url
         int length = ctx.queryParamAsClass("length",Integer.class).getOrDefault(780);
         int width =ctx.queryParamAsClass("width",Integer.class).getOrDefault(600);
+        //Create the SVG, with customers length and width
         CarportSvg svg = new CarportSvg(width,length);
+        //Add SVG to the render
         ctx.attribute("svg",svg.toString());
         ctx.render("designCarport.html");
     }

@@ -35,7 +35,6 @@ public class CarportSvg {
         }
     }
 
-
     @Override
     public String toString() {
         return carportSvg.toString();

@@ -33,9 +33,9 @@ public class Svg {
     private static final String SVG_LINE_TEMPLATE = "<line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" style=\"%s\" />";
     private static final String SVG_TEXT_TEMPLATE = "<text x=\"%d\" y=\"%d\" transform= \"rotate(%d)\" style=\"%s\">%s</text>";
     private static final String SVG_RECT_TEMPLATE = "<rect x=\"%f\" y=\"%f\" height=\"%f\" width=\"%f\" style=\"%s\"/>";
-    //%d= tal, %s=text, %f=floating-point, %.2f=floating-points med 2 dicimaler
     private StringBuilder svg = new StringBuilder();
 
+    //%d= tal, %s=text, %f=floating-point, %.2f=floating-points med 2 dicimaler
 
 
     public Svg(int x, int y, String viewBox, String width){
