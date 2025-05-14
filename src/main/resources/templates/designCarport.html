@@ -13,7 +13,7 @@
     </div>
     <ul class="nav-links">
         <!--links routs -->
-        <li><a th:href="@{/index}">Hjem</a></li>
+        <li><a th:href="@{/}">Hjem</a></li>
         <li><a th:href="@{/designCarport}">Design din egen carport</a></li>
         <li><a th:href="@{/inspiration}">Få inspiration</a></li>
         <li><a th:href="@{/aboutOurCarports}">Om vores Carporte</a></li>
@@ -66,7 +66,7 @@
         </select>
     </div>
 
-    <button  type="submit" class="view-button">Vis</button>
+    <button type="submit" class="view-button">Vis</button>
 
     <div class="carport-svg-topview">
 
@@ -75,7 +75,7 @@
     </div>
 
 
-    <button class="next-button">Næste</button>
+    <a class="next-button" th:href="@{/carportInfo}">Næste</a>
 </div>
 
 </body>
