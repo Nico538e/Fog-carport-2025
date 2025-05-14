@@ -14,8 +14,10 @@ import java.util.List;
 public class CarportController {
 
     public static void addRoutes(Javalin app, ConnectionPool connectionPool){
-        app.get("login", ctx -> ctx.render("login.html"));
-        app.get("AboutOurCarports", ctx -> ctx.render("aboutOurCarports.html"));
+        app.get("/designCarport", ctx -> CarportController.showSvgDrawing(ctx));
+        app.get("/inspiration", ctx -> ctx.redirect(""));
+        app.get("/aboutOurCarports", ctx -> ctx.render("aboutOurCarports.html"));
+        app.get("/goDesign", ctx -> showSvgDrawing(ctx));
     }
 
     public static void checkAllOrders(Context ctx, ConnectionPool connectionPool){
