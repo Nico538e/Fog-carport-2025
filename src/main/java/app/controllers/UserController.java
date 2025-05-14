@@ -1,5 +1,6 @@
 package app.controllers;
 
+import app.entities.ShowUserOrders;
 import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
@@ -11,8 +12,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class UserController {
-    public static void addRouts(Javalin app, ConnectionPool connectionPool){
+    public static void addRoutes(Javalin app, ConnectionPool connectionPool){
         app.get("/adminWatchOrders", ctx -> UserController.watchOrders(ctx, connectionPool));
+        app.get("/adminPage1", ctx -> UserController.watchOrders(ctx, connectionPool));
     }
 
 
@@ -69,10 +71,11 @@ public class UserController {
 
     public static void watchOrders(Context ctx, ConnectionPool connectionPool){
         try {
-            List<User> userOrder = UserMapper.adminGetUserOrdersById(connectionPool, 3);
+            List<ShowUserOrders> userOrder = UserMapper.adminGetUserWithOrders(connectionPool);
 
             ctx.attribute("userOrder", userOrder);
             ctx.render("adminPage1.html");
+
 
         }catch(DatabaseException e){
             ctx.status(500);

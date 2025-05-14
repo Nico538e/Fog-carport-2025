@@ -8,6 +8,8 @@ import app.services.Svg;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 import app.persistence.UserMapper;
+import okhttp3.*;
+import java.io.IOException;
 
 import java.util.List;
 import java.util.Locale;
@@ -15,8 +17,8 @@ import java.util.Locale;
 public class CarportController {
 
     public static void addRoutes(Javalin app, ConnectionPool connectionPool){
-
-
+        app.get("login", ctx -> ctx.render("login.html"));
+        app.get("AboutOurCarports", ctx -> ctx.render("aboutOurCarports.html"));
     }
 
     public static void checkAllOrders(Context ctx, ConnectionPool connectionPool){
@@ -31,12 +33,37 @@ public class CarportController {
             ctx.attribute("message", "Fejl ved hentning af order data");
             ctx.render("error.html"); //change filepath
         }
-
     }
 
-    // minder om showCart fra cupcake
-    public static void showUserOrder(){
 
+    public static void MailSender() throws IOException{
+        String domainName = "mg.kodekriger.dk";
+        String apikey =  System.getenv("MAILGUN_API_KEY");
+
+        OkHttpClient client = new OkHttpClient();
+
+
+        RequestBody formbody = new FormBody.Builder()
+                .add("from","noreply@" + domainName)
+                .add("to","nicolai-strand@hotmail.com")
+                .add("subject", "Bestilling af carport")
+                .add("text", "Tak for din bestilling")
+                .build();
+
+        Request request = new Request.Builder()
+                .url("https://api.eu.mailgun.net/v3/" + domainName + "/messages")
+                .post(formbody)
+                .addHeader("Authorization", Credentials.basic("api", apikey))
+                .build();
+
+
+        try(Response response = client.newCall(request).execute()){
+            if(response.isSuccessful()) {
+                System.out.println("Email sendt " + response.body().string());
+            }else{
+                System.out.println("Fejl ved afsendelse " + response.body().string());
+            }
+        }
     }
 
     public static void showSvgDrawing(Context ctx){
@@ -50,6 +77,7 @@ public class CarportController {
         ctx.attribute("svg",svg.toString());
         ctx.render("designCarport.html");
     }
+
 
 
 }

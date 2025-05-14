@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<title>Frontpage</title>
+<title>adminPage1</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
@@ -21,7 +21,7 @@
     </ul>
 </nav>
 
-<div>
+<div class="user-order-container">
     <table class="user-order-table">
         <thead>
         <tr>
@@ -36,18 +36,20 @@
         </tr>
         </thead>
         <tbody>
+
         <tr th:each="user : ${userOrder}">
-            <td th:text="|${user.orderId}|"></td>
-            <td th:text="|${user.userName}|"></td>
-            <td th:text="|${user.userEmail}|"></td>
-            <td th:text="|${user.userTlf}|"></td>
-            <td th:text="|${user.Address}|"></td>
-            <td th:text="|${user.isPaidStatus} ? ' ordren er betalt' : 'Ordren er ikke betalt'|"></td>
+            <td th:text="${user.orderId}"></td>
+            <td th:text="${user.userName}"></td>
+            <td th:text="${user.userEmail}"></td>
+            <td th:text="${user.userTlf}"></td>
+            <td th:text="${user.address}"></td>
+            <td th:text="${user.paidStatus}"></td>
             <td th:text="${user.costPrice}"></td>
             <td>
-                <a class="show-order-button" th:if="${session.currentUser != null}" th:href="@{/adminWatchOrders}">vis ordrer</a>
-                <button class="show-order-button"></button>
+                <a class="show-order-button" th:href="@{/adminWatchOrders}"></a>
+                <button>Vis ordre</button>
             </td>
+
         </tr>
         </tbody>
     </table>
