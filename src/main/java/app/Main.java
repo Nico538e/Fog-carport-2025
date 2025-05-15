@@ -34,8 +34,8 @@ public class Main {
         // Routing
 
         app.get("/", ctx ->  ctx.render("index.html"));
-        app.get("/designCarport", ctx-> CarportController.showSvgDrawing(ctx));
         UserController.addRoutes(app, connectionPool);
+        CarportController.addRoutes(app,connectionPool);
     }
 
 }
