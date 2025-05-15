@@ -6,7 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
 </head>
-                      <body>
+
+<body>
 <nav class="navbar">
     <div class="logo">
         <img src="../public/images/fog_logo.png" th:src="@{/images/fog_logo.png}" width="32%"/>
@@ -24,6 +25,7 @@
 <div class="grey-container carport-selection">
     <h2>Vælg mål for din Carport</h2>
 
+    <form method="get" action="/designCarport">
     <div class="selectors">
         <select name="length">
             <option selected>Længde</option>
@@ -40,12 +42,12 @@
             <option value="540">540</option>
             <option value="570">570</option>
             <option value="600">600</option>
-            <option value="450">630</option>
-            <option value="480">660</option>
-            <option value="510">690</option>
-            <option value="540">720</option>
-            <option value="570">750</option>
-            <option value="600">780</option>
+            <option value="630">630</option>
+            <option value="660">660</option>
+            <option value="690">690</option>
+            <option value="720">720</option>
+            <option value="750">750</option>
+            <option value="780">780</option>
         </select>
 
         <select name="width">
@@ -67,6 +69,8 @@
     </div>
 
     <button  type="submit" class="view-button">Vis</button>
+
+    </form>
 
     <div class="carport-svg-topview">
 
