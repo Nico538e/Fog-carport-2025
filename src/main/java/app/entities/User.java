@@ -47,6 +47,17 @@ public class User {
         this.isPaidStatus = isPaidStatus;
         this.costPrice = costPrice;
     }
+
+    public User(String userName, String userPassword, String role, String userEmail, int userTlf, boolean isPaidStatus, String address){
+        this.userName = userName;
+        this.userPassword = userPassword;
+        this.role = role;
+        this.userEmail = userEmail;
+        this.userTlf = userTlf;
+        this.isPaidStatus = isPaidStatus;
+        this.address = address;
+    }
+
     public boolean isPaidStatus() {
         return isPaidStatus;
     }
