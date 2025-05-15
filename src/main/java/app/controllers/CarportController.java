@@ -1,6 +1,7 @@
 package app.controllers;
 
 import app.entities.Orders;
+import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.services.CarportSvg;
@@ -38,7 +39,7 @@ public class CarportController {
     }
 
 
-    public static void MailSender() throws IOException{
+    public static void mailSender(User user) throws IOException{
         String domainName = "mg.kodekriger.dk";
         String apikey =  System.getenv("MAILGUN_API_KEY");
 
@@ -47,7 +48,7 @@ public class CarportController {
 
         RequestBody formbody = new FormBody.Builder()
                 .add("from","noreply@" + domainName)
-                .add("to","nicolai-strand@hotmail.com")
+                .add("to", user.getUserEmail())
                 .add("subject", "Bestilling af carport")
                 .add("text", "Tak for din bestilling")
                 .build();

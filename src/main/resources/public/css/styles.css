@@ -90,6 +90,7 @@ body{
     cursor: pointer;
     position: absolute;
     top: 80%;
+    text-decoration: none;
 }
 
 .get-started:hover{
@@ -270,14 +271,23 @@ input::placeholder{
 }
 
 .view-button, .next-button {
-    background-color: #ccc;
+    background-color: #164986;
+    color: white;
+    border-color: #164986;
     border: none;
     padding: 0.75rem 2rem;
     font-size: 1rem;
     margin: 1rem auto;
     border-radius: 4px;
     cursor: pointer;
+    text-decoration: none;
 }
+
+.view-button:hover, .next-button:hover{
+    background-color: #b6c8de;
+    color: #272b30;
+}
+
 
 /***** DesignCarportInfo*****/
 
