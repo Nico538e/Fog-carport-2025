@@ -79,7 +79,4 @@ public class CarportController {
         ctx.attribute("svg",svg.toString());
         ctx.render("designCarport.html");
     }
-
-
-
 }
