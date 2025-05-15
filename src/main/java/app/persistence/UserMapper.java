@@ -128,4 +128,24 @@ public class UserMapper {
         return userOrderList;
     }
 
+    public static void createNewUser(User user, ConnectionPool connectionPool) throws DatabaseException{
+         String sql = "INSERT INTO users(user_name, user_password, role, user_email, user_tlf, is_paid_status, user_address) VALUES (?, ?, ?, ?, ?, ?, ?) ";
+
+        try(Connection connection = connectionPool.getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+            ps.setString(1, user.getUserName());
+            ps.setString(2, user.getUserPassword());
+            ps.setString(3, user.getRole());
+            ps.setString(4, user.getUserEmail());
+            ps.setInt(5, user.getUserTlf());
+            ps.setBoolean(6, user.isPaidStatus());
+            ps.setString(7, user.getAddress());
+            ps.executeUpdate();
+
+        }catch(SQLException e){
+                System.out.println("Failed could not insert new user in db: " + e.getMessage());
+        }
+    }
+
 }

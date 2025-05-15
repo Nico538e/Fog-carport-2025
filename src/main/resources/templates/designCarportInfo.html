@@ -25,10 +25,11 @@
     <div class="form-wrapper">
         <h2>Indtast Info for foresørgele</h2>
 
-        <input type="text" placeholder="Navn" class="info-field" />
-        <input type="email" placeholder="E-mail" class="info-field" />
-        <input type="text" placeholder="Adresse" class="info-field" />
-        <input type="tel" placeholder="Tlf-nummer" class="info-field" />
+        <form action="/createNewUser" method="post">
+        <input type="text" name="name"  placeholder="Navn" class="info-field" />
+        <input type="email" name="email" placeholder="E-mail" class="info-field" />
+        <input type="text" name="address" placeholder="Adresse" class="info-field" />
+        <input type="tel" name="telephone" placeholder="Tlf-nummer" class="info-field" />
 
         <h2>Kontakt mig på:</h2>
 
@@ -38,7 +39,7 @@
         </div>
 
         <button class="confirm-button">Bekræft</button>
-
+        </form>
     </div>
 
 </div>
