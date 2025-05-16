@@ -234,4 +234,27 @@ public class UserMapper {
             throw new DatabaseException("Failed while trying to update userName." + e.getMessage());
         }
     }
-}
+
+    public static void updateCostPrice(ConnectionPool connectionPool, BigDecimal costPrice, int userId) throws DatabaseException {
+        String sql = "update order_line set cost_price = ? " +
+                "where user_id = ? and role='postgres'";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+            ps.setBigDecimal(1, costPrice);
+            ps.setInt(2, userId);
+
+            int rowsAffected = ps.executeUpdate();
+
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Failed while trying to update costPrice");
+            }
+
+
+        } catch (SQLException e) {
+            throw new DatabaseException("Failed while trying to update costPrice" + e.getMessage());
+        }
+    }
+
+    }
