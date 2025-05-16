@@ -9,6 +9,7 @@ import io.javalin.Javalin;
 import io.javalin.http.Context;
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.invoke.StringConcatException;
 import java.util.List;
 
 public class UserController {
@@ -86,6 +87,58 @@ public class UserController {
             ctx.attribute("message", "Failed trying to get the users order data");
             ctx.render("error.html");
         }
-
     }
+
+    public static void createUser(Context ctx, ConnectionPool connectionPool){
+        try{
+            String name = ctx.formParam("name");
+            String email = ctx.formParam("email");
+            String address = ctx.formParam("address");
+            String tlfNr = ctx.formParam("telephone");
+
+            if(name == null|| email == null||address == null || tlfNr == null){
+                ctx.attribute("message", " Alle felter skal udfyldes");
+                ctx.render("designCarportInfo.html");
+                return;
+            }
+
+            int phone = Integer.parseInt(tlfNr);
+
+            //auto password
+            String autoPassword = generateRandomPassword(8);
+
+            //Standart values
+            String role = "postgres";
+            boolean isPaidStatus = false;
+
+            // if user exist
+            List<User> checkAllUsers = UserMapper.getAllUsers(connectionPool, "postgres");
+            boolean exists = checkAllUsers.stream().anyMatch(u-> u.getUserEmail()!=null && u.getUserEmail().equalsIgnoreCase(email));
+
+            if (exists){
+                ctx.attribute("message", "En bruger med denne email findes allerede.");
+                ctx.render("designCarportInfo.html");
+                return;
+            }
+
+            User user = new User(name, autoPassword, role, email, phone, isPaidStatus, address);
+            UserMapper.createNewUser(user, connectionPool);
+
+        } catch (DatabaseException e) {
+            ctx.status(500);
+            ctx.attribute("message", "Der opsod en fejl me doprettelsen af forspørgelsen" + e.getMessage());
+            ctx.render("designCarportInfo.html");
+        }
+    }
+
+    private static String generateRandomPassword(int length) {
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            int index = (int) (Math.random() * chars.length());
+            sb.append(chars.charAt(index));
+        }
+        return sb.toString();
+    }
+
 }
