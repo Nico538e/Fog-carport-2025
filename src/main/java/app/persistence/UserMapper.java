@@ -1,10 +1,11 @@
 package app.persistence;
 
+
+import app.DTO.UserDTO;
 import app.entities.Orders;
-import app.entities.ShowUserOrders;
+
 import app.entities.User;
 import app.exceptions.DatabaseException;
-
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -33,7 +34,7 @@ public class UserMapper {
                 int userTlf = rs.getInt("user_tlf");
                 boolean isPaidStatus = rs.getBoolean("isPaidStatus");
                 String address = rs.getString("address");
-                return new User( userId, userName, userPassword, roles, userEmail, userTlf, isPaidStatus, address) ;
+                return new User(userId, userName, userPassword, roles, userEmail, userTlf, isPaidStatus, address);
             } else {
                 throw new DatabaseException("Fejl i login. Prøv igen");
             }
@@ -41,6 +42,7 @@ public class UserMapper {
             throw new DatabaseException("DB fejl", e.getMessage());
         }
     }
+
     public static List<User> getAllUsers(ConnectionPool connectionPool, String role) throws DatabaseException {
         List<User> userNameList = new ArrayList<>();
         String sql = "SELECT user_id, user_name  FROM users where role = 'postgres'";
@@ -51,12 +53,11 @@ public class UserMapper {
              ResultSet rs = ps.executeQuery()) {
 
 
-
             while (rs.next()) {
                 int userId = rs.getInt("user_id");
                 String userName = rs.getString("user_name");
 
-                User users = new User(userId,userName);
+                User users = new User(userId, userName);
                 userNameList.add(users);
             }
 
@@ -66,30 +67,30 @@ public class UserMapper {
         return userNameList;
     }
 
-    public static List<Orders> getOrdersByUserId(ConnectionPool connectionPool, int userId) throws DatabaseException{
+    public static List<Orders> getOrdersByUserId(ConnectionPool connectionPool, int userId) throws DatabaseException {
         List<Orders> ordersList = new ArrayList<>();
         String sql = "SELECT * FROM orders Where user_id = ?";
 
-        try(Connection connection = connectionPool.getConnection();
-            PreparedStatement ps = connection.prepareStatement(sql)
-        ){
-            ps.setInt(1,userId);
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+            ps.setInt(1, userId);
             ResultSet rs = ps.executeQuery();
 
-            while(rs.next()){
+            while (rs.next()) {
                 int orderId = rs.getInt("order_id");
-                Orders order = new Orders(orderId,userId);
+                Orders order = new Orders(orderId, userId);
                 ordersList.add(order);
             }
 
-        }catch(SQLException e){
+        } catch (SQLException e) {
             throw new DatabaseException("Failed could not get the order from the specific user: " + userId, e);
         }
         return ordersList;
     }
 
-    public static List<ShowUserOrders> adminGetUserWithOrders(ConnectionPool connectionPool) throws DatabaseException{
-        List<ShowUserOrders> userOrderList = new ArrayList<>();
+    public static List<User> adminGetUserWithOrders(ConnectionPool connectionPool) throws DatabaseException {
+        List<User> userOrderList = new ArrayList<>();
 
         String sql = "SELECT o.order_id, " +
                 "u.user_name, " +
@@ -104,44 +105,35 @@ public class UserMapper {
                 "where u.role = 'postgres' " +
                 "and o.order_id is not null ";
 
-        try(Connection connection = connectionPool.getConnection();
-            PreparedStatement ps = connection.prepareStatement(sql)
-        ){
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
             ResultSet rs = ps.executeQuery();
 
-            while(rs.next()){
+            while (rs.next()) {
                 int orderId = rs.getInt("order_id");
                 String userName = rs.getString("user_name");
-                String Email = rs.getString("user_email");
+                String userEmail = rs.getString("user_email");
                 int tlf = rs.getInt("user_tlf");
                 String address = rs.getString("user_address");
                 boolean isPaidStatus = rs.getBoolean("is_paid_status");
                 BigDecimal costPrice = rs.getBigDecimal("cost_price");
 
-                ShowUserOrders showUserOrders = new ShowUserOrders(orderId, userName, Email, tlf, address, isPaidStatus, costPrice);
+                User showUserOrders = new User(orderId, userName, userEmail, tlf, address, isPaidStatus, costPrice);
                 userOrderList.add(showUserOrders);
             }
 
-        }catch(SQLException e){
-            System.out.println("Failed could not get the order and user details of the user: " + e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("Failed could not get the order and user details of the user " + e.getMessage());
         }
         return userOrderList;
     }
 
-    public static void main(String[] args) throws DatabaseException {
-        User user = new User("niki","1234","postgres","jahncke@peter.niki",12345678,false,"nikiveh");
-        ConnectionPool connectionPool  = ConnectionPool.getInstance("postgres", "Tgn64jcr","jdbc:postgresql://64.225.100.200:5432/%s?currentSchema=public","Carport");
-        createNewUser(user, connectionPool) ;
-        System.out.println("success");
+    public static void createNewUser(User user, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "INSERT INTO users(user_name, user_password, role, user_email, user_tlf, is_paid_status, user_address) VALUES (?, ?, ?, ?, ?, ?, ?) ";
 
-        //TODO: Connect-pool, main- methode getBottoms, getToppings, loop- listen, udskriv den.
-    }
-
-    public static void createNewUser(User user, ConnectionPool connectionPool) throws DatabaseException{
-         String sql = "INSERT INTO users(user_name, user_password, role, user_email, user_tlf, is_paid_status, user_address) VALUES (?, ?, ?, ?, ?, ?, ?) ";
-
-        try(Connection connection = connectionPool.getConnection();
-            PreparedStatement ps = connection.prepareStatement(sql)
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)
         ) {
             ps.setString(1, user.getUserName());
             ps.setString(2, user.getUserPassword());
@@ -152,9 +144,47 @@ public class UserMapper {
             ps.setString(7, user.getAddress());
             ps.executeUpdate();
 
-        }catch(SQLException e){
-                System.out.println("Failed could not insert new user in db: " + e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("Failed could not insert new user in db: " + e.getMessage());
         }
+    }
+
+    public static List<User> adminChangeUserOrderData(ConnectionPool connectionPool, int userId) throws DatabaseException {
+        List<User> userOrderData = new ArrayList<>();
+
+        String sql = "select u.user_name, " +
+                "ol.cost_price, " +
+                "u.user_email, " +
+                "u.user_tlf, " +
+                "u.user_address " +
+                "from order_line ol " +
+                "join users u on ol.user_id = u.user_id " +
+                "where u.role= 'postgres' " +
+                "and ol.order_id is not null " +
+                "and u.user_id = ?";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String userName = rs.getString("user_name");
+                BigDecimal costPrice = rs.getBigDecimal("cost_price");
+                String userEmail = rs.getString("user_email");
+                int userTlf = rs.getInt("user_tlf");
+                String address = rs.getString("user_address");
+
+                User changeOrder = new User(userName, costPrice, userEmail, userTlf, address);
+                userOrderData.add(changeOrder);
+
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Failed trying to get the the details of the specific user: " + userId + e.getMessage());
+        }
+        return userOrderData;
     }
 
 }
