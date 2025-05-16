@@ -213,24 +213,24 @@ public class UserMapper {
         return orderIdPlusUserName;
     }
 
-    public static void updateUserName(ConnectionPool connectionPool, String userName, int userId) throws DatabaseException{
+    public static void updateUserName(ConnectionPool connectionPool, String userName, int userId) throws DatabaseException {
         String sql = "update users set user_name = ? " +
                 "where user_id = ? and role='postgres'";
 
-        try(Connection connection = connectionPool.getConnection();
-            PreparedStatement ps = connection.prepareStatement(sql)
-        ){
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
             ps.setString(1, userName);
             ps.setInt(2, userId);
 
             int rowsAffected = ps.executeUpdate();
 
-            if(rowsAffected != 1){
+            if (rowsAffected != 1) {
                 throw new DatabaseException("Failed while trying to update userName");
             }
 
 
-        }catch(SQLException e){
+        } catch (SQLException e) {
             throw new DatabaseException("Failed while trying to update userName." + e.getMessage());
         }
     }
@@ -257,4 +257,26 @@ public class UserMapper {
         }
     }
 
+    public static void updateUserEmail(ConnectionPool connectionPool, String userEmail, int userId) throws DatabaseException{
+        String sql = "update users set user_email = ? " +
+                "where user_id = ? and role='postgres'";
+
+        try(Connection connection = connectionPool.getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql)
+        ){
+            ps.setString(1, userEmail);
+            ps.setInt(2, userId);
+
+            int rowsAffected = ps.executeUpdate();
+
+            if(rowsAffected != 1){
+                throw new DatabaseException("Failed while trying to update userEmail");
+            }
+
+
+        }catch(SQLException e){
+            throw new DatabaseException("Failed while trying to update userEmail" + e.getMessage());
+        }
     }
+
+}
