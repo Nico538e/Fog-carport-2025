@@ -213,4 +213,25 @@ public class UserMapper {
         return orderIdPlusUserName;
     }
 
+    public static void updateUserName(ConnectionPool connectionPool, String userName, int userId) throws DatabaseException{
+        String sql = "update users set user_name = ? " +
+                "where user_id = ? and role='postgres'";
+
+        try(Connection connection = connectionPool.getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql)
+        ){
+            ps.setString(1, userName);
+            ps.setInt(2, userId);
+
+            int rowsAffected = ps.executeUpdate();
+
+            if(rowsAffected != 1){
+                throw new DatabaseException("Failed while trying to update userName");
+            }
+
+
+        }catch(SQLException e){
+            throw new DatabaseException("Failed while trying to update userName." + e.getMessage());
+        }
+    }
 }
