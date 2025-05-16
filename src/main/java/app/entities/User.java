@@ -38,6 +38,7 @@ public class User {
         this.userName = userName;
     }
 
+    //Show all users with order info in a table on adminPage1
     public User(int orderId, String userName, String userEmail, int userTlf, String address, boolean isPaidStatus, BigDecimal costPrice){
         this.orderId = orderId;
         this.userName = userName;
@@ -58,86 +59,101 @@ public class User {
         this.address = address;
     }
 
-    public boolean isPaidStatus() {
-        return isPaidStatus;
-    }
 
-    public void setPaidStatus(boolean paidStatus) {
-        isPaidStatus = paidStatus;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
+    //One specific user to change they are set to be in the input fields on adminPage2
+    public User(String userName, BigDecimal costPrice, String userEmail, int userTlf, String address){
+        this.userName = userName;
+        this.costPrice = costPrice;
+        this.userEmail = userEmail;
+        this.userTlf = userTlf;
         this.address = address;
     }
 
-    public int getOrderId() {
-        return orderId;
-    }
 
-    public void setOrderId(int orderId) {
+    public User(String userName, int orderId) {
         this.orderId = orderId;
+        this.userName = userName;
     }
-
-    public BigDecimal getCostPrice() {
-        return costPrice;
-    }
-
-    public void setCostPrice(BigDecimal costPrice) {
-        this.costPrice = costPrice;
-    }
-
-
 
     public int getUserId() {
         return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 
     public String getUserName() {
         return userName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
     public String getUserPassword() {
         return userPassword;
-    }
-
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
     }
 
     public String getRole() {
         return role;
     }
 
-    public void setRole(String role) {
-        this.role = role;
-    }
-
     public String getUserEmail() {
         return userEmail;
-    }
-
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
     }
 
     public int getUserTlf() {
         return userTlf;
     }
 
+    public boolean isPaidStatus() {
+        return isPaidStatus;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public BigDecimal getCostPrice() {
+        return costPrice;
+    }
+
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
     public void setUserTlf(int userTlf) {
         this.userTlf = userTlf;
+    }
+
+    public void setPaidStatus(boolean paidStatus) {
+        isPaidStatus = paidStatus;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
+
+    public void setCostPrice(BigDecimal costPrice) {
+        this.costPrice = costPrice;
     }
 
     @Override

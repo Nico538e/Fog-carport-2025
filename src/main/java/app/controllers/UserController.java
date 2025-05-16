@@ -1,6 +1,5 @@
 package app.controllers;
 
-import app.entities.ShowUserOrders;
 import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
@@ -13,10 +12,10 @@ import java.lang.invoke.StringConcatException;
 import java.util.List;
 
 public class UserController {
-    public static void addRoutes(Javalin app, ConnectionPool connectionPool){
-        app.get("/adminWatchOrders", ctx -> UserController.watchOrders(ctx, connectionPool));
+    public static void addRoutes(Javalin app, ConnectionPool connectionPool) {
+        app.get("adminPage2", ctx -> UserController.watchOrders(ctx, connectionPool));
         app.get("/adminPage1", ctx -> UserController.watchOrders(ctx, connectionPool));
-        app.post("/login", ctx -> login(ctx,connectionPool));
+        app.post("/login", ctx -> login(ctx, connectionPool));
         app.get("login", ctx -> ctx.render("login.html"));
         app.get("logout", ctx -> logout(ctx));
         app.get("/carportInfo", ctx -> ctx.render("designCarportInfo.html"));
@@ -41,7 +40,7 @@ public class UserController {
 
             //check if you are admin and sending it to admin front page
             if (user.getRole().equals("admin")) {
-                ctx.redirect("/admin");
+                ctx.redirect("/adminPage1.html");
             } else {
                 ctx.redirect("/");
             }
@@ -77,10 +76,11 @@ public class UserController {
 
     public static void watchOrders(Context ctx, ConnectionPool connectionPool){
         try {
-            List<ShowUserOrders> userOrder = UserMapper.adminGetUserWithOrders(connectionPool);
+            List<User> userOrder = UserMapper.adminGetUserWithOrders(connectionPool);
 
             ctx.attribute("userOrder", userOrder);
             ctx.render("adminPage1.html");
+
 
 
         }catch(DatabaseException e){
