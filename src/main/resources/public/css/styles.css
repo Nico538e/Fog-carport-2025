@@ -212,7 +212,30 @@ input::placeholder{
     background-color: #f9f9f9;
 }
 
+.show-order-button a:hover{
+    text-decoration: underline;
+    cursor:pointer;
+}
+
 /***** admin page 2 *****/
+.change-order-container{
+    display: flex;
+    align-items: center;
+    width: 380px;
+    height: 240px;
+    margin: 1rem auto;
+    background-color: #ededed;
+    padding: 170px 505px;
+    border-radius: 5px;
+}
+
+.selector2{
+    display: flex;
+    gap: 480px;
+    position: relative;
+    margin-bottom: 25rem;
+    right: 285px ;
+}
 
 .login-container h3{
     color: #164986;
@@ -302,6 +325,13 @@ text-align: center;
 font-size: 1rem;
 }
 
+.carport-selection2{
+    flex-direction: row;
+    text-align: center;
+    width: 380px;
+    padding: 2rem;
+    height: auto;
+}
 .form-wrapper {
     display: flex;
     flex-direction: column;

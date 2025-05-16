@@ -20,6 +20,7 @@ public class UserController {
         app.get("login", ctx -> ctx.render("login.html"));
         app.get("logout", ctx -> logout(ctx));
         app.get("/carportInfo", ctx -> ctx.render("designCarportInfo.html"));
+        app.post("/addUser", ctx-> createUser(ctx, connectionPool));
     }
 
 
@@ -111,7 +112,7 @@ public class UserController {
             String role = "postgres";
             boolean isPaidStatus = false;
 
-            // if user exist
+            // check if user exist
             List<User> checkAllUsers = UserMapper.getAllUsers(connectionPool, "postgres");
             boolean exists = checkAllUsers.stream().anyMatch(u-> u.getUserEmail()!=null && u.getUserEmail().equalsIgnoreCase(email));
 
@@ -123,6 +124,9 @@ public class UserController {
 
             User user = new User(name, autoPassword, role, email, phone, isPaidStatus, address);
             UserMapper.createNewUser(user, connectionPool);
+            ctx.attribute("message", "Din forespørgelse er nu oprettet, du vil blive kontaktet snartes");
+            ctx.render("designCarportInfo");
+
 
         } catch (DatabaseException e) {
             ctx.status(500);
