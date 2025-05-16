@@ -128,6 +128,15 @@ public class UserMapper {
         return userOrderList;
     }
 
+    public static void main(String[] args) throws DatabaseException {
+        User user = new User("niki","1234","postgres","jahncke@peter.niki",12345678,false,"nikiveh");
+        ConnectionPool connectionPool  = ConnectionPool.getInstance("postgres", "Tgn64jcr","jdbc:postgresql://64.225.100.200:5432/%s?currentSchema=public","Carport");
+        createNewUser(user, connectionPool) ;
+        System.out.println("success");
+
+        //TODO: Connect-pool, main- methode getBottoms, getToppings, loop- listen, udskriv den.
+    }
+
     public static void createNewUser(User user, ConnectionPool connectionPool) throws DatabaseException{
          String sql = "INSERT INTO users(user_name, user_password, role, user_email, user_tlf, is_paid_status, user_address) VALUES (?, ?, ?, ?, ?, ?, ?) ";
 
