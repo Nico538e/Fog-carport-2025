@@ -212,6 +212,11 @@ input::placeholder{
     background-color: #f9f9f9;
 }
 
+.show-order-button a:hover{
+    text-decoration: underline;
+    cursor:pointer;
+}
+
 /***** admin page 2 *****/
 .change-order-container{
     display: flex;
