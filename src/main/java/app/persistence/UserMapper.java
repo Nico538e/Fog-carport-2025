@@ -187,4 +187,30 @@ public class UserMapper {
         return userOrderData;
     }
 
+    public static List<UserDTO> getUserNameAndOrderIdByUserId(ConnectionPool connectionPool, int userId) throws DatabaseException {
+        List<UserDTO> orderIdPlusUserName = new ArrayList<>();
+        String sql = "select o.order_id, u.user_name " +
+                "from orders o " +
+                "join users u on o.user_id = u.user_id " +
+                "where u.role='postgres' " +
+                "and o.order_id is not null " +
+                "and u.user_id= ?";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int orderId = rs.getInt("order_id");
+                String userName = rs.getString("user_name");
+                UserDTO orderIdAndUserName = new UserDTO(orderId, userName);
+                orderIdPlusUserName.add(orderIdAndUserName);
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Failed trying to get orderId and userName" + e.getMessage());
+        }
+        return orderIdPlusUserName;
+    }
+
 }
