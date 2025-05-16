@@ -21,7 +21,7 @@
     </ul>
 </nav>
 
-<div class="grey-container">
+<div class="grey-container carport-selection2">
     <div class="form-wrapper">
         <h2>Indtast Info for foresørgele</h2>
 
@@ -38,11 +38,13 @@
             <label><input type="checkbox" /> Tlf</label>
         </div>
 
- 
-        <button class="confirm-button">Bekræft</button>
+            <button class="next-button" formaction="addUser" type="submit" >Bekræft</button>
+            <div th:if="${message}" class="h1">
+                <p th:text="${message}" ></p>
+            </div>
         </form>
 
-        <button class="next-button">Bekræft</button>
+
 
     </div>
 

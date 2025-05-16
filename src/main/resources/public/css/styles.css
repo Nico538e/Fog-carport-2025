@@ -229,6 +229,17 @@ input::placeholder{
     border-radius: 5px;
 }
 
+
+.selector2{
+    display: flex;
+    gap: 480px;
+    position: relative;
+    margin-bottom: 25rem;
+    right: 285px ;
+}
+
+
+
 .selector2{
     display: flex;
     gap: 480px;
@@ -403,6 +414,13 @@ text-align: center;
 font-size: 1rem;
 }
 
+.carport-selection2{
+    flex-direction: row;
+    text-align: center;
+    width: 380px;
+    padding: 2rem;
+    height: auto;
+}
 .form-wrapper {
     display: flex;
     flex-direction: column;
