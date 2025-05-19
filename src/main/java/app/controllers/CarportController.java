@@ -18,10 +18,11 @@ import java.util.Locale;
 public class CarportController {
 
     public static void addRoutes(Javalin app, ConnectionPool connectionPool){
-        app.get("/designCarport", ctx -> CarportController.showSvgDrawing(ctx));
+        app.get("/carportInfo", ctx -> CarportController.showSvgDrawing(ctx));
         app.get("/inspiration", ctx -> ctx.redirect(""));
         app.get("/aboutOurCarports", ctx -> ctx.render("aboutOurCarports.html"));
-        app.get("/goDesign", ctx -> showSvgDrawing(ctx));
+        app.get("/goDesign", ctx -> ctx.render("designCarport.html"));
+        app.get("/designCarport", ctx -> ctx.render("designCarport.html"));
     }
 
     public static void checkAllOrders(Context ctx, ConnectionPool connectionPool){
@@ -78,6 +79,6 @@ public class CarportController {
         CarportSvg svg = new CarportSvg(width,length);
         //Add SVG to the render
         ctx.attribute("svg",svg.toString());
-        ctx.render("designCarport.html");
+        ctx.render("designCarportInfo.html");
     }
 }

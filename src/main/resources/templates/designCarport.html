@@ -25,7 +25,7 @@
 <div class="grey-container carport-selection">
     <h2>Vælg mål for din Carport</h2>
 
-    <form method="get" action="/designCarport">
+    <form method="post" action="/designCarport">
     <div class="selectors">
         <select name="length">
             <option selected>Længde</option>
@@ -67,19 +67,13 @@
             <option value="600">600</option>
         </select>
     </div>
-    //kun en knap, svg skal vise på næste side, gem længter og bredder i seesionartibrude, da man kan komme til at trykke nste uden vis
-    <button  type="submit" class="view-button">Vis</button>
+    //gem længder og bredder i session-attribute, da man kan komme til at trykke næste uden vis
+
+
+    <button type="submit" class="view-button" th:href="@{/carportInfo}">Næste</button>
 
     </form>
 
-    <div class="carport-svg-topview">
-
-        <div th:utext="${svg}"></div>
-
-    </div>
-
-
-    <a class="next-button" th:href="@{/carportInfo}">Næste</a>
 </div>
 
 </body>

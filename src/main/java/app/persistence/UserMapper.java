@@ -91,6 +91,52 @@ public class UserMapper {
         return ordersList;
     }
 
+    public static void createOrders(ConnectionPool connectionPool, int userId, int length, int width) throws DatabaseException{
+        String sql = "INSERT INTO orders(user_id, carport_length, carport_width) VALUES (?,?,?)";
+        try(Connection connection = connectionPool.getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+            ps.setInt(1,userId);
+            ps.setInt(2,length);
+            ps.setInt(3,width);
+
+            ps.executeUpdate();
+
+        }catch(SQLException e){
+            throw new DatabaseException("Failed to insert order into database", e);
+        }
+    }
+
+    public static User getUserByEmail(ConnectionPool connectionPool, String email) throws DatabaseException{
+        String SQL = "SELECT * FROM users WHERE user_email = ?";
+
+        try(Connection connection = connectionPool.getConnection();
+            PreparedStatement ps = connection.prepareStatement(SQL)
+        ){
+            ps.setString(1,email);
+
+            ResultSet rs = ps.executeQuery();
+
+            if(rs.next()){
+                int userId = rs.getInt("user_id");
+                String userName = rs.getString("user_name");
+                String password = rs.getString("user_password");
+                String role = rs.getString("role");
+                String userEmail = rs.getString("user_email");
+                int tlf = rs.getInt("user_tlf");
+                boolean isPaidStatus = rs.getBoolean("is_paid_status");
+                String address = rs.getString("user_address");
+
+                return new User(userId, userName, password, role, userEmail, tlf, isPaidStatus, address);
+            } else{
+                throw new DatabaseException("Failed trying to find user email");
+            }
+        }catch (SQLException e){
+            throw new DatabaseException("Failed trying to get user email", e);
+        }
+
+    }
+
     public static List<User> adminGetUserWithOrders(ConnectionPool connectionPool) throws DatabaseException {
         List<User> userOrderList = new ArrayList<>();
 
