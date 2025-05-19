@@ -39,7 +39,8 @@ public class User {
     }
 
     //Show all users with order info in a table on adminPage1
-    public User(int orderId, String userName, String userEmail, int userTlf, String address, boolean isPaidStatus, BigDecimal costPrice){
+    public User(int userId, int orderId, String userName, String userEmail, int userTlf, String address, boolean isPaidStatus, BigDecimal costPrice){
+        this.userId = userId;
         this.orderId = orderId;
         this.userName = userName;
         this.userEmail = userEmail;

@@ -46,8 +46,10 @@
             <td th:text="${user.paidStatus}"></td>
             <td th:text="${user.costPrice}"></td>
             <td>
-                <a class="show-order-button" th:href="@{/adminWatchOrders}"></a>
-                <a class="show-order-button" th:href="@{/adminPage2}">Vis ordre</a>
+                <form method="post" th:action="@{/adminPage2}">
+                    <input type="hidden" name="userId" th:value="${user.userId}">
+                    <button type="submit" class="show-order-button">Vis bruger</button>
+                </form>
             </td>
 
         </tr>

@@ -212,9 +212,17 @@ input::placeholder{
     background-color: #f9f9f9;
 }
 
-.show-order-button a:hover{
-    text-decoration: underline;
+.show-order-button{
+    background-color: #164986;
+    color: white;
+    border-color:#164986;
+    border-radius: 5px;
     cursor:pointer;
+}
+
+.show-order-button:hover{
+    background-color: #b6c8de;
+    color: #272b30;
 }
 
 /***** admin page 2 *****/
@@ -229,6 +237,27 @@ input::placeholder{
     border-radius: 5px;
 }
 
+.userName{
+    display: flex;
+    text-align: center;
+    width: 100px;
+    font-size: 30px ;
+    color: #164986;
+    position: absolute;
+    margin-bottom: 25rem;
+    left: 710px;
+}
+
+.orderId{
+    display: flex;
+    text-align: center;
+    width: 100px;
+    font-size: 30px;
+    color: #164986;
+    position: absolute;
+    margin-bottom: 25rem;
+    left: 685px;
+}
 
 .selector2{
     display: flex;
@@ -237,8 +266,6 @@ input::placeholder{
     margin-bottom: 25rem;
     right: 285px ;
 }
-
-
 
 .selector2{
     display: flex;
@@ -316,7 +343,6 @@ input::placeholder{
     right: 79.2rem;
 }
 
-
 .save-changes-button{
     background-color: #164986;
     color: white;
@@ -341,7 +367,6 @@ input::placeholder{
     max-width: 100%;
     height: auto;
 }
-
 
 .grey-container{
     display: flex;

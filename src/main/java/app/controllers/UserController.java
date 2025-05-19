@@ -1,5 +1,6 @@
 package app.controllers;
 
+import app.DTO.UserDTO;
 import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
@@ -9,19 +10,21 @@ import io.javalin.http.Context;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.invoke.StringConcatException;
+import java.math.BigDecimal;
 import java.util.List;
 
 public class UserController {
     public static void addRoutes(Javalin app, ConnectionPool connectionPool) {
-        app.get("adminPage2", ctx -> UserController.watchOrders(ctx, connectionPool));
         app.get("/adminPage1", ctx -> UserController.watchOrders(ctx, connectionPool));
+        app.post("/adminPage2", ctx -> UserController.getUserOrderForm(ctx, connectionPool));
+        app.post("/saveChangeAdminPage1", ctx -> UserController.updateUserOrder(ctx, connectionPool));
+
         app.post("/login", ctx -> login(ctx, connectionPool));
         app.get("login", ctx -> ctx.render("login.html"));
         app.get("logout", ctx -> logout(ctx));
         app.get("/carportInfo", ctx -> ctx.render("designCarportInfo.html"));
         app.post("/addUser", ctx-> createUser(ctx, connectionPool));
     }
-
 
     public static void login(Context ctx, ConnectionPool connectionPool) {
         // Hent email og password fra login-formularen
@@ -79,12 +82,98 @@ public class UserController {
             ctx.attribute("userOrder", userOrder);
             ctx.render("adminPage1.html");
 
-
-
         }catch(DatabaseException e){
             ctx.status(500);
             ctx.attribute("message", "Failed trying to get the users order data");
-            ctx.render("error.html");
+            ctx.render("adminPage1.html");
+        }
+    }
+
+    public static void getUserOrderForm(Context ctx, ConnectionPool connectionPool){
+        int userId = Integer.parseInt(ctx.formParam("userId"));
+
+        try{
+            UserDTO userDTO = UserMapper.getUserNameAndOrderIdByUserId(connectionPool, userId);
+            User user = UserMapper.adminGetUserDataByUserid(connectionPool, userId);
+            ctx.attribute("userDTO", userDTO);
+            ctx.attribute("user", user);
+            ctx.attribute("userId", userId);
+            ctx.render("adminPage2.html");
+
+        }catch(DatabaseException e){
+            ctx.status(500);
+            ctx.attribute("message", "Failed could not get the user information");
+            ctx.render("adminPage1.html");
+        }
+    }
+
+    public static void updateUserOrder(Context ctx, ConnectionPool connectionPool){
+        int userId = Integer.parseInt(ctx.formParam("userId"));
+
+        try{
+            String userName = ctx.formParam("userName");
+            String costPrice = ctx.formParam("costPrice");
+            String userEmail = ctx.formParam("userEmail");
+            String userTlf = ctx.formParam("userTlf");
+            String address = ctx.formParam("address");
+
+            //The existing user data
+            User userExists = UserMapper.adminGetUserDataByUserid(connectionPool, userId);
+
+            if(userName == null){
+                userName = userExists.getUserName();
+            }
+
+
+            if(costPrice == null) {
+                costPrice = userExists.getCostPrice().toString();
+            }
+
+            if(userEmail == null){
+                userEmail = userExists.getUserEmail();
+            }
+
+            if(userTlf == null){
+                userTlf = String.valueOf(userExists.getUserTlf());
+            }
+
+            if(address == null){
+                address = userExists.getAddress();
+            }
+
+            // updater user info by comparing user and already existing userData
+            if(!userName.equals(userExists.getUserName())){
+                UserMapper.updateUserName(connectionPool, userName, userId);
+            }
+
+            BigDecimal price = new BigDecimal(costPrice);
+            if(!price.equals(userExists.getCostPrice())){
+                UserMapper.updateCostPrice(connectionPool, price, userId);
+            }
+
+            if(!userEmail.equals(userExists.getUserEmail())){
+                UserMapper.updateUserEmail(connectionPool, userEmail, userId);
+            }
+
+            int tlf = Integer.parseInt(userTlf);
+            if(tlf != userExists.getUserTlf()){
+                UserMapper.updateUserTlf(connectionPool, tlf, userId);
+            }
+
+            if(!address.equals(userExists.getAddress())){
+                UserMapper.updateUserAddress(connectionPool, address, userId);
+            }
+
+            ctx.redirect("/adminPage1");
+
+        }catch(DatabaseException e){
+            ctx.status(500);
+            ctx.attribute("message", "Failed trying to update");
+            ctx.render("adminPage1.html");
+        } catch (NumberFormatException e){
+            ctx.status(400);
+            ctx.attribute("message", "Failed wrong format in price og tel-number");
+            ctx.render("adminPage2.html");
         }
     }
 
