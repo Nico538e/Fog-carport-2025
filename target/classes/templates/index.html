@@ -11,8 +11,6 @@
 <img src="../public/images/fog_logo.png" th:src="@{/images/fog_logo.png}" width="32%"/>
 </div>
     <ul class="nav-links">
-        <!--# er placeholder til links routs ind til vi ved vor at det skal føre hen-->
-
         <li><a th:href="@{/}">Hjem</a></li>
         <li><a th:href="@{/designCarport}">Design din egen carport</a></li>
         <li><a th:href="@{/inspiration}">Få inspiration</a></li>
@@ -26,6 +24,8 @@
     <h1>Velkommen til Fog's Carport side</h1>
     <img class="front-page-carport" src="../public/images/front_page_carport.png" th:src="@{/images/front_page_carport.png}" width="50%">
     <a th:href="@{/goDesign}" class="get-started">Kom i gang</a>
+
+    <div th:if="${#ctx.message!=null}" th:text="${#ctx.message}"></div>
 </div>
 </body>
 </html>
