@@ -1,5 +1,6 @@
 package app.controllers;
 
+import app.DTO.UserDTO;
 import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
@@ -9,19 +10,21 @@ import io.javalin.http.Context;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.invoke.StringConcatException;
+import java.math.BigDecimal;
 import java.util.List;
 
 public class UserController {
     public static void addRoutes(Javalin app, ConnectionPool connectionPool) {
-        app.get("adminPage2", ctx -> UserController.watchOrders(ctx, connectionPool));
         app.get("/adminPage1", ctx -> UserController.watchOrders(ctx, connectionPool));
+        app.post("/adminPage2", ctx -> UserController.getUserOrderForm(ctx, connectionPool));
+        app.post("/saveChangeAdminPage1", ctx -> UserController.updateUserOrder(ctx, connectionPool));
+
         app.post("/login", ctx -> login(ctx, connectionPool));
         app.get("login", ctx -> ctx.render("login.html"));
         app.get("logout", ctx -> logout(ctx));
         app.get("/carportInfo", ctx -> ctx.render("designCarportInfo.html"));
         app.post("/addUser", ctx-> createUser(ctx, connectionPool));
     }
-
 
     public static void login(Context ctx, ConnectionPool connectionPool) {
         // Hent email og password fra login-formularen
@@ -81,14 +84,15 @@ public class UserController {
             ctx.attribute("userOrder", userOrder);
             ctx.render("adminPage1.html");
 
-
-
         }catch(DatabaseException e){
             ctx.status(500);
             ctx.attribute("message", "Failed trying to get the users order data");
-            ctx.render("error.html");
+            ctx.render("adminPage1.html");
         }
     }
+
+
+
 
     public static void createUser(Context ctx, ConnectionPool connectionPool){
         try{
