@@ -1,6 +1,7 @@
 package app.controllers;
 
 import app.DTO.UserDTO;
+import app.entities.Orders;
 import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
@@ -22,8 +23,8 @@ public class UserController {
         app.post("/login", ctx -> login(ctx, connectionPool));
         app.get("login", ctx -> ctx.render("login.html"));
         app.get("logout", ctx -> logout(ctx));
-        app.get("/carportInfo", ctx -> ctx.render("designCarportInfo.html"));
         app.post("/addUser", ctx-> createUser(ctx, connectionPool));
+        app.post("/designCarport", ctx -> handleCarportSelections(ctx));
     }
 
     public static void login(Context ctx, ConnectionPool connectionPool) {
@@ -211,15 +212,48 @@ public class UserController {
 
             User user = new User(name, autoPassword, role, email, phone, isPaidStatus, address);
             UserMapper.createNewUser(user, connectionPool);
-            ctx.attribute("message", "Din forespørgelse er nu oprettet, du vil blive kontaktet snartes");
+
+            User createdUser = UserMapper.getUserByEmail(connectionPool, email);
+
+            String carportLength = ctx.sessionAttribute("length");
+            String carportWidth = ctx.sessionAttribute("width");
+
+            if(carportLength != null && carportWidth != null){
+
+                    int length = Integer.parseInt(carportLength);
+                    int width = Integer.parseInt(carportWidth);
+                    UserMapper.createOrders(connectionPool,createdUser.getUserId(),length,width);
+
+                }
+
+
+            ctx.attribute("message", "Din forespørgelse er nu oprettet, du vil blive kontaktet snarest");
             ctx.render("designCarportInfo");
 
 
         } catch (DatabaseException e) {
             ctx.status(500);
-            ctx.attribute("message", "Der opsod en fejl me doprettelsen af forspørgelsen" + e.getMessage());
+            ctx.attribute("message", "Der opstod en fejl med oprettelsen af forspørgelsen" + e.getMessage());
             ctx.render("designCarportInfo.html");
         }
+    }
+
+    //for at håndtere hvad kunden vælger af længder og bredder
+
+    public static void handleCarportSelections(Context ctx){
+        String length = ctx.formParam("length");
+        String width = ctx.formParam("width");
+
+        if(length.equals("length") || width.equals("width")){
+            ctx.attribute("message", "Vælg både længde og bredde");
+            ctx.render("designCarport.html");
+            return;
+        }
+
+        ctx.sessionAttribute("length", length);
+        ctx.sessionAttribute("width", width);
+
+        ctx.redirect("/carportInfo");
     }
 
     private static String generateRandomPassword(int length) {
