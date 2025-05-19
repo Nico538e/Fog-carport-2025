@@ -92,7 +92,8 @@ public class UserMapper {
     public static List<User> adminGetUserWithOrders(ConnectionPool connectionPool) throws DatabaseException {
         List<User> userOrderList = new ArrayList<>();
 
-        String sql = "SELECT o.order_id, " +
+        String sql = "SELECT u.user_id, " +
+                "o.order_id, " +
                 "u.user_name, " +
                 "u.user_email, " +
                 "u.user_tlf, " +
@@ -111,6 +112,7 @@ public class UserMapper {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
+                int userId = rs.getInt("user_id");
                 int orderId = rs.getInt("order_id");
                 String userName = rs.getString("user_name");
                 String userEmail = rs.getString("user_email");
@@ -119,7 +121,7 @@ public class UserMapper {
                 boolean isPaidStatus = rs.getBoolean("is_paid_status");
                 BigDecimal costPrice = rs.getBigDecimal("cost_price");
 
-                User showUserOrders = new User(orderId, userName, userEmail, tlf, address, isPaidStatus, costPrice);
+                User showUserOrders = new User(userId, orderId, userName, userEmail, tlf, address, isPaidStatus, costPrice);
                 userOrderList.add(showUserOrders);
             }
 
@@ -149,9 +151,7 @@ public class UserMapper {
         }
     }
 
-    public static List<User> adminChangeUserOrderData(ConnectionPool connectionPool, int userId) throws DatabaseException {
-        List<User> userOrderData = new ArrayList<>();
-
+    public static User adminGetUserDataByUserid(ConnectionPool connectionPool, int userId) throws DatabaseException {
         String sql = "select u.user_name, " +
                 "ol.cost_price, " +
                 "u.user_email, " +
@@ -170,25 +170,23 @@ public class UserMapper {
             ps.setInt(1, userId);
             ResultSet rs = ps.executeQuery();
 
-            while (rs.next()) {
+            if (rs.next()) {
                 String userName = rs.getString("user_name");
                 BigDecimal costPrice = rs.getBigDecimal("cost_price");
                 String userEmail = rs.getString("user_email");
                 int userTlf = rs.getInt("user_tlf");
                 String address = rs.getString("user_address");
 
-                User changeOrder = new User(userName, costPrice, userEmail, userTlf, address);
-                userOrderData.add(changeOrder);
-
+                  return new User(userName, costPrice, userEmail, userTlf, address);
+            }else{
+                throw new DatabaseException("The user was not found: " + userId);
             }
         } catch (SQLException e) {
-            throw new DatabaseException("Failed trying to get the the details of the specific user: " + userId + e.getMessage());
+            throw new DatabaseException("Failed trying to get the the details of the specific user from the database: " + userId + e.getMessage());
         }
-        return userOrderData;
     }
 
-    public static List<UserDTO> getUserNameAndOrderIdByUserId(ConnectionPool connectionPool, int userId) throws DatabaseException {
-        List<UserDTO> orderIdPlusUserName = new ArrayList<>();
+    public static UserDTO getUserNameAndOrderIdByUserId(ConnectionPool connectionPool, int userId) throws DatabaseException {
         String sql = "select o.order_id, u.user_name " +
                 "from orders o " +
                 "join users u on o.user_id = u.user_id " +
@@ -201,16 +199,17 @@ public class UserMapper {
         ) {
             ps.setInt(1, userId);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
+
+            if (rs.next()) {
                 int orderId = rs.getInt("order_id");
                 String userName = rs.getString("user_name");
-                UserDTO orderIdAndUserName = new UserDTO(orderId, userName);
-                orderIdPlusUserName.add(orderIdAndUserName);
+                return new UserDTO(orderId, userName);
+            }else{
+                throw  new DatabaseException("The userName and orderId was not found");
             }
         } catch (SQLException e) {
             throw new DatabaseException("Failed trying to get orderId and userName" + e.getMessage());
         }
-        return orderIdPlusUserName;
     }
 
     public static void updateUserName(ConnectionPool connectionPool, String userName, int userId) throws DatabaseException {
