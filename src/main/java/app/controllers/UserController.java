@@ -40,13 +40,11 @@ public class UserController {
 
             //check if you are admin and sending it to admin front page
             if (user.getRole().equals("admin")) {
-                ctx.redirect("/adminPage1.html");
+                ctx.redirect("/adminPage1");
             } else {
                 ctx.redirect("/");
             }
 
-            //session atribute hvis du kommer fra basket ligesom user
-            //if statement med om du komer fra basket
         } catch (DatabaseException e){ // hvis login failer(forkert email eller password), kommer denne besked og siden rendere igen
             ctx.attribute("message", "Forkert email eller password");
             ctx.render("login.html");
