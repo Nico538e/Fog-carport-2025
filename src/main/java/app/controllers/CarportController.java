@@ -40,7 +40,7 @@ public class CarportController {
     }
 
 
-    public static void mailSender(User user) throws IOException{
+    public static void mailSender(Context ctx, ConnectionPool connectionPool, User user, String password) throws IOException{
         String domainName = "mg.kodekriger.dk";
         String apikey =  System.getenv("MAILGUN_API_KEY");
 
@@ -51,7 +51,10 @@ public class CarportController {
                 .add("from","noreply@" + domainName)
                 .add("to", user.getUserEmail())
                 .add("subject", "Bestilling af carport")
-                .add("text", "Tak for din bestilling")
+                .add("text", "Tak for din interesse, \n" +
+                        "her er dit password, som du kan logge ind med den mail du sendte ind: \n\n" +
+                        "Mail: " + user.getUserEmail() + "\n" +
+                        "Password: " + password + "\n\n" )
                 .build();
 
         Request request = new Request.Builder()

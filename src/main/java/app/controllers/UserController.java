@@ -10,6 +10,7 @@ import io.javalin.Javalin;
 import io.javalin.http.Context;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
 import java.lang.invoke.StringConcatException;
 import java.math.BigDecimal;
 import java.util.List;
@@ -178,7 +179,7 @@ public class UserController {
         }
     }
 
-    public static void createUser(Context ctx, ConnectionPool connectionPool){
+    public static void createUser(Context ctx, ConnectionPool connectionPool) throws IOException {
         try{
             String name = ctx.formParam("name");
             String email = ctx.formParam("email");
@@ -226,7 +227,7 @@ public class UserController {
 
                 }
 
-
+            CarportController.mailSender(ctx, connectionPool, createdUser, autoPassword);
             ctx.attribute("message", "Din forespørgelse er nu oprettet, du vil blive kontaktet snarest");
             ctx.render("designCarportInfo");
 
@@ -256,7 +257,7 @@ public class UserController {
         ctx.redirect("/carportInfo");
     }
 
-    private static String generateRandomPassword(int length) {
+    public static String generateRandomPassword(int length) {
         String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < length; i++) {
