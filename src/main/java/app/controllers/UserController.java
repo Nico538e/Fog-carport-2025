@@ -25,7 +25,7 @@ public class UserController {
         app.get("login", ctx -> ctx.render("login.html"));
         app.get("logout", ctx -> logout(ctx));
         app.post("/addUser", ctx-> createUser(ctx, connectionPool));
-        app.post("/designCarport", ctx -> handleCarportSelections(ctx));
+        app.post("/designCarport", ctx -> handleOrderSelections(ctx));
     }
 
     public static void login(Context ctx, ConnectionPool connectionPool) {
@@ -241,7 +241,7 @@ public class UserController {
 
     //for at håndtere hvad kunden vælger af længder og bredder
 
-    public static void handleCarportSelections(Context ctx){
+    public static void handleOrderSelections(Context ctx){
         String length = ctx.formParam("length");
         String width = ctx.formParam("width");
 
