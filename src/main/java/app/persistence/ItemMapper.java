@@ -1,6 +1,7 @@
 package app.persistence;
 
 import app.entities.Item;
+import app.entities.ItemVariant;
 import app.exceptions.DatabaseException;
 
 import java.sql.Connection;
@@ -125,5 +126,53 @@ public class ItemMapper {
         // if the item do not exist return null
         return null;
     }
+
+    public static List<ItemVariant> getVariantsByItemTypeAndMinLength(int itemTypeId, int minLength, ConnectionPool connectionPool) throws DatabaseException {
+        List<ItemVariant> variants = new ArrayList<>();
+
+        String sql = """
+        SELECT iv.variant_id, iv.variant_length,
+               i.item_id, i.item_name, i.item_height, i.item_width, i.item_type_id, i.item_package_type, i.item_cost_price
+        FROM item_variant iv
+        JOIN item i ON iv.item_id = i.item_id
+        WHERE i.item_type_id = ? AND iv.variant_length >= ?
+        ORDER BY iv.variant_length ASC
+        """;
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setInt(1, itemTypeId);
+            ps.setInt(2, minLength);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                // Item først
+                Item item = new Item(
+                        rs.getInt("item_id"),
+                        rs.getString("item_name"),
+                        rs.getInt("item_height"),
+                        rs.getInt("item_width"),
+                        rs.getInt("item_type_id"),
+                        rs.getString("item_package_type"),
+                        rs.getInt("item_cost_price")
+                );
+
+                // Variant med item
+                ItemVariant variant = new ItemVariant(rs.getInt("variant_id"), item, rs.getInt("variant_length"));
+
+                variants.add(variant);
+            }
+
+        } catch (SQLException e) {
+            throw new DatabaseException("Fejl ved hentning af item varianter", e);
+        }
+
+        return variants;
+    }
+
+    // Ordersmapper
+
+
 
 }

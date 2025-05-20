@@ -11,6 +11,7 @@ public class OrderLine {
     private ItemVariant itemVariant;
     private Orders orders;
     private String description;
+    private int itemPackageAmount;
 
 
     public OrderLine(int orderLineId, int orderId, int userId, int itemId, int costPrice) {
@@ -40,8 +41,28 @@ public class OrderLine {
         this.description = description;
     }
 
+    public OrderLine(int orderLineId, int orderId, int userId, int itemId, int costPrice, ItemVariant itemVariant, Orders orders, String description, int itemPackageAmount) {
+        this.orderLineId = orderLineId;
+        this.orderId = orderId;
+        this.userId = userId;
+        this.itemId = itemId;
+        this.costPrice = costPrice;
+        this.itemVariant = itemVariant;
+        this.orders = orders;
+        this.description = description;
+        this.itemPackageAmount = itemPackageAmount;
+    }
+
     public ItemVariant getItemVariant() {
         return itemVariant;
+    }
+
+    public int getItemPackageAmount() {
+        return itemPackageAmount;
+    }
+
+    public void setItemPackageAmount(int itemPackageAmount) {
+        this.itemPackageAmount = itemPackageAmount;
     }
 
     public void setItemVariant(ItemVariant itemVariant) {

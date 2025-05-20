@@ -4,6 +4,8 @@ import app.entities.Orders;
 import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
+import app.persistence.OrderMapper;
+import app.services.Calculator;
 import app.services.CarportSvg;
 import app.services.Svg;
 import io.javalin.Javalin;
@@ -23,6 +25,7 @@ public class CarportController {
         app.get("/aboutOurCarports", ctx -> ctx.render("aboutOurCarports.html"));
         app.get("/goDesign", ctx -> ctx.render("designCarport.html"));
         app.get("/designCarport", ctx -> ctx.render("designCarport.html"));
+        app.get("/beregnMaterialer", ctx-> calculateOrderLines(ctx,connectionPool));
     }
 
     public static void checkAllOrders(Context ctx, ConnectionPool connectionPool){
@@ -84,4 +87,29 @@ public class CarportController {
         ctx.attribute("svg",svg.toString());
         ctx.render("designCarportInfo.html");
     }
+
+    public static void calculateOrderLines(Context ctx, ConnectionPool connectionPool){
+        try{
+           User currentUser = ctx.sessionAttribute("currentUser");
+            Orders order;
+
+            if(currentUser.getRole().equalsIgnoreCase("admin")){
+                int orderId = Integer.parseInt(ctx.queryParam("orderId"));
+                order = OrderMapper.getOrderById(orderId, connectionPool);
+            }else{
+                order = OrderMapper.getLatestPaidOrderByUserId(currentUser.getUserId(), connectionPool);
+            }
+
+            Calculator calculator =new Calculator(connectionPool);
+            calculator.calculate(order);
+
+            ctx.attribute("orderLines",calculator.getOrderLines());
+            ctx.render("matrialeList.html");
+        }catch (Exception e){
+            ctx.attribute("message", "Fejl ved beregning: " + e.getMessage());
+            ctx.render("index.html");
+        }
+    }
+
+
 }
