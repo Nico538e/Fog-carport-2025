@@ -2,13 +2,13 @@ package app.entities;
 
 public class ItemVariant {
     private int variantId;
-    private Item itemId;
+    private Item item;
     private int variantLength;
 
 
-    public ItemVariant(int variantId, Item itemId, int variantLength) {
+    public ItemVariant(int variantId, Item item, int variantLength) {
         this.variantId = variantId;
-        this.itemId = itemId;
+        this.item = item;
         this.variantLength = variantLength;
     }
 
@@ -20,12 +20,12 @@ public class ItemVariant {
         this.variantId = variantId;
     }
 
-    public Item getItemId() {
-        return itemId;
+    public Item getItem() {
+        return item;
     }
 
-    public void setItemId(Item itemId) {
-        this.itemId = itemId;
+    public void setItem(Item item) {
+        this.item = item;
     }
 
     public int getVariantLength() {

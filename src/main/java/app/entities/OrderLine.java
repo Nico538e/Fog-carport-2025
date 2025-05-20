@@ -1,11 +1,17 @@
 package app.entities;
 
+import javax.lang.model.element.NestingKind;
+
 public class OrderLine {
-private int orderLineId;
-private int orderId;
-private int userId;
-private int itemId;
-private int costPrice;
+    private int orderLineId;
+    private int orderId;
+    private int userId;
+    private int itemId;
+    private int costPrice;
+    private ItemVariant itemVariant;
+    private Orders orders;
+    private String description;
+
 
     public OrderLine(int orderLineId, int orderId, int userId, int itemId, int costPrice) {
         this.orderLineId = orderLineId;
@@ -13,6 +19,49 @@ private int costPrice;
         this.userId = userId;
         this.itemId = itemId;
         this.costPrice = costPrice;
+    }
+
+    public OrderLine(int orderLineId, Orders orders, int userId, int itemId, int costPrice, ItemVariant itemVariant) {
+        this.orderLineId = orderLineId;
+        this.orders = orders;
+        this.userId = userId;
+        this.itemId = itemId;
+        this.costPrice = costPrice;
+        this.itemVariant = itemVariant;
+    }
+
+    public OrderLine(int orderLineId, Orders orders, int userId, int itemId, int costPrice, ItemVariant itemVariant, String description) {
+        this.orderLineId = orderLineId;
+        this.orders = orders;
+        this.userId = userId;
+        this.itemId = itemId;
+        this.costPrice = costPrice;
+        this.itemVariant = itemVariant;
+        this.description = description;
+    }
+
+    public ItemVariant getItemVariant() {
+        return itemVariant;
+    }
+
+    public void setItemVariant(ItemVariant itemVariant) {
+        this.itemVariant = itemVariant;
+    }
+
+    public Orders getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Orders orders) {
+        this.orders = orders;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public int getOrderLineId() {
@@ -63,6 +112,9 @@ private int costPrice;
                 ", userId=" + userId +
                 ", itemId=" + itemId +
                 ", costPrice=" + costPrice +
+                ", itemVariant=" + itemVariant +
+                ", orders=" + orders +
+                ", description='" + description + '\'' +
                 '}';
     }
 }
