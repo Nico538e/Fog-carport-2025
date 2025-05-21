@@ -1,6 +1,6 @@
 package app.entities;
 
-public class Orders {
+public class Order {
     private int orderId;
     private int userId;
     private User user;
@@ -8,7 +8,7 @@ public class Orders {
     private int width;
     private boolean isPaid;
 
-    public Orders(int orderId, int userId, User user, int length, int width) {
+    public Order(int orderId, int userId, User user, int length, int width) {
         this.orderId = orderId;
         this.userId = userId;
         this.user = user;
@@ -16,24 +16,24 @@ public class Orders {
         this.width = width;
     }
 
-    public Orders(int userId, int length, int width) {
+    public Order(int userId, int length, int width) {
         this.userId = userId;
         this.length = length;
         this.width = width;
     }
 
-    public Orders(int orderId, int userId, User user) {
+    public Order(int orderId, int userId, User user) {
         this.orderId = orderId;
         this.userId = userId;
         this.user = user;
     }
 
-    public Orders(int orderId, int userId) {
+    public Order(int orderId, int userId) {
         this.orderId = orderId;
         this.userId = userId;
     }
 
-    public Orders(int orderId, int userId, int width, int length) {
+    public Order(int orderId, int userId, int width, int length) {
         this.orderId = orderId;
         this.userId = userId;
         this.length = length;
