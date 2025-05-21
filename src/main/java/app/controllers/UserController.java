@@ -25,7 +25,7 @@ public class UserController {
         app.get("login", ctx -> ctx.render("login.html"));
         app.get("logout", ctx -> logout(ctx));
         app.post("/addUser", ctx-> createUser(ctx, connectionPool));
-        app.post("/designCarport", ctx -> handleCarportSelections(ctx));
+        app.post("/designCarport", ctx -> handleOrderSelections(ctx));
     }
 
     public static void login(Context ctx, ConnectionPool connectionPool) {
@@ -199,7 +199,6 @@ public class UserController {
 
             //Standart values
             String role = "postgres";
-            boolean isPaidStatus = false;
 
             // check if user exist
             List<User> checkAllUsers = UserMapper.getAllUsers(connectionPool, "postgres");
@@ -211,7 +210,7 @@ public class UserController {
                 return;
             }
 
-            User user = new User(name, autoPassword, role, email, phone, isPaidStatus, address);
+            User user = new User(name, autoPassword, role, email, phone, address);
             UserMapper.createNewUser(user, connectionPool);
 
             User createdUser = UserMapper.getUserByEmail(connectionPool, email);
@@ -241,7 +240,7 @@ public class UserController {
 
     //for at håndtere hvad kunden vælger af længder og bredder
 
-    public static void handleCarportSelections(Context ctx){
+    public static void handleOrderSelections(Context ctx){
         String length = ctx.formParam("length");
         String width = ctx.formParam("width");
 
