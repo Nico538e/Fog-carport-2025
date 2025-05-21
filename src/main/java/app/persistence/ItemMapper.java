@@ -133,7 +133,7 @@ public class ItemMapper {
         String sql = """
         SELECT iv.variant_id, iv.variant_length,
                i.item_id, i.item_name, i.item_height, i.item_width, i.item_type_id, i.item_package_type, i.item_cost_price
-        FROM item_variant iv
+        FROM variants iv
         JOIN item i ON iv.item_id = i.item_id
         WHERE i.item_type_id = ? AND iv.variant_length >= ?
         ORDER BY iv.variant_length ASC

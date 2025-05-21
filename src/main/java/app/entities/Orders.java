@@ -80,6 +80,14 @@ public class Orders {
         this.width = width;
     }
 
+    public boolean isPaid() {
+        return isPaid;
+    }
+
+    public void setPaid(boolean paid) {
+        isPaid = paid;
+    }
+
     @Override
     public String toString() {
         return "Orders{" +

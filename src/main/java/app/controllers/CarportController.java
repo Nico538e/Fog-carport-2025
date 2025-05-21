@@ -5,15 +5,14 @@ import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.OrderMapper;
+import app.persistence.UserMapper;
 import app.services.Calculator;
 import app.services.CarportSvg;
-import app.services.Svg;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
-import app.persistence.UserMapper;
 import okhttp3.*;
-import java.io.IOException;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
@@ -25,7 +24,7 @@ public class CarportController {
         app.get("/aboutOurCarports", ctx -> ctx.render("aboutOurCarports.html"));
         app.get("/goDesign", ctx -> ctx.render("designCarport.html"));
         app.get("/designCarport", ctx -> ctx.render("designCarport.html"));
-        app.get("/matrialeList", ctx-> calculateOrderLines(ctx,connectionPool));
+        app.get("/materialList", ctx -> calculateOrderLines(ctx, connectionPool));
     }
 
     public static void checkAllOrders(Context ctx, ConnectionPool connectionPool){
@@ -97,23 +96,22 @@ public class CarportController {
                 return;
             }
 
-           Orders order;
+            int orderId = Integer.parseInt(ctx.queryParam("orderId"));
+            Orders order = OrderMapper.getOrderById(orderId, connectionPool);
 
-            if(currentUser.getRole().equalsIgnoreCase("admin")){
-                int orderId = Integer.parseInt(ctx.queryParam("orderId"));
-                order = OrderMapper.getOrderById(orderId, connectionPool);
-            }else{
-                order = OrderMapper.getLatestPaidOrderByUserId(currentUser.getUserId(), connectionPool);
+            if (!(currentUser.getUserId() == order.getUserId() || currentUser.getRole().equalsIgnoreCase("admin"))) {
+                ctx.result("You are not authorized to view this page.");
+                return;
             }
 
-            Calculator calculator =new Calculator(connectionPool);
+            Calculator calculator = new Calculator(connectionPool);
             calculator.calculate(order);
 
             ctx.attribute("orderLines", calculator.getOrderLines());
             ctx.attribute("order", order);
             ctx.attribute("currentUser", currentUser);
 
-            ctx.render("matrialeList.html");
+            ctx.render("materialList.html");
         }catch (Exception e){
             e.printStackTrace();
             ctx.attribute("message", "Fejl ved beregning: " + e.getMessage());

@@ -16,7 +16,7 @@ public class Calculator {
     // Konstanter for item_type_id i databasen (skal matche din DB)
     private static final int POSTS = 1;   // Stolper
     private static final int BEAMS = 2;   // Remme
-    private static final int RAFTERS = 3; // Spær
+    private static final int RAFTERS = 2; // Spær
 
     private final ConnectionPool connectionPool;
     private final List<OrderLine> orderLines = new ArrayList<>();
@@ -50,12 +50,14 @@ public class Calculator {
 
         OrderLine orderLine = new OrderLine(
                 0,
-                order,
+                order.getOrderId(),
                 order.getUserId(),
                 item.getItemId(),
                 item.getItemCostPrice(),
                 variant,
-                "Stolper nedgraves 90 cm. i jorden – placeret 2 for og bag, resten med 310 cm afstand langs længden"
+                order,
+                "Stolper nedgraves 90 cm. i jorden – placeret 2 for og bag, resten med 310 cm afstand langs længden",
+                quantity
         );
         orderLines.add(orderLine);
     }
@@ -79,12 +81,14 @@ public class Calculator {
 
         OrderLine orderLine = new OrderLine(
                 0,
-                order,
+                order.getOrderId(),
                 order.getUserId(),
                 item.getItemId(),
                 item.getItemCostPrice(),
                 variant,
-                "Remme monteres i begge sider, hele carportens længde"
+                order,
+                "Remme monteres i begge sider, hele carportens længde",
+                quantity
         );
         orderLines.add(orderLine);
     }
@@ -106,12 +110,14 @@ public class Calculator {
 
         OrderLine orderLine = new OrderLine(
                 0,
-                order,
+                order.getOrderId(),
                 order.getUserId(),
                 item.getItemId(),
                 item.getItemCostPrice(),
                 variant,
-                "Spær monteres med ca. 55 cm mellemrum, tværs over carportens bredde"
+                order,
+                "Spær monteres med ca. 55 cm mellemrum, tværs over carportens bredde",
+                quantity
         );
         orderLines.add(orderLine);
     }
