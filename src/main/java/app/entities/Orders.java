@@ -6,6 +6,7 @@ public class Orders {
     private User user;
     private int length;
     private int width;
+    private boolean isPaid;
 
     public Orders(int orderId, int userId, User user, int length, int width) {
         this.orderId = orderId;
@@ -30,6 +31,25 @@ public class Orders {
     public Orders(int orderId, int userId) {
         this.orderId = orderId;
         this.userId = userId;
+    }
+
+    public Orders(int orderId, int userId, int width, int length) {
+        this.orderId = orderId;
+        this.userId = userId;
+        this.length = length;
+        this.width = width;
+    }
+
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public User getUser() {
+        return user;
     }
 
     public void setOrderId(int orderId) {
@@ -58,6 +78,14 @@ public class Orders {
 
     public void setWidth(int width) {
         this.width = width;
+    }
+
+    public boolean isPaid() {
+        return isPaid;
+    }
+
+    public void setPaid(boolean paid) {
+        isPaid = paid;
     }
 
     @Override
