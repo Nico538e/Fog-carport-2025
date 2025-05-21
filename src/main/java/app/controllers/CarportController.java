@@ -25,7 +25,7 @@ public class CarportController {
         app.get("/aboutOurCarports", ctx -> ctx.render("aboutOurCarports.html"));
         app.get("/goDesign", ctx -> ctx.render("designCarport.html"));
         app.get("/designCarport", ctx -> ctx.render("designCarport.html"));
-        app.get("/beregnMaterialer", ctx-> calculateOrderLines(ctx,connectionPool));
+        app.get("/matrialeList", ctx-> calculateOrderLines(ctx,connectionPool));
     }
 
     public static void checkAllOrders(Context ctx, ConnectionPool connectionPool){
@@ -88,10 +88,16 @@ public class CarportController {
         ctx.render("designCarportInfo.html");
     }
 
+    //styklisteberegner
     public static void calculateOrderLines(Context ctx, ConnectionPool connectionPool){
         try{
            User currentUser = ctx.sessionAttribute("currentUser");
-            Orders order;
+            if (currentUser == null) {
+                ctx.redirect("/login"); // eller vis en fejl
+                return;
+            }
+
+           Orders order;
 
             if(currentUser.getRole().equalsIgnoreCase("admin")){
                 int orderId = Integer.parseInt(ctx.queryParam("orderId"));
@@ -103,9 +109,13 @@ public class CarportController {
             Calculator calculator =new Calculator(connectionPool);
             calculator.calculate(order);
 
-            ctx.attribute("orderLines",calculator.getOrderLines());
+            ctx.attribute("orderLines", calculator.getOrderLines());
+            ctx.attribute("order", order);
+            ctx.attribute("currentUser", currentUser);
+
             ctx.render("matrialeList.html");
         }catch (Exception e){
+            e.printStackTrace();
             ctx.attribute("message", "Fejl ved beregning: " + e.getMessage());
             ctx.render("index.html");
         }

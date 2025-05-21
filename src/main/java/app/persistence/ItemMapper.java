@@ -171,8 +171,4 @@ public class ItemMapper {
         return variants;
     }
 
-    // Ordersmapper
-
-
-
 }

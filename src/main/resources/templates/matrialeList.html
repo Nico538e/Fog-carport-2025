@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -23,7 +22,11 @@
 </nav>
 
 <div class="user-order-container">
-    <h2>Materialeliste for din ordre</h2>
+    <h2>Materialeliste for ordre <span th:text="${order.orderId}"></span></h2>
+    <p>
+        Kunde: <span th:text="${currentUser.userName}"></span> |
+        Email: <span th:text="${currentUser.userEmail}"></span>
+    </p>
 
     <table class="user-order-table">
         <thead>
