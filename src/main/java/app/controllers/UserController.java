@@ -199,7 +199,6 @@ public class UserController {
 
             //Standart values
             String role = "postgres";
-            boolean isPaidStatus = false;
 
             // check if user exist
             List<User> checkAllUsers = UserMapper.getAllUsers(connectionPool, "postgres");
@@ -211,7 +210,7 @@ public class UserController {
                 return;
             }
 
-            User user = new User(name, autoPassword, role, email, phone, isPaidStatus, address);
+            User user = new User(name, autoPassword, role, email, phone, address);
             UserMapper.createNewUser(user, connectionPool);
 
             User createdUser = UserMapper.getUserByEmail(connectionPool, email);

@@ -10,19 +10,17 @@ public class User {
     private String role;
     private String userEmail;
     private int userTlf;
-    private boolean isPaidStatus;
     private String address;
     private int orderId;
     private BigDecimal costPrice;
 
-    public User(int userId, String userName, String userPassword, String role, String userEmail, int userTlf, boolean isPaidStatus, String address) {
+    public User(int userId, String userName, String userPassword, String role, String userEmail, int userTlf, String address) {
         this.userId = userId;
         this.userName = userName;
         this.userPassword = userPassword;
         this.role = role;
         this.userEmail = userEmail;
         this.userTlf = userTlf;
-        this.isPaidStatus = isPaidStatus;
         this.address = address;
     }
     public User(int userTlf, String userEmail, String role, String userPassword, String userName) {
@@ -39,24 +37,22 @@ public class User {
     }
 
     //Show all users with order info in a table on adminPage1
-    public User(int userId, int orderId, String userName, String userEmail, int userTlf, String address, boolean isPaidStatus, BigDecimal costPrice){
+    public User(int userId, int orderId, String userName, String userEmail, int userTlf, String address, BigDecimal costPrice){
         this.userId = userId;
         this.orderId = orderId;
         this.userName = userName;
         this.userEmail = userEmail;
         this.userTlf = userTlf;
         this.address = address;
-        this.isPaidStatus = isPaidStatus;
         this.costPrice = costPrice;
     }
 
-    public User(String userName, String userPassword, String role, String userEmail, int userTlf, boolean isPaidStatus, String address){
+    public User(String userName, String userPassword, String role, String userEmail, int userTlf, String address){
         this.userName = userName;
         this.userPassword = userPassword;
         this.role = role;
         this.userEmail = userEmail;
         this.userTlf = userTlf;
-        this.isPaidStatus = isPaidStatus;
         this.address = address;
     }
 
@@ -100,9 +96,6 @@ public class User {
         return userTlf;
     }
 
-    public boolean isPaidStatus() {
-        return isPaidStatus;
-    }
 
     public String getAddress() {
         return address;
@@ -141,10 +134,6 @@ public class User {
         this.userTlf = userTlf;
     }
 
-    public void setPaidStatus(boolean paidStatus) {
-        isPaidStatus = paidStatus;
-    }
-
     public void setAddress(String address) {
         this.address = address;
     }
@@ -166,7 +155,6 @@ public class User {
                 ", role='" + role + '\'' +
                 ", userEmail='" + userEmail + '\'' +
                 ", userTlf=" + userTlf +
-                ", isPaidStatus=" + isPaidStatus +
                 ", address='" + address + '\'' +
                 ", orderId=" + orderId +
                 ", costPrice=" + costPrice +

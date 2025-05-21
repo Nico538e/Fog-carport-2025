@@ -1,26 +1,31 @@
+
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>matrialeList</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+    <title>Materialeliste</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" href="../public/css/styles.css">
 </head>
 <body>
 
+<!-- NAVIGATIONSBAR -->
 <nav class="navbar">
     <div class="logo">
-        <img src="../public/images/fog_logo.png" th:src="@{/images/fog_logo.png}" width="32%"/>
+        <a th:href="@{/}">
+            <img th:src="@{/images/fog_logo.png}" src="../public/images/fog_logo.png" alt="FOG logo" width="200">
+        </a>
     </div>
     <ul class="nav-links">
         <li><a th:href="@{/}">Hjem</a></li>
-        <li><a th:href="@{/designCarport}">Design din egen carport</a></li>
-        <li><a th:href="@{/inspiration}">Få inspiration</a></li>
-        <li><a th:href="@{/aboutOurCarports}">Om vores Carporte</a></li>
+        <li><a th:href="@{/designCarport}">Design din carport</a></li>
+        <li><a th:href="@{/inspiration}">Inspiration</a></li>
+        <li><a th:href="@{/aboutOurCarports}">Om carporte</a></li>
         <li><a th:href="@{/login}">Logout</a></li>
     </ul>
 </nav>
 
+<!-- MATERIALER -->
 <div class="user-order-container">
     <h2>Materialeliste for ordre <span th:text="${order.orderId}"></span></h2>
     <p>
@@ -51,6 +56,7 @@
         </tbody>
     </table>
 </div>
+
 
 </body>
 </html>

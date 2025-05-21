@@ -34,9 +34,8 @@ public class UserMapper {
                 String userPassword = rs.getString("user_password");
                 String userEmail = rs.getString("user_email");
                 int userTlf = rs.getInt("user_tlf");
-                boolean isPaidStatus = rs.getBoolean("is_paid_status");
                 String address = rs.getString("user_address");
-                return new User(userId, userName, userPassword, roles, userEmail, userTlf, isPaidStatus, address);
+                return new User(userId, userName, userPassword, roles, userEmail, userTlf, address);
             } else {
                 throw new DatabaseException("Fejl i login. Prøv igen");
             }
@@ -124,10 +123,9 @@ public class UserMapper {
                 String role = rs.getString("role");
                 String userEmail = rs.getString("user_email");
                 int tlf = rs.getInt("user_tlf");
-                boolean isPaidStatus = rs.getBoolean("is_paid_status");
                 String address = rs.getString("user_address");
 
-                return new User(userId, userName, password, role, userEmail, tlf, isPaidStatus, address);
+                return new User(userId, userName, password, role, userEmail, tlf, address);
             } else{
                 throw new DatabaseException("Failed trying to find user email");
             }
@@ -166,10 +164,9 @@ public class UserMapper {
                 String userEmail = rs.getString("user_email");
                 int tlf = rs.getInt("user_tlf");
                 String address = rs.getString("user_address");
-                boolean isPaidStatus = rs.getBoolean("is_paid_status");
                 BigDecimal costPrice = rs.getBigDecimal("cost_price");
 
-                User showUserOrders = new User(userId, orderId, userName, userEmail, tlf, address, isPaidStatus, costPrice);
+                User showUserOrders = new User(userId, orderId, userName, userEmail, tlf, address, costPrice);
                 userOrderList.add(showUserOrders);
             }
 
@@ -190,7 +187,6 @@ public class UserMapper {
             ps.setString(3, user.getRole());
             ps.setString(4, user.getUserEmail());
             ps.setInt(5, user.getUserTlf());
-            ps.setBoolean(6, user.isPaidStatus());
             ps.setString(7, user.getAddress());
             ps.executeUpdate();
 
