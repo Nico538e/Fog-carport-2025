@@ -371,7 +371,8 @@ input::placeholder{
 .grey-container{
     display: flex;
     align-items: center;
-    width: 380px;
+    width: 90%;
+    height: 240px;
     margin: 1rem auto;
     background-color: #ededed;
     padding: 170px 505px;
@@ -383,7 +384,7 @@ input::placeholder{
     text-align: center;
     padding: 2rem;
     width: 90%;
-    height: auto;
+    height: 600px;
 }
 
 .carport-selection h2{
@@ -496,4 +497,23 @@ font-size: 1rem;
 
 .item-table-for-user tr:nth-child(even) {
     background-color: #f9f9f9;
+}
+
+
+.back-button{
+    display: flex;
+    align-items: center;
+    text-align: center;
+    background-color: #164986;
+    color: white;
+    border-color:#164986;
+    padding: 0.90rem 4rem;
+    border-radius: 5px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.back-button:hover{
+    background-color: #b6c8de;
+    color: #272b30;
 }

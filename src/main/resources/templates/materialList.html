@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Materialeliste</title>
+    <title>materialList</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
@@ -28,7 +28,6 @@
 
     <h2>Materialeliste for ordre <span th:text="${order.orderId}"></span></h2>
     <p>
-        Kunde: <strong th:text="${currentUser.userName}"></strong> |
         Email: <strong th:text="${currentUser.userEmail}"></strong>
     </p>
 
@@ -56,6 +55,10 @@
             </tbody>
         </table>
     </div>
+    <form method="post" th:action="@{/costumerPage}">
+        <input type="hidden" name="userId" th:value="${currentUser.userId}">
+        <button type="submit" class="back-button">Tilbage</button>
+    </form>
 </div>
 
 </body>
