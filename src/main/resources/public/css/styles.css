@@ -517,3 +517,26 @@ font-size: 1rem;
     background-color: #b6c8de;
     color: #272b30;
 }
+
+/***** Inspiration side *****/
+
+.image-row {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* afstand mellem billederne */
+    margin-top: 30px;
+    flex-wrap: wrap; /* gør det responsivt hvis skærmen er smal */
+}
+
+.image-row img {
+    width: 300px;  /* du kan justere bredden her */
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px; /* valgfrit: runde hjørner */
+
+}
+
+
+
+
+
