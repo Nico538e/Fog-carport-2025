@@ -52,27 +52,11 @@ public class UserController {
         }
     }
 
-    // Metode til at logge brugeren ud
     private static void logout(@NotNull Context ctx) {
         ctx.req().getSession().invalidate();// Invaliderer den aktuelle session (sletter session-data, f.eks. brugerens login-information)
 
         ctx.redirect("/");// Omdirigerer brugeren til forsiden af applikationen
     }
-
-    public static void getUserOptions(Context ctx, ConnectionPool connectionPool) {
-        try {
-            List<User> users = UserMapper.getAllUsers(connectionPool);
-
-            ctx.attribute("users", users);
-            ctx.render("index.html"); //change filepath
-
-        } catch (DatabaseException e) {
-            ctx.status(500);
-            ctx.attribute("message", "Fejl ved hentning af user data");
-            ctx.render("index.html"); //change filepath
-        }
-    }
-
 
     public static void getUserOrderForm(Context ctx, ConnectionPool connectionPool) {
         int userId = Integer.parseInt(ctx.formParam("userId"));

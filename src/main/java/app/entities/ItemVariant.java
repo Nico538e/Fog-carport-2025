@@ -12,27 +12,16 @@ public class ItemVariant {
         this.variantLength = variantLength;
     }
 
-    public int getVariantId() {
-        return variantId;
-    }
-
-    public void setVariantId(int variantId) {
-        this.variantId = variantId;
-    }
-
     public Item getItem() {
         return item;
     }
 
-    public void setItem(Item item) {
-        this.item = item;
-    }
-
-    public int getVariantLength() {
-        return variantLength;
-    }
-
-    public void setVariantLength(int variantLength) {
-        this.variantLength = variantLength;
+    @Override
+    public String toString() {
+        return "ItemVariant{" +
+                "variantId=" + variantId +
+                ", item=" + item +
+                ", variantLength=" + variantLength +
+                '}';
     }
 }

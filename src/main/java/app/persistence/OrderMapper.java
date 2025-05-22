@@ -1,4 +1,3 @@
-
 package app.persistence;
 
 import app.entities.Order;
@@ -27,7 +26,7 @@ public class OrderMapper {
                 int orderId = rs.getInt("order_id");
                 int length = rs.getInt("carport_length");
                 int width = rs.getInt("carport_width");
-                Order order = new Order(orderId, userId , length, width);
+                Order order = new Order(orderId, userId, length, width);
                 orderList.add(order);
             }
 
@@ -37,18 +36,18 @@ public class OrderMapper {
         return orderList;
     }
 
-    public static void createOrders(ConnectionPool connectionPool, int userId, int length, int width) throws DatabaseException{
+    public static void createOrders(ConnectionPool connectionPool, int userId, int length, int width) throws DatabaseException {
         String sql = "INSERT INTO orders(user_id, carport_length, carport_width) VALUES (?,?,?)";
-        try(Connection connection = connectionPool.getConnection();
-            PreparedStatement ps = connection.prepareStatement(sql)
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)
         ) {
-            ps.setInt(1,userId);
-            ps.setInt(2,length);
-            ps.setInt(3,width);
+            ps.setInt(1, userId);
+            ps.setInt(2, length);
+            ps.setInt(3, width);
 
             ps.executeUpdate();
 
-        }catch(SQLException e){
+        } catch (SQLException e) {
             throw new DatabaseException("Failed to insert order into database", e);
         }
     }

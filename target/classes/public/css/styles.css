@@ -176,19 +176,19 @@ input::placeholder{
 
 /***** admin page 1 *****/
 
-.user-order-container {
+.user-container {
     display: flex;
-    align-items: center;
-    width: 380px;
-    height: 240px;
+    justify-content: center;
+    height: 700px;
     margin: 1rem auto;
+    width: 100%;
     background-color: #ededed;
-    padding: 170px 505px;
     border-radius: 5px;
 }
 
-.item-table-for-user {
+.user-table{
     width: 670px;
+    border-width: 20px;
     border-collapse: collapse;
     margin-top: 20px;
     position:absolute;
@@ -196,19 +196,19 @@ input::placeholder{
     left: 25%;
 }
 
-.item-table-for-user th, .item-table-for-user td {
+.user-table th, .user-table td {
     border: 2px solid black;
     padding: 12px;
     text-align: left;
     color: black;
 }
 
-.item-table-for-user th {
+.user-table th {
     background-color: #164986;
     color: white;
 }
 
-.item-table-for-user tr:nth-child(even) {
+.user-table tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
@@ -226,32 +226,40 @@ input::placeholder{
 }
 
 /***** admin page 2 *****/
-.change-order-container{
+.change-user-container{
     display: flex;
+    flex-direction: column;
     align-items: center;
-    width: 380px;
-    height: 240px;
     margin: 1rem auto;
     background-color: #ededed;
-    padding: 170px 505px;
     border-radius: 5px;
+    width: 100%;
 }
 
-.userName{
+@media (max-width: 500px) {
+    .change-user-container{
+        width: 80%;
+    }
+    .user-form{
+        width: 50%;
+    }
+}
+
+.userName {
     display: flex;
     text-align: center;
-    width: 100px;
-    font-size: 30px ;
+    width: 100%;
+    font-size: 30px;
     color: #164986;
     position: absolute;
     margin-bottom: 25rem;
     left: 710px;
 }
 
-.orderId{
+.orderId {
     display: flex;
     text-align: center;
-    width: 100px;
+    width: 100%;
     font-size: 30px;
     color: #164986;
     position: absolute;
@@ -259,107 +267,78 @@ input::placeholder{
     left: 685px;
 }
 
-.selector2{
+.user-form {
     display: flex;
-    gap: 480px;
-    position: relative;
-    margin-bottom: 25rem;
-    right: 285px ;
+    flex-direction: column;
+    justify-content: center;
+    padding: 3rem;
 }
 
-.selector2{
-    display: flex;
-    gap: 480px;
-    position: relative;
-    margin-bottom: 25rem;
-    right: 285px ;
-}
+    .edit-user-header {
+        font-size: 30px;
+        text-align: center;
+        margin-top: 25px;
+        color: #164986;
+    }
 
-.selector2 select{
-    border-color: #164986;
-    border-radius: 3px;
-    font-size: 1.5rem;
-    width: 250px;
-    max-width: 400px;
-}
+    .name-user {
+        border-color: #164986;
+        border-radius: 3px;
+        font-size: 1.5rem;
+        width: 100%;
+        text-align: left;
+        position: relative;
+        margin-bottom: 1rem;
+    }
 
-.name-user{
-    border-color: #164986;
-    border-radius: 3px;
-    font-size: 1.5rem;
-    width: 250px;
-    max-width: 400px;
-    position: relative;
-    margin-top: 8rem;
-    margin-bottom: 1rem;
-    right: 79.2rem;
-}
+    .email-user {
+        border-color: #164986;
+        border-radius: 3px;
+        font-size: 1.5rem;
+        width: 100%;
+        position: relative;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
 
-.price-of-order{
-    border-color: #164986;
-    border-radius: 3px;
-    font-size: 1.5rem;
-    width: 250px;
-    max-width: 400px;
-    position: relative;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    right: 79.2rem;
-}
+    .tlf-user {
+        border-color: #164986;
+        border-radius: 3px;
+        font-size: 1.5rem;
+        width: 100%;
+        position: relative;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
 
-.email-user{
-    border-color: #164986;
-    border-radius: 3px;
-    font-size: 1.5rem;
-    width: 250px;
-    max-width: 400px;
-    position: relative;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    right: 79.2rem;
-}
+    .address-user {
+        border-color: #164986;
+        border-radius: 3px;
+        font-size: 1.5rem;
+        width: 100%;
+        position: relative;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
 
-.tlf-user{
-    border-color: #164986;
-    border-radius: 3px;
-    font-size: 1.5rem;
-    width: 250px;
-    max-width: 400px;
-    position: relative;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    right: 79.2rem;
-}
 
-.address-user{
-    border-color: #164986;
-    border-radius: 3px;
-    font-size: 1.5rem;
-    width: 250px;
-    max-width: 400px;
-    position: relative;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    right: 79.2rem;
-}
-
-.save-changes-button{
+.save-changes-button {
     background-color: #164986;
     color: white;
-    border-color:#164986;
+    border-color: #164986;
     border-radius: 5px;
     font-size: 20px;
-    width: 250px;
+    width: 103.05%;
     position: relative;
-    margin-top: 2rem;
-    right: 79.1rem;
+    margin-top: 1.5rem;
     cursor: pointer;
 }
 
-.save-changes-button:hover{
+.save-changes-button:hover {
     background-color: #b6c8de;
     color: #272b30;
 }
+
 
 /***** DesignCarport+ SVG*****/
 
@@ -517,3 +496,26 @@ font-size: 1rem;
     background-color: #b6c8de;
     color: #272b30;
 }
+
+/***** Inspiration side *****/
+
+.image-row {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* afstand mellem billederne */
+    margin-top: 30px;
+    flex-wrap: wrap; /* gør det responsivt hvis skærmen er smal */
+}
+
+.image-row img {
+    width: 300px;  /* du kan justere bredden her */
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px; /* valgfrit: runde hjørner */
+
+}
+
+
+
+
+

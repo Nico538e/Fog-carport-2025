@@ -2,10 +2,8 @@ package app.controllers;
 
 import app.entities.Order;
 import app.entities.User;
-import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.OrderMapper;
-import app.persistence.UserMapper;
 import app.services.Calculator;
 import app.services.CarportSvg;
 import io.javalin.Javalin;
@@ -13,7 +11,6 @@ import io.javalin.http.Context;
 import okhttp3.*;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Locale;
 
 public class CarportController {
@@ -26,21 +23,6 @@ public class CarportController {
         app.get("/designCarport", ctx -> ctx.render("designCarport.html"));
         app.get("/materialList", ctx -> calculateOrderLines(ctx, connectionPool));
     }
-
-    public static void checkAllOrders(Context ctx, ConnectionPool connectionPool){
-        try {
-            List<Order> orders = OrderMapper.getOrdersByUserId(connectionPool,2);
-
-            ctx.attribute("orders", orders);
-            ctx.render("page2.html"); //change filepath
-
-        } catch (DatabaseException e) {
-            ctx.status(500);
-            ctx.attribute("message", "Fejl ved hentning af order data");
-            ctx.render("error.html"); //change filepath
-        }
-    }
-
 
     public static void mailSender(Context ctx, ConnectionPool connectionPool, User user, String password) throws IOException{
         String domainName = "mg.kodekriger.dk";
@@ -118,6 +100,4 @@ public class CarportController {
             ctx.render("index.html");
         }
     }
-
-
 }

@@ -8,30 +8,6 @@ public class Order {
     private int width;
     private boolean isPaid;
 
-    public Order(int orderId, int userId, User user, int length, int width) {
-        this.orderId = orderId;
-        this.userId = userId;
-        this.user = user;
-        this.length = length;
-        this.width = width;
-    }
-
-    public Order(int userId, int length, int width) {
-        this.userId = userId;
-        this.length = length;
-        this.width = width;
-    }
-
-    public Order(int orderId, int userId, User user) {
-        this.orderId = orderId;
-        this.userId = userId;
-        this.user = user;
-    }
-
-    public Order(int orderId, int userId) {
-        this.orderId = orderId;
-        this.userId = userId;
-    }
 
     public Order(int orderId, int userId, int width, int length) {
         this.orderId = orderId;
@@ -56,10 +32,6 @@ public class Order {
         this.orderId = orderId;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
     public void setUser(User user) {
         this.user = user;
     }
@@ -68,24 +40,12 @@ public class Order {
         return length;
     }
 
-    public void setLength(int length) {
-        this.length = length;
-    }
-
     public int getWidth() {
         return width;
     }
 
     public void setWidth(int width) {
         this.width = width;
-    }
-
-    public boolean isPaid() {
-        return isPaid;
-    }
-
-    public void setPaid(boolean paid) {
-        isPaid = paid;
     }
 
     @Override
