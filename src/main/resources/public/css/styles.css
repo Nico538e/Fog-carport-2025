@@ -176,14 +176,13 @@ input::placeholder{
 
 /***** admin page 1 *****/
 
-.user-order-container {
+.user-container {
     display: flex;
-    align-items: center;
-    width: 380px;
-    height: 240px;
+    justify-content: center;
+    height: 700px;
     margin: 1rem auto;
+    width: 100%;
     background-color: #ededed;
-    padding: 170px 505px;
     border-radius: 5px;
 }
 
@@ -194,6 +193,7 @@ input::placeholder{
     position:absolute;
     top: 20%;
     left: 25%;
+
 }
 
 .user-order-table th, .user-order-table td {
@@ -226,30 +226,40 @@ input::placeholder{
 }
 
 /***** admin page 2 *****/
-.change-order-container{
+.change-user-container{
     display: flex;
     flex-direction: column;
     align-items: center;
     margin: 1rem auto;
     background-color: #ededed;
     border-radius: 5px;
+    width: 100%;
 }
 
-.userName{
+@media (max-width: 500px) {
+    .change-user-container{
+        width: 80%;
+    }
+    .user-form{
+        width: 50%;
+    }
+}
+
+.userName {
     display: flex;
     text-align: center;
-    width: 100px;
-    font-size: 30px ;
+    width: 100%;
+    font-size: 30px;
     color: #164986;
     position: absolute;
     margin-bottom: 25rem;
     left: 710px;
 }
 
-.orderId{
+.orderId {
     display: flex;
     text-align: center;
-    width: 100px;
+    width: 100%;
     font-size: 30px;
     color: #164986;
     position: absolute;
@@ -257,106 +267,78 @@ input::placeholder{
     left: 685px;
 }
 
-.selector2{
-    display: flex;
-    gap: 480px;
-    position: relative;
-    margin-bottom: 25rem;
-    right: 285px ;
-}
-
-.selector2{
-    display: flex;
-    gap: 480px;
-    position: relative;
-    margin-bottom: 25rem;
-    right: 285px ;
-}
-
-.selector2 select{
-    border-color: #164986;
-    border-radius: 3px;
-    font-size: 1.5rem;
-    width: 250px;
-    max-width: 400px;
-}
-
-.user-order-form {
+.user-form {
     display: flex;
     flex-direction: column;
-    padding: 5rem;
+    justify-content: center;
+    padding: 3rem;
 }
 
-.name-user{
-    border-color: #164986;
-    border-radius: 3px;
-    font-size: 1.5rem;
-    width: 250px;
-    max-width: 400px;
-    position: relative;
-    margin-bottom: 1rem;
-}
+    .edit-user-header {
+        font-size: 30px;
+        text-align: center;
+        margin-top: 25px;
+        color: #164986;
+    }
 
-.price-of-order{
-    border-color: #164986;
-    border-radius: 3px;
-    font-size: 1.5rem;
-    width: 250px;
-    max-width: 400px;
-    position: relative;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-}
+    .name-user {
+        border-color: #164986;
+        border-radius: 3px;
+        font-size: 1.5rem;
+        width: 100%;
+        text-align: left;
+        position: relative;
+        margin-bottom: 1rem;
+    }
 
-.email-user{
-    border-color: #164986;
-    border-radius: 3px;
-    font-size: 1.5rem;
-    width: 250px;
-    max-width: 400px;
-    position: relative;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-}
+    .email-user {
+        border-color: #164986;
+        border-radius: 3px;
+        font-size: 1.5rem;
+        width: 100%;
+        position: relative;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
 
-.tlf-user{
-    border-color: #164986;
-    border-radius: 3px;
-    font-size: 1.5rem;
-    width: 250px;
-    max-width: 400px;
-    position: relative;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-}
+    .tlf-user {
+        border-color: #164986;
+        border-radius: 3px;
+        font-size: 1.5rem;
+        width: 100%;
+        position: relative;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
 
-.address-user{
-    border-color: #164986;
-    border-radius: 3px;
-    font-size: 1.5rem;
-    width: 250px;
-    max-width: 400px;
-    position: relative;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-}
+    .address-user {
+        border-color: #164986;
+        border-radius: 3px;
+        font-size: 1.5rem;
+        width: 100%;
+        position: relative;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
 
-.save-changes-button{
+
+.save-changes-button {
     background-color: #164986;
     color: white;
-    border-color:#164986;
+    border-color: #164986;
     border-radius: 5px;
     font-size: 20px;
-    width: 250px;
+    width: 103.05%;
     position: relative;
-    margin-top: 2rem;
+    margin-top: 1.5rem;
     cursor: pointer;
 }
 
-.save-changes-button:hover{
+.save-changes-button:hover {
     background-color: #b6c8de;
     color: #272b30;
 }
+
 
 /***** DesignCarport+ SVG*****/
 

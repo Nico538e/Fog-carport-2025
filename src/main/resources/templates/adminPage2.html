@@ -20,16 +20,16 @@
     </ul>
 </nav>
 
-<div class="change-order-container">
-    <h1>Rediger Bruger</h1>
-   <form method="post" class="user-order-form" th:action="@{/saveChangeAdminPage1}">
+<div class="change-user-container">
+        <h9 class="edit-user-header">Rediger Bruger</h9>
+   <form method="post" class="user-form" th:action="@{/saveChangeAdminPage1}">
        <input type="hidden" th:name="userId" th:value="${user.userId}">
+
 
        <input th:value="${user.userName}" type="text" name="userName" placeholder="Navn" class="name-user">
        <input th:value="${user.userEmail}"  type="email" name="userEmail" placeholder="E-mail" class="email-user">
        <input th:value="${user.userTlf}" type="text" name="userTlf" placeholder="Tlf-nummer" class="tlf-user">
        <input th:value="${user.address}" type="text" name="address" placeholder="Adresse" class="address-user">
-
        <button type="submit" formaction="/saveChangeAdminPage1" class="save-changes-button">Gem ændringer</button>
    </form>
 </div>
