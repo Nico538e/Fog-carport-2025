@@ -186,29 +186,29 @@ input::placeholder{
     border-radius: 5px;
 }
 
-.item-table-for-user {
+.user-table{
     width: 670px;
+    border-width: 20px;
     border-collapse: collapse;
     margin-top: 20px;
     position:absolute;
     top: 20%;
     left: 25%;
-
 }
 
-.item-table-for-user th, .item-table-for-user td {
+.user-table th, .user-table td {
     border: 2px solid black;
     padding: 12px;
     text-align: left;
     color: black;
 }
 
-.item-table-for-user th {
+.user-table th {
     background-color: #164986;
     color: white;
 }
 
-.item-table-for-user tr:nth-child(even) {
+.user-table tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
