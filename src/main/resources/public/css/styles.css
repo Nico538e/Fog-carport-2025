@@ -187,7 +187,7 @@ input::placeholder{
     border-radius: 5px;
 }
 
-.user-order-table {
+.item-table-for-user {
     width: 670px;
     border-collapse: collapse;
     margin-top: 20px;
@@ -196,19 +196,19 @@ input::placeholder{
     left: 25%;
 }
 
-.user-order-table th, .user-order-table td {
+.item-table-for-user th, .item-table-for-user td {
     border: 2px solid black;
     padding: 12px;
     text-align: left;
     color: black;
 }
 
-.user-order-table th {
+.item-table-for-user th {
     background-color: #164986;
     color: white;
 }
 
-.user-order-table tr:nth-child(even) {
+.item-table-for-user tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
@@ -371,7 +371,7 @@ input::placeholder{
 .grey-container{
     display: flex;
     align-items: center;
-    width: 380px;
+    width: 90%;
     height: 240px;
     margin: 1rem auto;
     background-color: #ededed;
@@ -384,7 +384,7 @@ input::placeholder{
     text-align: center;
     padding: 2rem;
     width: 90%;
-    height: auto;
+    height: 600px;
 }
 
 .carport-selection h2{
@@ -476,6 +476,48 @@ font-size: 1rem;
     margin: 0.2rem 0;
 }
 
+/***** customerpage / materialList*****/
+
+.item-table-for-user {
+    border-collapse: collapse;
+    margin-top: 180px;
+}
+
+.item-table-for-user th, .item-table-for-user td {
+    border: 2px solid black;
+    padding: 12px;
+    text-align: left;
+    color: black;
+}
+
+.item-table-for-user th {
+    background-color: #164986;
+    color: white;
+}
+
+.item-table-for-user tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+
+.back-button{
+    display: flex;
+    align-items: center;
+    text-align: center;
+    background-color: #164986;
+    color: white;
+    border-color:#164986;
+    padding: 0.90rem 4rem;
+    border-radius: 5px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.back-button:hover{
+    background-color: #b6c8de;
+    color: #272b30;
+}
+
 /***** Inspiration side *****/
 
 .image-row {
@@ -493,6 +535,7 @@ font-size: 1rem;
     border-radius: 8px; /* valgfrit: runde hjørner */
 
 }
+
 
 
 
