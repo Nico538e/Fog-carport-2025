@@ -1,32 +1,29 @@
 package app.controllers;
 
 import app.DTO.UserDTO;
-import app.entities.Orders;
+import app.entities.Order;
 import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
+import app.persistence.OrderMapper;
 import app.persistence.UserMapper;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
-import java.lang.invoke.StringConcatException;
-import java.math.BigDecimal;
 import java.util.List;
 
 public class UserController {
     public static void addRoutes(Javalin app, ConnectionPool connectionPool) {
-        app.get("/adminPage1", ctx -> UserController.watchOrders(ctx, connectionPool));
         app.post("/adminPage2", ctx -> UserController.getUserOrderForm(ctx, connectionPool));
-        app.post("/saveChangeAdminPage1", ctx -> UserController.updateUserOrder(ctx, connectionPool));
+        app.post("/saveChangeAdminPage1", ctx -> UserController.updateUserInfo(ctx, connectionPool));
 
         app.post("/login", ctx -> login(ctx, connectionPool));
         app.get("login", ctx -> ctx.render("login.html"));
         app.get("logout", ctx -> logout(ctx));
         app.post("/addUser", ctx-> createUser(ctx, connectionPool));
         app.post("/designCarport", ctx -> handleOrderSelections(ctx));
-        app.get("/customerPage", ctx -> showCustomerPage(ctx, connectionPool));
     }
 
     public static void login(Context ctx, ConnectionPool connectionPool) {
@@ -96,26 +93,23 @@ public class UserController {
         int userId = Integer.parseInt(ctx.formParam("userId"));
 
         try{
-            UserDTO userDTO = UserMapper.getUserNameAndOrderIdByUserId(connectionPool, userId);
             User user = UserMapper.adminGetUserDataByUserid(connectionPool, userId);
-            ctx.attribute("userDTO", userDTO);
             ctx.attribute("user", user);
-            ctx.attribute("userId", userId);
             ctx.render("adminPage2.html");
 
         }catch(DatabaseException e){
             ctx.status(500);
-            ctx.attribute("message", "Failed could not get the user information");
+            ctx.attribute("message", "Failed could not get the user information and price of order");
             ctx.render("adminPage1.html");
         }
     }
 
-    public static void updateUserOrder(Context ctx, ConnectionPool connectionPool){
+
+    public static void updateUserInfo(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         int userId = Integer.parseInt(ctx.formParam("userId"));
 
         try{
             String userName = ctx.formParam("userName");
-            String costPrice = ctx.formParam("costPrice");
             String userEmail = ctx.formParam("userEmail");
             String userTlf = ctx.formParam("userTlf");
             String address = ctx.formParam("address");
@@ -125,11 +119,6 @@ public class UserController {
 
             if(userName == null){
                 userName = userExists.getUserName();
-            }
-
-
-            if(costPrice == null) {
-                costPrice = userExists.getCostPrice().toString();
             }
 
             if(userEmail == null){
@@ -147,11 +136,6 @@ public class UserController {
             // updater user info by comparing user and already existing userData
             if(!userName.equals(userExists.getUserName())){
                 UserMapper.updateUserName(connectionPool, userName, userId);
-            }
-
-            BigDecimal price = new BigDecimal(costPrice);
-            if(!price.equals(userExists.getCostPrice())){
-                UserMapper.updateCostPrice(connectionPool, price, userId);
             }
 
             if(!userEmail.equals(userExists.getUserEmail())){
@@ -265,23 +249,6 @@ public class UserController {
             sb.append(chars.charAt(index));
         }
         return sb.toString();
-    }
-
-    public static String showCustomerPage(Context ctx, ConnectionPool connectionPool) {
-        User currentUser = ctx.sessionAttribute("currentUser");
-        Orders order = ctx.sessionAttribute("order");
-
-        if (currentUser == null) {
-            ctx.redirect("/login");
-            return null;
-        }
-
-
-        ctx.attribute("currentUser", currentUser);
-        ctx.attribute("order", order);
-
-        ctx.render("customerPage.html");
-        return null;
     }
 
 }

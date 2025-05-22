@@ -13,16 +13,8 @@ public class UserDTO {
         return orderId;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
     public void setOrderId(int orderId) {
         this.orderId = orderId;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
     }
 
     @Override
