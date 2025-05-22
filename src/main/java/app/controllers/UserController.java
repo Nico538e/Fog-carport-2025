@@ -26,6 +26,7 @@ public class UserController {
         app.get("logout", ctx -> logout(ctx));
         app.post("/addUser", ctx-> createUser(ctx, connectionPool));
         app.post("/designCarport", ctx -> handleOrderSelections(ctx));
+        app.get("/customerPage", ctx -> showCustomerPage(ctx, connectionPool));
     }
 
     public static void login(Context ctx, ConnectionPool connectionPool) {
@@ -264,6 +265,23 @@ public class UserController {
             sb.append(chars.charAt(index));
         }
         return sb.toString();
+    }
+
+    public static String showCustomerPage(Context ctx, ConnectionPool connectionPool) {
+        User currentUser = ctx.sessionAttribute("currentUser");
+        Orders order = ctx.sessionAttribute("order");
+
+        if (currentUser == null) {
+            ctx.redirect("/login");
+            return null;
+        }
+
+
+        ctx.attribute("currentUser", currentUser);
+        ctx.attribute("order", order);
+
+        ctx.render("customerPage.html");
+        return null;
     }
 
 }
