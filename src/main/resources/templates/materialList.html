@@ -1,62 +1,65 @@
-
 <!DOCTYPE html>
-<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <title>materialList</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Materialeliste</title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}" href="../public/css/styles.css">
+    <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
 </head>
+
 <body>
 
-<!-- NAVIGATIONSBAR -->
+<!-- Navigation -->
 <nav class="navbar">
     <div class="logo">
-        <a th:href="@{/}">
-            <img th:src="@{/images/fog_logo.png}" src="../public/images/fog_logo.png" alt="FOG logo" width="200">
-        </a>
+        <img src="../public/images/fog_logo.png" th:src="@{/images/fog_logo.png}" width="32%" />
     </div>
     <ul class="nav-links">
         <li><a th:href="@{/}">Hjem</a></li>
-        <li><a th:href="@{/designCarport}">Design din carport</a></li>
-        <li><a th:href="@{/inspiration}">Inspiration</a></li>
-        <li><a th:href="@{/aboutOurCarports}">Om carporte</a></li>
+        <li><a th:href="@{/designCarport}">Design din egen carport</a></li>
+        <li><a th:href="@{/inspiration}">Få inspiration</a></li>
+        <li><a th:href="@{/aboutOurCarports}">Om vores Carporte</a></li>
         <li><a th:href="@{/login}">Logout</a></li>
     </ul>
 </nav>
 
-<!-- MATERIALER -->
-<div class="user-order-container">
+<!-- Materialeliste-indhold -->
+<div class="grey-container carport-selection ">
+
     <h2>Materialeliste for ordre <span th:text="${order.orderId}"></span></h2>
     <p>
-        Kunde: <span th:text="${currentUser.userName}"></span> |
-        Email: <span th:text="${currentUser.userEmail}"></span>
+        Email: <strong th:text="${currentUser.userEmail}"></strong>
     </p>
 
-    <table class="user-order-table">
-        <thead>
-        <tr>
-            <th>Varenavn</th>
-            <th>Antal</th>
-            <th>Længde (mm)</th>
-            <th>Enhedspris (kr)</th>
-            <th>Totalpris (kr)</th>
-            <th>Beskrivelse</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="line : ${orderLines}">
-            <td th:text="${line.itemVariant.item.itemName}"></td>
-            <td th:text="${line.itemPackageAmount}"></td>
-            <td th:text="${line.itemVariant.variantLength}"></td>
-            <td th:text="${line.costPrice}"></td>
-            <td th:text="${line.itemPackageAmount * line.costPrice}"></td>
-            <td th:text="${line.description}"></td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="carport-selection h2" style="overflow-x:auto; width: 100%">
+        <table class="item-table-for-user">
+            <thead>
+            <tr>
+                <th>Varenavn</th>
+                <th>Antal</th>
+                <th>Længde (mm)</th>
+                <th>Enhedspris (kr)</th>
+                <th>Totalpris (kr)</th>
+                <th>Beskrivelse</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="line : ${orderLines}">
+                <td th:text="${line.itemVariant.item.itemName}"></td>
+                <td th:text="${line.itemPackageAmount}"></td>
+                <td th:text="${line.itemVariant.variantLength}"></td>
+                <td th:text="${line.costPrice}"></td>
+                <td th:text="${line.itemPackageAmount * line.costPrice}"></td>
+                <td th:text="${line.description}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <form method="post" th:action="@{/costumerPage}">
+        <input type="hidden" name="userId" th:value="${currentUser.userId}">
+        <button type="submit" class="back-button">Tilbage</button>
+    </form>
 </div>
-
 
 </body>
 </html>

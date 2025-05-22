@@ -20,7 +20,7 @@ public class CarportController {
 
     public static void addRoutes(Javalin app, ConnectionPool connectionPool){
         app.get("/carportInfo", ctx -> CarportController.showSvgDrawing(ctx));
-        app.get("/inspiration", ctx -> ctx.redirect(""));
+        app.get("/inspiration", ctx -> ctx.render("inspiration.html"));
         app.get("/aboutOurCarports", ctx -> ctx.render("aboutOurCarports.html"));
         app.get("/goDesign", ctx -> ctx.render("designCarport.html"));
         app.get("/designCarport", ctx -> ctx.render("designCarport.html"));
@@ -54,7 +54,7 @@ public class CarportController {
                 .add("to", user.getUserEmail())
                 .add("subject", "Bestilling af carport")
                 .add("text", "Tak for din interesse, \n" +
-                        "her er dit password, som du kan logge ind med den mail du sendte ind: \n\n" +
+                        "Nu kan du til en hver tid logge ind og tjekke din forespørgelse: \n\n" +
                         "Mail: " + user.getUserEmail() + "\n" +
                         "Password: " + password + "\n\n" )
                 .build();
