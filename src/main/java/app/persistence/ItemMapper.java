@@ -117,7 +117,7 @@ public class ItemMapper {
                 String itemPackageType = rs.getString("item_package_type");
                 int itemCostPrice = rs.getInt("item_cost_price");
 
-                return new Item(itemId, itemName, itemType,itemPackageType, itemCostPrice);
+                return new Item(itemId, itemName, itemType, itemPackageType, itemCostPrice);
             }
 
         } catch (SQLException e) {
@@ -131,13 +131,13 @@ public class ItemMapper {
         List<ItemVariant> variants = new ArrayList<>();
 
         String sql = """
-        SELECT iv.variant_id, iv.variant_length,
-               i.item_id, i.item_name, i.item_height, i.item_width, i.item_type_id, i.item_package_type, i.item_cost_price
-        FROM variants iv
-        JOIN item i ON iv.item_id = i.item_id
-        WHERE i.item_type_id = ? AND iv.variant_length >= ?
-        ORDER BY iv.variant_length ASC
-        """;
+                SELECT iv.variant_id, iv.variant_length,
+                       i.item_id, i.item_name, i.item_height, i.item_width, i.item_type_id, i.item_package_type, i.item_cost_price
+                FROM variants iv
+                JOIN item i ON iv.item_id = i.item_id
+                WHERE i.item_type_id = ? AND iv.variant_length >= ?
+                ORDER BY iv.variant_length ASC
+                """;
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {

@@ -2,8 +2,8 @@ package app.services;
 
 import app.entities.Item;
 import app.entities.ItemVariant;
-import app.entities.OrderLine;
 import app.entities.Order;
+import app.entities.OrderLine;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.ItemMapper;
@@ -13,7 +13,6 @@ import java.util.List;
 
 public class Calculator {
 
-    // Konstanter for item_type_id i databasen (skal matche din DB)
     private static final int POSTS = 1;   // Stolper
     private static final int BEAMS = 2;   // Remme
     private static final int RAFTERS = 2; // Spær
@@ -25,18 +24,12 @@ public class Calculator {
         this.connectionPool = connectionPool;
     }
 
-    /**
-     * Hovedmetode til beregning af alle materialer til en carport
-     */
     public void calculate(Order order) throws DatabaseException {
         calcPosts(order);
         calcBeams(order);
         calcRafters(order);
     }
 
-    /**
-     * Beregner stolper og tilføjer til orderLines
-     */
     private void calcPosts(Order order) throws DatabaseException {
         int length = order.getLength();
 
@@ -66,9 +59,6 @@ public class Calculator {
         return 2 * (2 + (length - 130) / 310); // 310 cm afstand mellem stolper
     }
 
-    /**
-     * Beregner remme (beams) og tilføjer til orderLines
-     */
     private void calcBeams(Order order) throws DatabaseException {
         int length = order.getLength();
         int quantity = 2; // én på hver side
@@ -93,9 +83,6 @@ public class Calculator {
         orderLines.add(orderLine);
     }
 
-    /**
-     * Beregner spær og tilføjer til orderLines
-     */
     private void calcRafters(Order order) throws DatabaseException {
         int length = order.getLength();
         int width = order.getWidth();

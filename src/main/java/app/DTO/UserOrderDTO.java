@@ -31,7 +31,7 @@ public class UserOrderDTO {
     }
 
     //adminPage1
-    public UserOrderDTO(int userId, int orderId, String userName, String userEmail, int userTlf, String address, int length, int width){
+    public UserOrderDTO(int userId, int orderId, String userName, String userEmail, int userTlf, String address, int length, int width) {
         this.userId = userId;
         this.orderId = orderId;
         this.userName = userName;

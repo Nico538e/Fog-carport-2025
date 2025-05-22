@@ -2,12 +2,9 @@ package app.persistence;
 
 
 import app.DTO.UserDTO;
-import app.DTO.UserOrderDTO;
-import app.entities.Order;
-
 import app.entities.User;
 import app.exceptions.DatabaseException;
-import java.math.BigDecimal;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -45,7 +42,7 @@ public class UserMapper {
         }
     }
 
-    public static List<User> getUserNamesAndUserId (ConnectionPool connectionPool, String role) throws DatabaseException {
+    public static List<User> getUserNamesAndUserId(ConnectionPool connectionPool, String role) throws DatabaseException {
         List<User> userNameList = new ArrayList<>();
         String sql = "SELECT user_id, user_name  FROM users where role = 'postgres'";
 
@@ -88,7 +85,7 @@ public class UserMapper {
 
 
                 User user = new User(userId, userName, userEmail, userTlf, address);
-                user.addOrders(OrderMapper.getOrdersByUserId(connectionPool,userId));
+                user.addOrders(OrderMapper.getOrdersByUserId(connectionPool, userId));
                 userNameList.add(user);
             }
 
@@ -98,17 +95,17 @@ public class UserMapper {
         return userNameList;
     }
 
-    public static User getUserByEmail(ConnectionPool connectionPool, String email) throws DatabaseException{
+    public static User getUserByEmail(ConnectionPool connectionPool, String email) throws DatabaseException {
         String SQL = "SELECT * FROM users WHERE user_email = ?";
 
-        try(Connection connection = connectionPool.getConnection();
-            PreparedStatement ps = connection.prepareStatement(SQL)
-        ){
-            ps.setString(1,email);
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(SQL)
+        ) {
+            ps.setString(1, email);
 
             ResultSet rs = ps.executeQuery();
 
-            if(rs.next()){
+            if (rs.next()) {
                 int userId = rs.getInt("user_id");
                 String userName = rs.getString("user_name");
                 String password = rs.getString("user_password");
@@ -118,10 +115,10 @@ public class UserMapper {
                 String address = rs.getString("user_address");
 
                 return new User(userId, userName, password, role, userEmail, tlf, address);
-            } else{
+            } else {
                 throw new DatabaseException("Failed trying to find user email");
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new DatabaseException("Failed trying to get user email", e);
         }
 
@@ -168,8 +165,8 @@ public class UserMapper {
                 int userTlf = rs.getInt("user_tlf");
                 String address = rs.getString("user_address");
 
-                  return new User(userId, userName, userEmail, userTlf, address);
-            }else{
+                return new User(userId, userName, userEmail, userTlf, address);
+            } else {
                 throw new DatabaseException("The user was not found: " + userId);
             }
         } catch (SQLException e) {
@@ -196,8 +193,8 @@ public class UserMapper {
                 int orderId = rs.getInt("order_id");
                 String userName = rs.getString("user_name");
                 return new UserDTO(orderId, userName);
-            }else{
-                throw  new DatabaseException("The userName and orderId was not found");
+            } else {
+                throw new DatabaseException("The userName and orderId was not found");
             }
         } catch (SQLException e) {
             throw new DatabaseException("Failed trying to get orderId and userName" + e.getMessage());
@@ -226,68 +223,68 @@ public class UserMapper {
         }
     }
 
-    public static void updateUserEmail(ConnectionPool connectionPool, String userEmail, int userId) throws DatabaseException{
+    public static void updateUserEmail(ConnectionPool connectionPool, String userEmail, int userId) throws DatabaseException {
         String sql = "update users set user_email = ? " +
                 "where user_id = ? and role='postgres'";
 
-        try(Connection connection = connectionPool.getConnection();
-            PreparedStatement ps = connection.prepareStatement(sql)
-        ){
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
             ps.setString(1, userEmail);
             ps.setInt(2, userId);
 
             int rowsAffected = ps.executeUpdate();
 
-            if(rowsAffected != 1){
+            if (rowsAffected != 1) {
                 throw new DatabaseException("Failed while trying to update userEmail");
             }
 
 
-        }catch(SQLException e){
+        } catch (SQLException e) {
             throw new DatabaseException("Failed while trying to update userEmail" + e.getMessage());
         }
     }
 
-    public static void updateUserTlf(ConnectionPool connectionPool, int userTlf , int userId) throws DatabaseException{
+    public static void updateUserTlf(ConnectionPool connectionPool, int userTlf, int userId) throws DatabaseException {
         String sql = "update users set user_tlf = ? " +
                 "where user_id = ? and role='postgres'";
 
-        try(Connection connection = connectionPool.getConnection();
-            PreparedStatement ps = connection.prepareStatement(sql)
-        ){
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
             ps.setInt(1, userTlf);
             ps.setInt(2, userId);
 
             int rowsAffected = ps.executeUpdate();
 
-            if(rowsAffected != 1){
+            if (rowsAffected != 1) {
                 throw new DatabaseException("Failed while trying to update userTlf");
             }
 
 
-        }catch(SQLException e){
+        } catch (SQLException e) {
             throw new DatabaseException("Failed while trying to update userTlf" + e.getMessage());
         }
     }
 
-    public static void updateUserAddress(ConnectionPool connectionPool, String userAddress , int userId) throws DatabaseException{
+    public static void updateUserAddress(ConnectionPool connectionPool, String userAddress, int userId) throws DatabaseException {
         String sql = "update users set user_address = ? " +
                 "where user_id = ? and role='postgres'";
 
-        try(Connection connection = connectionPool.getConnection();
-            PreparedStatement ps = connection.prepareStatement(sql)
-        ){
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
             ps.setString(1, userAddress);
             ps.setInt(2, userId);
 
             int rowsAffected = ps.executeUpdate();
 
-            if(rowsAffected != 1){
+            if (rowsAffected != 1) {
                 throw new DatabaseException("Failed while trying to update userTlf");
             }
 
 
-        }catch(SQLException e){
+        } catch (SQLException e) {
             throw new DatabaseException("Failed while trying to update userTlf" + e.getMessage());
         }
     }
