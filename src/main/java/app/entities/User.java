@@ -1,6 +1,8 @@
 package app.entities;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 public class User {
 
@@ -11,8 +13,7 @@ public class User {
     private String userEmail;
     private int userTlf;
     private String address;
-    private int orderId;
-    private BigDecimal costPrice;
+    private List<Order> orders = new ArrayList<>();
 
     public User(int userId, String userName, String userPassword, String role, String userEmail, int userTlf, String address) {
         this.userId = userId;
@@ -21,6 +22,7 @@ public class User {
         this.role = role;
         this.userEmail = userEmail;
         this.userTlf = userTlf;
+
         this.address = address;
     }
     public User(int userTlf, String userEmail, String role, String userPassword, String userName) {
@@ -39,12 +41,11 @@ public class User {
     //Show all users with order info in a table on adminPage1
     public User(int userId, int orderId, String userName, String userEmail, int userTlf, String address, BigDecimal costPrice){
         this.userId = userId;
-        this.orderId = orderId;
         this.userName = userName;
         this.userEmail = userEmail;
         this.userTlf = userTlf;
         this.address = address;
-        this.costPrice = costPrice;
+
     }
 
     public User(String userName, String userPassword, String role, String userEmail, int userTlf, String address){
@@ -58,9 +59,8 @@ public class User {
 
 
     //One specific user to change they are set to be in the input fields on adminPage2
-    public User(String userName, BigDecimal costPrice, String userEmail, int userTlf, String address){
+    public User(String userName, String userEmail, int userTlf, String address){
         this.userName = userName;
-        this.costPrice = costPrice;
         this.userEmail = userEmail;
         this.userTlf = userTlf;
         this.address = address;
@@ -68,8 +68,25 @@ public class User {
 
 
     public User(String userName, int orderId) {
-        this.orderId = orderId;
+
         this.userName = userName;
+    }
+
+    public User(int userId, String userName, String userEmail, int userTlf, String address) {
+        this.userId = userId;
+        this.userName = userName;
+        this.userEmail = userEmail;
+        this.userTlf = userTlf;
+        this.address = address;
+    }
+
+
+    public void addOrder(Order order){
+        this.orders.add(order);
+    }
+
+    public void addOrders(List<Order> orders){
+        this.orders.addAll(orders);
     }
 
     public int getUserId() {
@@ -96,17 +113,8 @@ public class User {
         return userTlf;
     }
 
-
     public String getAddress() {
         return address;
-    }
-
-    public int getOrderId() {
-        return orderId;
-    }
-
-    public BigDecimal getCostPrice() {
-        return costPrice;
     }
 
 
@@ -138,13 +146,6 @@ public class User {
         this.address = address;
     }
 
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
-    }
-
-    public void setCostPrice(BigDecimal costPrice) {
-        this.costPrice = costPrice;
-    }
 
     @Override
     public String toString() {
@@ -156,8 +157,7 @@ public class User {
                 ", userEmail='" + userEmail + '\'' +
                 ", userTlf=" + userTlf +
                 ", address='" + address + '\'' +
-                ", orderId=" + orderId +
-                ", costPrice=" + costPrice +
+                ", orders=" + orders +
                 '}';
     }
 }

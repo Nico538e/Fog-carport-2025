@@ -2,7 +2,8 @@ package app.persistence;
 
 
 import app.DTO.UserDTO;
-import app.entities.Orders;
+import app.DTO.UserOrderDTO;
+import app.entities.Order;
 
 import app.entities.User;
 import app.exceptions.DatabaseException;
@@ -44,7 +45,7 @@ public class UserMapper {
         }
     }
 
-    public static List<User> getAllUsers(ConnectionPool connectionPool, String role) throws DatabaseException {
+    public static List<User> getUserNamesAndUserId (ConnectionPool connectionPool, String role) throws DatabaseException {
         List<User> userNameList = new ArrayList<>();
         String sql = "SELECT user_id, user_name  FROM users where role = 'postgres'";
 
@@ -68,42 +69,33 @@ public class UserMapper {
         return userNameList;
     }
 
-    public static List<Orders> getOrdersByUserId(ConnectionPool connectionPool, int userId) throws DatabaseException {
-        List<Orders> ordersList = new ArrayList<>();
-        String sql = "SELECT * FROM orders Where user_id = ?";
+    public static List<User> getAllUsers(ConnectionPool connectionPool) throws DatabaseException {
+        List<User> userNameList = new ArrayList<>();
+        String sql = "SELECT user_id, user_name, user_email, user_tlf, user_address  FROM users where role = 'postgres'";
+
 
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)
-        ) {
-            ps.setInt(1, userId);
-            ResultSet rs = ps.executeQuery();
+             PreparedStatement ps = connection.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
 
             while (rs.next()) {
-                int orderId = rs.getInt("order_id");
-                Orders order = new Orders(orderId, userId);
-                ordersList.add(order);
+                int userId = rs.getInt("user_id");
+                String userName = rs.getString("user_name");
+                String userEmail = rs.getString("user_email");
+                int userTlf = rs.getInt("user_tlf");
+                String address = rs.getString("user_address");
+
+
+                User user = new User(userId, userName, userEmail, userTlf, address);
+                user.addOrders(OrderMapper.getOrdersByUserId(connectionPool,userId));
+                userNameList.add(user);
             }
 
         } catch (SQLException e) {
-            throw new DatabaseException("Failed could not get the order from the specific user: " + userId, e);
+            throw new DatabaseException("Failed trying to get all userNames", e);
         }
-        return ordersList;
-    }
-
-    public static void createOrders(ConnectionPool connectionPool, int userId, int length, int width) throws DatabaseException{
-        String sql = "INSERT INTO orders(user_id, carport_length, carport_width) VALUES (?,?,?)";
-        try(Connection connection = connectionPool.getConnection();
-            PreparedStatement ps = connection.prepareStatement(sql)
-        ) {
-            ps.setInt(1,userId);
-            ps.setInt(2,length);
-            ps.setInt(3,width);
-
-            ps.executeUpdate();
-
-        }catch(SQLException e){
-            throw new DatabaseException("Failed to insert order into database", e);
-        }
+        return userNameList;
     }
 
     public static User getUserByEmail(ConnectionPool connectionPool, String email) throws DatabaseException{
@@ -135,49 +127,8 @@ public class UserMapper {
 
     }
 
-    public static List<User> adminGetUserWithOrders(ConnectionPool connectionPool) throws DatabaseException {
-        List<User> userOrderList = new ArrayList<>();
-
-        String sql = "SELECT u.user_id, " +
-                "o.order_id, " +
-                "u.user_name, " +
-                "u.user_email, " +
-                "u.user_tlf, " +
-                "u.user_address, " +
-                "u.is_paid_status, " +
-                "ol.cost_price " +
-                "FROM orders o " +
-                "join users u on o.user_id = u.user_id " +
-                "join order_line ol on o.order_id = ol.order_id " +
-                "where u.role = 'postgres' " +
-                "and o.order_id is not null ";
-
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)
-        ) {
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                int userId = rs.getInt("user_id");
-                int orderId = rs.getInt("order_id");
-                String userName = rs.getString("user_name");
-                String userEmail = rs.getString("user_email");
-                int tlf = rs.getInt("user_tlf");
-                String address = rs.getString("user_address");
-                BigDecimal costPrice = rs.getBigDecimal("cost_price");
-
-                User showUserOrders = new User(userId, orderId, userName, userEmail, tlf, address, costPrice);
-                userOrderList.add(showUserOrders);
-            }
-
-        } catch (SQLException e) {
-            System.out.println("Failed could not get the order and user details of the user " + e.getMessage());
-        }
-        return userOrderList;
-    }
-
     public static void createNewUser(User user, ConnectionPool connectionPool) throws DatabaseException {
-        String sql = "INSERT INTO users(user_name, user_password, role, user_email, user_tlf, is_paid_status, user_address) VALUES (?, ?, ?, ?, ?, ?, ?) ";
+        String sql = "INSERT INTO users(user_name, user_password, role, user_email, user_tlf, user_address) VALUES (?, ?, ?, ?, ?, ?) ";
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)
@@ -187,7 +138,7 @@ public class UserMapper {
             ps.setString(3, user.getRole());
             ps.setString(4, user.getUserEmail());
             ps.setInt(5, user.getUserTlf());
-            ps.setString(7, user.getAddress());
+            ps.setString(6, user.getAddress());
             ps.executeUpdate();
 
         } catch (SQLException e) {
@@ -196,16 +147,13 @@ public class UserMapper {
     }
 
     public static User adminGetUserDataByUserid(ConnectionPool connectionPool, int userId) throws DatabaseException {
-        String sql = "select u.user_name, " +
-                "ol.cost_price, " +
-                "u.user_email, " +
-                "u.user_tlf, " +
-                "u.user_address " +
-                "from order_line ol " +
-                "join users u on ol.user_id = u.user_id " +
-                "where u.role= 'postgres' " +
-                "and ol.order_id is not null " +
-                "and u.user_id = ?";
+        String sql = "select user_name, " +
+                "user_email, " +
+                "user_tlf, " +
+                "user_address " +
+                "from users " +
+                "where role= 'postgres' " +
+                "and user_id = ?";
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)
@@ -216,12 +164,11 @@ public class UserMapper {
 
             if (rs.next()) {
                 String userName = rs.getString("user_name");
-                BigDecimal costPrice = rs.getBigDecimal("cost_price");
                 String userEmail = rs.getString("user_email");
                 int userTlf = rs.getInt("user_tlf");
                 String address = rs.getString("user_address");
 
-                  return new User(userName, costPrice, userEmail, userTlf, address);
+                  return new User(userId, userName, userEmail, userTlf, address);
             }else{
                 throw new DatabaseException("The user was not found: " + userId);
             }
@@ -230,6 +177,7 @@ public class UserMapper {
         }
     }
 
+    // rediger eller slet
     public static UserDTO getUserNameAndOrderIdByUserId(ConnectionPool connectionPool, int userId) throws DatabaseException {
         String sql = "select o.order_id, u.user_name " +
                 "from orders o " +
@@ -275,28 +223,6 @@ public class UserMapper {
 
         } catch (SQLException e) {
             throw new DatabaseException("Failed while trying to update userName." + e.getMessage());
-        }
-    }
-
-    public static void updateCostPrice(ConnectionPool connectionPool, BigDecimal costPrice, int userId) throws DatabaseException {
-        String sql = "update order_line set cost_price = ? " +
-                "where user_id = ? and role='postgres'";
-
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)
-        ) {
-            ps.setBigDecimal(1, costPrice);
-            ps.setInt(2, userId);
-
-            int rowsAffected = ps.executeUpdate();
-
-            if (rowsAffected != 1) {
-                throw new DatabaseException("Failed while trying to update costPrice");
-            }
-
-
-        } catch (SQLException e) {
-            throw new DatabaseException("Failed while trying to update costPrice" + e.getMessage());
         }
     }
 

@@ -1,7 +1,5 @@
 package app.entities;
 
-import javax.lang.model.element.NestingKind;
-
 public class OrderLine {
     private int orderLineId;
     private int orderId;
@@ -9,7 +7,7 @@ public class OrderLine {
     private int itemId;
     private int costPrice;
     private ItemVariant itemVariant;
-    private Orders orders;
+    private Order order;
     private String description;
     private int itemPackageAmount;
 
@@ -22,18 +20,18 @@ public class OrderLine {
         this.costPrice = costPrice;
     }
 
-    public OrderLine(int orderLineId, Orders orders, int userId, int itemId, int costPrice, ItemVariant itemVariant) {
+    public OrderLine(int orderLineId, Order order, int userId, int itemId, int costPrice, ItemVariant itemVariant) {
         this.orderLineId = orderLineId;
-        this.orders = orders;
+        this.order = order;
         this.userId = userId;
         this.itemId = itemId;
         this.costPrice = costPrice;
         this.itemVariant = itemVariant;
     }
 
-    public OrderLine(int orderLineId, Orders orders, int userId, int itemId, int costPrice, ItemVariant itemVariant, String description) {
+    public OrderLine(int orderLineId, Order order, int userId, int itemId, int costPrice, ItemVariant itemVariant, String description) {
         this.orderLineId = orderLineId;
-        this.orders = orders;
+        this.order = order;
         this.userId = userId;
         this.itemId = itemId;
         this.costPrice = costPrice;
@@ -41,14 +39,14 @@ public class OrderLine {
         this.description = description;
     }
 
-    public OrderLine(int orderLineId, int orderId, int userId, int itemId, int costPrice, ItemVariant itemVariant, Orders orders, String description, int itemPackageAmount) {
+    public OrderLine(int orderLineId, int orderId, int userId, int itemId, int costPrice, ItemVariant itemVariant, Order order, String description, int itemPackageAmount) {
         this.orderLineId = orderLineId;
         this.orderId = orderId;
         this.userId = userId;
         this.itemId = itemId;
         this.costPrice = costPrice;
         this.itemVariant = itemVariant;
-        this.orders = orders;
+        this.order = order;
         this.description = description;
         this.itemPackageAmount = itemPackageAmount;
     }
@@ -69,12 +67,12 @@ public class OrderLine {
         this.itemVariant = itemVariant;
     }
 
-    public Orders getOrders() {
-        return orders;
+    public Order getOrders() {
+        return order;
     }
 
-    public void setOrders(Orders orders) {
-        this.orders = orders;
+    public void setOrders(Order order) {
+        this.order = order;
     }
 
     public String getDescription() {
@@ -134,7 +132,7 @@ public class OrderLine {
                 ", itemId=" + itemId +
                 ", costPrice=" + costPrice +
                 ", itemVariant=" + itemVariant +
-                ", orders=" + orders +
+                ", orders=" + order +
                 ", description='" + description + '\'' +
                 '}';
     }

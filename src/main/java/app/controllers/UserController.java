@@ -1,25 +1,21 @@
 package app.controllers;
 
-import app.DTO.UserDTO;
-import app.entities.Orders;
 import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
+import app.persistence.OrderMapper;
 import app.persistence.UserMapper;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
-import java.lang.invoke.StringConcatException;
-import java.math.BigDecimal;
 import java.util.List;
 
 public class UserController {
     public static void addRoutes(Javalin app, ConnectionPool connectionPool) {
-        app.get("/adminPage1", ctx -> UserController.watchOrders(ctx, connectionPool));
         app.post("/adminPage2", ctx -> UserController.getUserOrderForm(ctx, connectionPool));
-        app.post("/saveChangeAdminPage1", ctx -> UserController.updateUserOrder(ctx, connectionPool));
+        app.post("/saveChangeAdminPage1", ctx -> UserController.updateUserInfo(ctx, connectionPool));
 
         app.post("/login", ctx -> login(ctx, connectionPool));
         app.get("login", ctx -> ctx.render("login.html"));
@@ -65,7 +61,7 @@ public class UserController {
 
     public static void getUserOptions(Context ctx, ConnectionPool connectionPool) {
         try {
-            List<User> users = UserMapper.getAllUsers(connectionPool, "postgres");
+            List<User> users = UserMapper.getAllUsers(connectionPool);
 
             ctx.attribute("users", users);
             ctx.render("index.html"); //change filepath
@@ -77,44 +73,28 @@ public class UserController {
         }
     }
 
-    public static void watchOrders(Context ctx, ConnectionPool connectionPool){
-        try {
-            List<User> userOrder = UserMapper.adminGetUserWithOrders(connectionPool);
 
-            ctx.attribute("userOrder", userOrder);
-            ctx.render("adminPage1.html");
-
-        }catch(DatabaseException e){
-            ctx.status(500);
-            ctx.attribute("message", "Failed trying to get the users order data");
-            ctx.render("adminPage1.html");
-        }
-    }
-
-    public static void getUserOrderForm(Context ctx, ConnectionPool connectionPool){
+    public static void getUserOrderForm(Context ctx, ConnectionPool connectionPool) {
         int userId = Integer.parseInt(ctx.formParam("userId"));
 
         try{
-            UserDTO userDTO = UserMapper.getUserNameAndOrderIdByUserId(connectionPool, userId);
             User user = UserMapper.adminGetUserDataByUserid(connectionPool, userId);
-            ctx.attribute("userDTO", userDTO);
             ctx.attribute("user", user);
-            ctx.attribute("userId", userId);
             ctx.render("adminPage2.html");
 
         }catch(DatabaseException e){
             ctx.status(500);
-            ctx.attribute("message", "Failed could not get the user information");
+            ctx.attribute("message", "Failed could not get the user information and price of order");
             ctx.render("adminPage1.html");
         }
     }
 
-    public static void updateUserOrder(Context ctx, ConnectionPool connectionPool){
+
+    public static void updateUserInfo(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         int userId = Integer.parseInt(ctx.formParam("userId"));
 
         try{
             String userName = ctx.formParam("userName");
-            String costPrice = ctx.formParam("costPrice");
             String userEmail = ctx.formParam("userEmail");
             String userTlf = ctx.formParam("userTlf");
             String address = ctx.formParam("address");
@@ -124,11 +104,6 @@ public class UserController {
 
             if(userName == null){
                 userName = userExists.getUserName();
-            }
-
-
-            if(costPrice == null) {
-                costPrice = userExists.getCostPrice().toString();
             }
 
             if(userEmail == null){
@@ -146,11 +121,6 @@ public class UserController {
             // updater user info by comparing user and already existing userData
             if(!userName.equals(userExists.getUserName())){
                 UserMapper.updateUserName(connectionPool, userName, userId);
-            }
-
-            BigDecimal price = new BigDecimal(costPrice);
-            if(!price.equals(userExists.getCostPrice())){
-                UserMapper.updateCostPrice(connectionPool, price, userId);
             }
 
             if(!userEmail.equals(userExists.getUserEmail())){
@@ -199,9 +169,10 @@ public class UserController {
 
             //Standart values
             String role = "postgres";
+            boolean isPaidStatus = false;
 
             // check if user exist
-            List<User> checkAllUsers = UserMapper.getAllUsers(connectionPool, "postgres");
+            List<User> checkAllUsers = UserMapper.getUserNamesAndUserId(connectionPool, "postgres");
             boolean exists = checkAllUsers.stream().anyMatch(u-> u.getUserEmail()!=null && u.getUserEmail().equalsIgnoreCase(email));
 
             if (exists){
@@ -220,11 +191,11 @@ public class UserController {
 
             if(carportLength != null && carportWidth != null){
 
-                    int length = Integer.parseInt(carportLength);
-                    int width = Integer.parseInt(carportWidth);
-                    UserMapper.createOrders(connectionPool,createdUser.getUserId(),length,width);
+                int length = Integer.parseInt(carportLength);
+                int width = Integer.parseInt(carportWidth);
+                OrderMapper.createOrders(connectionPool, createdUser.getUserId(), length, width);
 
-                }
+            }
 
             CarportController.mailSender(ctx, connectionPool, createdUser, autoPassword);
             ctx.attribute("message", "Din forespørgelse er nu oprettet, du vil blive kontaktet snarest");
@@ -239,7 +210,6 @@ public class UserController {
     }
 
     //for at håndtere hvad kunden vælger af længder og bredder
-
     public static void handleOrderSelections(Context ctx){
         String length = ctx.formParam("length");
         String width = ctx.formParam("width");
@@ -265,5 +235,4 @@ public class UserController {
         }
         return sb.toString();
     }
-
 }

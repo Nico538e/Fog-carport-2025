@@ -1,6 +1,6 @@
 package app.controllers;
 
-import app.entities.Orders;
+import app.entities.Order;
 import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
@@ -29,7 +29,7 @@ public class CarportController {
 
     public static void checkAllOrders(Context ctx, ConnectionPool connectionPool){
         try {
-            List<Orders> orders = UserMapper.getOrdersByUserId(connectionPool,2);
+            List<Order> orders = OrderMapper.getOrdersByUserId(connectionPool,2);
 
             ctx.attribute("orders", orders);
             ctx.render("page2.html"); //change filepath
@@ -97,7 +97,7 @@ public class CarportController {
             }
 
             int orderId = Integer.parseInt(ctx.queryParam("orderId"));
-            Orders order = OrderMapper.getOrderById(orderId, connectionPool);
+            Order order = OrderMapper.getOrderById(orderId, connectionPool);
 
             if (!(currentUser.getUserId() == order.getUserId() || currentUser.getRole().equalsIgnoreCase("admin"))) {
                 ctx.result("You are not authorized to view this page.");

@@ -3,7 +3,7 @@ package app.services;
 import app.entities.Item;
 import app.entities.ItemVariant;
 import app.entities.OrderLine;
-import app.entities.Orders;
+import app.entities.Order;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.ItemMapper;
@@ -28,7 +28,7 @@ public class Calculator {
     /**
      * Hovedmetode til beregning af alle materialer til en carport
      */
-    public void calculate(Orders order) throws DatabaseException {
+    public void calculate(Order order) throws DatabaseException {
         calcPosts(order);
         calcBeams(order);
         calcRafters(order);
@@ -37,7 +37,7 @@ public class Calculator {
     /**
      * Beregner stolper og tilføjer til orderLines
      */
-    private void calcPosts(Orders order) throws DatabaseException {
+    private void calcPosts(Order order) throws DatabaseException {
         int length = order.getLength();
 
         int quantity = calcPostQuantity(length);
@@ -69,7 +69,7 @@ public class Calculator {
     /**
      * Beregner remme (beams) og tilføjer til orderLines
      */
-    private void calcBeams(Orders order) throws DatabaseException {
+    private void calcBeams(Order order) throws DatabaseException {
         int length = order.getLength();
         int quantity = 2; // én på hver side
 
@@ -96,7 +96,7 @@ public class Calculator {
     /**
      * Beregner spær og tilføjer til orderLines
      */
-    private void calcRafters(Orders order) throws DatabaseException {
+    private void calcRafters(Order order) throws DatabaseException {
         int length = order.getLength();
         int width = order.getWidth();
 
