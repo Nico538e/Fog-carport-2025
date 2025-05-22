@@ -3,6 +3,7 @@ package app.entities;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class User {
 
@@ -25,6 +26,8 @@ public class User {
 
         this.address = address;
     }
+
+
 
     public User(int userTlf, String userEmail, String role, String userPassword, String userName) {
         this.userTlf = userTlf;
@@ -159,5 +162,25 @@ public class User {
                 ", address='" + address + '\'' +
                 ", orders=" + orders +
                 '}';
+    }
+
+    @Override
+    public final boolean equals(Object o) {
+        if (!(o instanceof User user)) return false;
+
+        return getUserId() == user.getUserId() && getUserTlf() == user.getUserTlf() && getUserName().equals(user.getUserName()) && getUserPassword().equals(user.getUserPassword()) && getRole().equals(user.getRole()) && getUserEmail().equals(user.getUserEmail()) && getAddress().equals(user.getAddress()) && orders.equals(user.orders);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getUserId();
+        result = 31 * result + getUserName().hashCode();
+        result = 31 * result + getUserPassword().hashCode();
+        result = 31 * result + getRole().hashCode();
+        result = 31 * result + getUserEmail().hashCode();
+        result = 31 * result + getUserTlf();
+        result = 31 * result + getAddress().hashCode();
+        result = 31 * result + orders.hashCode();
+        return result;
     }
 }
