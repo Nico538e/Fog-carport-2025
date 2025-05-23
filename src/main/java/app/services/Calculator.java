@@ -112,4 +112,13 @@ public class Calculator {
     public List<OrderLine> getOrderLines() {
         return orderLines;
     }
+
+    public int getTotalPrice(List<OrderLine> orderLines){
+        int totalPrice = 0;
+
+        for(OrderLine ol: orderLines){
+            totalPrice += ol.getItemPackageAmount() * ol.getCostPrice();
+        }
+        return totalPrice;
+    }
 }
