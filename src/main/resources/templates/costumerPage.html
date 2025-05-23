@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<title>CostumersPage</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+<head>
+    <title>CustomerPage</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
 </head>
 <body>
 <nav class="navbar">
@@ -11,8 +12,8 @@
         <img src="../public/images/fog_logo.png" th:src="@{/images/fog_logo.png}" width="32%"/>
     </div>
     <ul class="nav-links">
-        <!--# er placeholder til links routs ind til vi ved vor at det skal føre hen-->
-        <li><a th:href="@{/index}">Hjem</a></li>
+
+        <li><a th:href="@{/}">Hjem</a></li>
         <li><a th:href="@{/designCarport}">Design din egen carport</a></li>
         <li><a th:href="@{/inspiration}">Få inspiration</a></li>
         <li><a th:href="@{/aboutOurCarports}">Om vores Carporte</a></li>
@@ -21,33 +22,23 @@
 </nav>
 
 <div class="change-order-container">
-
+    <form th:action="@{/customerPage}" method="get"></form>
     <div class="form-wrapper">
-        <h2>her er dine oplysninger</h2>
+        <h2>Her er dine oplysninger</h2>
 
-        <p><strong>Navn:</strong> <span th:text="${user.name}">Navn</span> </p>
-        <p><strong>:</strong> <span th:text="${order.length}">780</span> </p>
-        <p><strong>Længde:</strong> <span th:text="${order.length}">780</span> </p>
-        <p><strong>Længde:</strong> <span th:text="${order.length}">780</span> </p>
-        <p><strong>Længde:</strong> <span th:text="${order.length}">780</span> </p>
-        <p><strong>Længde:</strong> <span th:text="${order.length}">780</span> </p>
-        <p><strong>Længde:</strong> <span th:text="${order.length}">780</span> </p>
+        <p><strong>Navn:</strong> <span th:text="${currentUser.userName}">Navn</span> </p>
+        <p><strong>Email:</strong> <span th:text="${currentUser.userEmail}">Email</span> </p>
+        <p><strong>Adresse:</strong> <span th:text="${currentUser.address}">780</span> </p>
+        <p><strong>Tlf:</strong> <span th:text="${currentUser.userTlf}">Tlf</span> </p>
+
+        <p><strong>Længde:</strong> <span th:text="${order.length}">780</span> cm</p>
+        <p><strong>Bredde:</strong> <span th:text="${order.width}">780</span> cm</p>
+        <p><strong>Pris:</strong> <span th:text="${order.costPrice}">780</span> kr.</p>
 
 
+        <button type="submit" class="save-chanages-button">Se stykliste</button>
 
     </div>
-
-   <form method="post" class="user-order-form" >
-       <input th:value="" type="text" name="Name" placeholder="Navn" class="name-user">
-       <input type="number" name="Price" placeholder="Pris" class="price-of-order">
-       <input type="email" name="Email" placeholder="E-mail" class="email-user">
-       <input type="number" name="tel" placeholder="Tlf-nummer" class="tlf-user">
-       <input type="text" name="address" placeholder="Adresse" class="address-user">
-
-       <button type="submit" formaction="/saveChanges" class="save-changes-button">Gem ændringer</button>
-   </form>
-
-
 
 </div>
 </body>
