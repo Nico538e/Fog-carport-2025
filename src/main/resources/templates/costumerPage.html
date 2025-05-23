@@ -22,7 +22,7 @@
 </nav>
 
 <div class="change-order-container">
-    <form th:action="@{/customerPage}" method="get"></form>
+    <form th:action="@{/costumerPage}" method="get">
     <div class="form-wrapper">
         <h2>Her er dine oplysninger</h2>
 
@@ -33,12 +33,14 @@
 
         <p><strong>Længde:</strong> <span th:text="${order.length}">780</span> cm</p>
         <p><strong>Bredde:</strong> <span th:text="${order.width}">780</span> cm</p>
-        <p><strong>Pris:</strong> <span th:text="${order.costPrice}">780</span> kr.</p>
 
-
-        <button type="submit" class="save-chanages-button">Se stykliste</button>
 
     </div>
+    </form>
+    <form th:action="@{/materialList}" method="get">
+        <input type="hidden" name="orderId" th:value="${order.orderId}" />
+        <button type="submit" class="save-chanages-button">Se stykliste</button>
+    </form>
 
 </div>
 </body>

@@ -35,6 +35,26 @@ public class Item {
         return itemCostPrice;
     }
 
+    public String getItemName() {
+        return itemName;
+    }
+
+    public int getItemHeight() {
+        return itemHeight;
+    }
+
+    public int getItemWidth() {
+        return itemWidth;
+    }
+
+    public String getItemType() {
+        return itemType;
+    }
+
+    public String getItemPackageType() {
+        return itemPackageType;
+    }
+
     @Override
     public String toString() {
         return "Item{" +

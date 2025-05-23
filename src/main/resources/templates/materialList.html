@@ -30,7 +30,7 @@
     <p>
         Email: <strong th:text="${currentUser.userEmail}"></strong>
     </p>
-
+    <form th:action="@{materialList}" method="get">
     <div class="carport-selection h2" style="overflow-x:auto; width: 100%">
         <table class="item-table-for-user">
             <thead>
@@ -55,9 +55,6 @@
             </tbody>
         </table>
     </div>
-    <form method="post" th:action="@{/costumerPage}">
-        <input type="hidden" name="userId" th:value="${currentUser.userId}">
-        <button type="submit" class="back-button">Tilbage</button>
     </form>
 </div>
 

@@ -31,6 +31,70 @@ public class OrderLine {
         this.orderId = orderId;
     }
 
+    public int getOrderLineId() {
+        return orderLineId;
+    }
+
+    public void setOrderLineId(int orderLineId) {
+        this.orderLineId = orderLineId;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public int getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(int itemId) {
+        this.itemId = itemId;
+    }
+
+    public int getCostPrice() {
+        return costPrice;
+    }
+
+    public void setCostPrice(int costPrice) {
+        this.costPrice = costPrice;
+    }
+
+    public ItemVariant getItemVariant() {
+        return itemVariant;
+    }
+
+    public void setItemVariant(ItemVariant itemVariant) {
+        this.itemVariant = itemVariant;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getItemPackageAmount() {
+        return itemPackageAmount;
+    }
+
+    public void setItemPackageAmount(int itemPackageAmount) {
+        this.itemPackageAmount = itemPackageAmount;
+    }
+
     @Override
     public String toString() {
         return "OrderLine{" +

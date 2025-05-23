@@ -16,6 +16,15 @@ public class ItemVariant {
         return item;
     }
 
+    public int getVariantId() {
+        return variantId;
+    }
+
+    public int getVariantLength() {
+        return variantLength;
+    }
+
+
     @Override
     public String toString() {
         return "ItemVariant{" +

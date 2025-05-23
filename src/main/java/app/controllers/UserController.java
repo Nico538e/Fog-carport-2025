@@ -1,5 +1,6 @@
 package app.controllers;
 
+import app.entities.Order;
 import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
@@ -12,6 +13,8 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.util.List;
 
+import static app.controllers.CarportController.calculateOrderLines;
+
 public class UserController {
     public static void addRoutes(Javalin app, ConnectionPool connectionPool) {
         app.post("/adminPage2", ctx -> UserController.getUserOrderForm(ctx, connectionPool));
@@ -22,6 +25,7 @@ public class UserController {
         app.get("logout", ctx -> logout(ctx));
         app.post("/addUser", ctx-> createUser(ctx, connectionPool));
         app.post("/designCarport", ctx -> handleOrderSelections(ctx));
+        app.get("/costumerPage", ctx -> showCostumerPage(ctx,connectionPool));
     }
 
     public static void login(Context ctx, ConnectionPool connectionPool) {
@@ -43,12 +47,13 @@ public class UserController {
             if (user.getRole().equals("admin")) {
                 ctx.redirect("/adminPage1");
             } else {
-                ctx.redirect("/");
+                ctx.redirect("/costumerPage");
             }
 
         } catch (DatabaseException e){ // hvis login failer(forkert email eller password), kommer denne besked og siden rendere igen
             ctx.attribute("message", "Forkert email eller password");
             ctx.render("login.html");
+            e.printStackTrace();
         }
     }
 
@@ -219,4 +224,23 @@ public class UserController {
         }
         return sb.toString();
     }
+    public static void showCostumerPage(Context ctx, ConnectionPool connectionPool) throws IOException, DatabaseException {
+        User currentUser = ctx.sessionAttribute("currentUser");
+        int orderId = 3;
+        // int orderId = Integer.parseInt(ctx.sessionAttribute("orderId"));
+
+        if (currentUser == null) {
+            ctx.redirect("/login");
+            return;
+        }
+
+        // Hent ordre til brugeren (hvis en ordre eksisterer)
+        Order order = OrderMapper.getOrderById(orderId,connectionPool);
+
+        ctx.attribute("currentUser", currentUser);
+        ctx.attribute("order", order);
+
+        ctx.render("costumerPage.html");
+    }
+
 }
