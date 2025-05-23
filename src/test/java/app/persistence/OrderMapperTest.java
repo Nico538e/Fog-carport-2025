@@ -22,7 +22,6 @@ class OrderMapperTest {
 
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
-
     @BeforeAll
     static void setupClass()
     {
