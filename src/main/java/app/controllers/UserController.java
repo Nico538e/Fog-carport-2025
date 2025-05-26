@@ -188,7 +188,7 @@ public class UserController {
 
             CarportController.mailSender(ctx, connectionPool, createdUser, autoPassword);
             ctx.attribute("message", "Din forespørgelse er nu oprettet, du vil blive kontaktet snarest");
-            ctx.render("designCarportInfo");
+            ctx.render("designCarportInfo.html");
 
 
         } catch (DatabaseException e) {
