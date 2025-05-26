@@ -234,6 +234,7 @@ public class UserController {
         int userId = user.getUserId();
 
 
+
         if (currentUser == null) {
             ctx.redirect("/login");
             return;
@@ -242,9 +243,9 @@ public class UserController {
         // Hent ordre til brugeren (hvis en ordre eksisterer)
         Order order = OrderMapper.getOrderByUserId(userId,connectionPool);
 
-        //Hvis kundens forespørgsel ikke er betalt må de ikke se styklisten/costumerPage
-        if(order == null || order.isPaid() == false){
-            ctx.attribute("message","Din forespørgelse er endnu ikke blevet en ordre. Prøv igen i morgen");
+        //Hvis kundens forespørgsel ikke er oprettet kan de ikke komme ind på siden
+        if(order == null){
+            ctx.attribute("message","Din forespørgelse er endnu ikke blevet oprettet. Prøv igen i morgen");
             ctx.render("login.html");
             return;
         }
