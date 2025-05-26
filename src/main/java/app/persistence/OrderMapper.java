@@ -89,8 +89,9 @@ public class OrderMapper {
                 int orderId = rs.getInt("order_id");
                 int length = rs.getInt("carport_length");
                 int width = rs.getInt("carport_width");
+                boolean isPaid = rs.getBoolean("is_paid");
 
-                return new Order(orderId, userId, width, length);  // Matcher din Orders constructor
+                return new Order(orderId, userId, width, length, isPaid);  // Matcher din Orders constructor
             } else {
                 return null; // Hvis ordren ikke findes
             }

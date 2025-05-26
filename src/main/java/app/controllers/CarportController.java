@@ -81,7 +81,9 @@ public class CarportController {
             int orderId = Integer.parseInt(ctx.queryParam("orderId"));
             Order order = OrderMapper.getOrderById(orderId, connectionPool);
 
-            if (!(currentUser.getUserId() == order.getUserId() || currentUser.getRole().equalsIgnoreCase("admin"))) {
+
+            //Hvis kundens forespørgsel ikke er betalt må de ikke se styklisten/costumerPage
+            if (!(order.isPaid() == true || currentUser.getRole().equalsIgnoreCase("admin"))) {
                 ctx.result("You are not authorized to view this page.");
                 return;
             }
