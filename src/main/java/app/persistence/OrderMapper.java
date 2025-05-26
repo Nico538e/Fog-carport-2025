@@ -75,4 +75,28 @@ public class OrderMapper {
             throw new DatabaseException("Fejl under hentning af ordre med ID " + orderId, e);
         }
     }
+
+    public static Order getOrderByUserId(int userId, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "SELECT * FROM orders WHERE user_id = ?";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                int orderId = rs.getInt("order_id");
+                int length = rs.getInt("carport_length");
+                int width = rs.getInt("carport_width");
+
+                return new Order(orderId, userId, width, length);  // Matcher din Orders constructor
+            } else {
+                return null; // Hvis ordren ikke findes
+            }
+
+        } catch (SQLException e) {
+            throw new DatabaseException("Fejl under hentning af ordre med ID " + userId, e);
+        }
+    }
 }

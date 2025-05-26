@@ -196,6 +196,7 @@ public class UserController {
             ctx.attribute("message", "Der opstod en fejl med oprettelsen af forspørgelsen" + e.getMessage());
             ctx.render("designCarportInfo.html");
         }
+
     }
 
     //for at håndtere hvad kunden vælger af længder og bredder
@@ -224,10 +225,14 @@ public class UserController {
         }
         return sb.toString();
     }
+
+
     public static void showCostumerPage(Context ctx, ConnectionPool connectionPool) throws IOException, DatabaseException {
         User currentUser = ctx.sessionAttribute("currentUser");
-        int orderId = 3;
-        // int orderId = Integer.parseInt(ctx.sessionAttribute("orderId"));
+        String userEmail = currentUser.getUserEmail();
+        User user = UserMapper.getUserByEmail(connectionPool, userEmail);
+        int userId = user.getUserId();
+
 
         if (currentUser == null) {
             ctx.redirect("/login");
@@ -235,11 +240,17 @@ public class UserController {
         }
 
         // Hent ordre til brugeren (hvis en ordre eksisterer)
-        Order order = OrderMapper.getOrderById(orderId,connectionPool);
+        Order order = OrderMapper.getOrderByUserId(userId,connectionPool);
+
+        //Hvis kundens forespørgsel ikke er betalt må de ikke se styklisten/costumerPage
+        if(order == null || order.isPaid() == false){
+            ctx.attribute("message","Din forespørgelse er endnu ikke blevet en ordre. Prøv igen i morgen");
+            ctx.render("login.html");
+            return;
+        }
 
         ctx.attribute("currentUser", currentUser);
         ctx.attribute("order", order);
-
         ctx.render("costumerPage.html");
     }
 

@@ -288,4 +288,5 @@ public class UserMapper {
             throw new DatabaseException("Failed while trying to update userTlf" + e.getMessage());
         }
     }
+
 }
