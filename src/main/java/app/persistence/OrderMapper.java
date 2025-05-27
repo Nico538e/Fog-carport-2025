@@ -67,7 +67,7 @@ public class OrderMapper {
                 int width = rs.getInt("carport_width");
                 boolean isPaid = rs.getBoolean("is_paid");
 
-                return new Order(orderId, userId, width, length, isPaid);  // Matcher din Orders constructor
+                return new Order(orderId, userId, length, width, isPaid);  // Matcher din Orders constructor
             } else {
                 return null; // Hvis ordren ikke findes
             }
